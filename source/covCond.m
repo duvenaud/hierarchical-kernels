@@ -5,9 +5,9 @@ function K = covCond(hyp, x, z, i)
 %
 % k(x^p,x^q) = sf^2 * exp(-0.5*d(x^p, x^q)^2) 
 %
-% where d^2 =  0              if   x^p == NaN and x^q == NaN
-%              omega^2        if   x^p == NaN xor x^q == NaN
-%              2*(1 - cos(pi*rho*(x^p - x^q)))     otherwise
+% where d^2 =  0                      if   x^p == NaN and x^q == NaN
+%              omega^2                if   x^p == NaN xor x^q == NaN
+%              omega^2*2*(1 - cos(pi*rho*(x^p - x^q)))     otherwise
 %
 % where
 % sf^2 is the signal variance,
@@ -39,29 +39,40 @@ assert(size(x,2) == 1);  % Only handles 1D input for now.
 if xeqz
     z = x;
 end
-x = omega .*[ cos(pi*rho*x), sin(pi*rho*x)];
-z = omega .*[ cos(pi*rho*z), sin(pi*rho*z)];
-x(isnan(x)) = 0;
-z(isnan(z)) = 0;
+
+% Use projection into 2D to compute kernel.
+xproj = omega .*[ cos(pi*rho*x), sin(pi*rho*x)];
+zproj = omega .*[ cos(pi*rho*z), sin(pi*rho*z)];
+
+% Missing points get both coordinates set to zero.
+xproj(isnan(xproj)) = 0;
+zproj(isnan(zproj)) = 0;
 
 % precompute squared distances
 if dg                                                               % vector kxx
-  K = zeros(size(x,1),1);
+  K = zeros(size(xproj,1),1);
 else
   if xeqz                                                 % symmetric matrix Kxx
-    K = sq_dist(x');
+    K = sq_dist(xproj');
   else                                                   % cross covariances Kxz
-    K = sq_dist(x',z');
+    K = sq_dist(xproj',zproj');
   end
 end
 
 if nargin<4                                                        % covariances
   K = sf2*exp(-K/2);
 else                                                               % derivatives
-  if i==1
-    K = sf2*exp(-K/2).*K;
-  elseif i==2
-    K = 2*sf2*exp(-K/2);
+  if i==1       % omega
+    K = -sf2*exp(-K/2).*K;
+  elseif i==2   % rho
+    tempx = x; tempx(isnan(tempx)) = 0;
+    tempz = z; tempz(isnan(tempz)) = 0;
+    orig_proj = sqrt(sq_dist(tempx',tempz'));
+    dd2drho = 2.*sin( pi.*rho*(orig_proj)) .* orig_proj .* pi .* omega^2;
+    neithermissing = double(~isnan(x))*double(~isnan(z'));
+    K = -0.5*sf2*exp(-K/2) .* dd2drho .*neithermissing .* rho;
+  elseif i==3   % sf2
+    K = 2*sf2*exp(-K/2);    
   else
     error('Unknown hyperparameter')
   end
