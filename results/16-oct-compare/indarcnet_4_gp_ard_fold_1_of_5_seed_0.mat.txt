@@ -1,0 +1,18 @@
+
+
+Running
+          Method: gp_ard
+         Dataset: indarcnet_4 
+            Fold: 1 of 5 
+            Seed: 0 
+Output directory: ../results/16-oct-compare/ 
+ Output filename: ../results/16-oct-compare/indarcnet_4_gp_ard_fold_1_of_5_seed_0.mat
+
+ Not randomizing dataset order
+
+max_iters =
+
+   100
+
+Function evaluation      0;  Value 7.898226e+02Function evaluation      9;  Value 8.199872e+01Function evaluation     12;  Value 7.110946e+01Function evaluation     14;  Value 6.387525e+01Function evaluation     16;  Value 5.670060e+01Function evaluation     18;  Value 4.606151e+01Function evaluation     20;  Value 4.064380e+01Function evaluation     22;  Value 3.361325e+01Function evaluation     25;  Value 3.263592e+01Function evaluation     30;  Value 1.334916e+01Function evaluation     34;  Value 1.144839e+01Function evaluation     36;  Value 8.101353e+00Function evaluation     39;  Value 7.585875e+00Function evaluation     42;  Value 3.798768e+00Function evaluation     44;  Value 2.566681e+00Function evaluation     46;  Value -4.510115e-01Function evaluation     50;  Value -1.279050e+00Function evaluation     52;  Value -2.595238e+00Function evaluation     56;  Value -2.803899e+00Function evaluation     58;  Value -3.109535e+00Function evaluation     61;  Value -6.098482e+00Function evaluation     64;  Value -6.957336e+00Function evaluation     67;  Value -1.108085e+01Function evaluation     70;  Value -1.221085e+01Function evaluation     72;  Value -1.335328e+01Function evaluation     74;  Value -1.386189e+01Function evaluation     76;  Value -1.458600e+01Function evaluation     79;  Value -1.731646e+01Function evaluation     83;  Value -1.789092e+01Function evaluation     85;  Value -1.869312e+01Function evaluation     87;  Value -1.968566e+01Function evaluation     89;  Value -2.047956e+01Function evaluation     91;  Value -2.076370e+01Function evaluation     94;  Value -2.180338e+01Function evaluation     98;  Value -2.192251e+01Function evaluation    100;  Value -2.202306e+01
+Saved to ../results/16-oct-compare/indarcnet_4_gp_ard_fold_1_of_5_seed_0.mat

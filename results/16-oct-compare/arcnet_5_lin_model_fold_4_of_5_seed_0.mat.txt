@@ -1,0 +1,45 @@
+
+
+Running
+          Method: lin_model
+         Dataset: arcnet_5 
+            Fold: 4 of 5 
+            Seed: 0 
+Output directory: ../results/16-oct-compare/ 
+ Output filename: ../results/16-oct-compare/arcnet_5_lin_model_fold_4_of_5_seed_0.mat
+
+ Not randomizing dataset order
+
+weights =
+
+    0.2765
+   -0.1765
+   -0.2628
+    0.1519
+    0.0702
+    0.1260
+   -0.0112
+   -0.0899
+    0.1129
+   -0.1836
+    0.0317
+    0.0846
+    0.0762
+    0.0647
+   -0.1644
+    0.2300
+   -0.0241
+   -0.1593
+   -0.0925
+    0.2402
+    0.0791
+   -0.2765
+    0.3216
+    0.0664
+
+
+ss_hat =
+
+    0.5218
+
+Saved to ../results/16-oct-compare/arcnet_5_lin_model_fold_4_of_5_seed_0.mat

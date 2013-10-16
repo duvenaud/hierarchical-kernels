@@ -1,0 +1,90 @@
+
+
+Running
+          Method: lin_model
+         Dataset: arcnet_1 
+            Fold: 2 of 5 
+            Seed: 0 
+Output directory: ../results/16-oct-compare/ 
+ Output filename: ../results/16-oct-compare/arcnet_1_lin_model_fold_2_of_5_seed_0.mat
+
+ Not randomizing dataset order
+
+weights =
+
+    0.5164
+    0.0934
+    0.0097
+    0.1099
+   -0.1424
+   -0.1974
+    0.0635
+   -0.1300
+   -0.0181
+   -0.0664
+   -0.1322
+    0.0611
+    0.0587
+    0.0666
+   -0.1361
+    0.0438
+   -0.0767
+    0.1005
+   -0.1218
+   -0.0500
+    0.2151
+   -0.4511
+   -0.1764
+    0.0714
+
+
+ss_hat =
+
+    0.3719
+
+Saved to ../results/16-oct-compare/arcnet_1_lin_model_fold_2_of_5_seed_0.mat
+
+
+Running
+          Method: lin_model
+         Dataset: arcnet_1 
+            Fold: 2 of 5 
+            Seed: 0 
+Output directory: ../results/16-oct-compare/ 
+ Output filename: ../results/16-oct-compare/arcnet_1_lin_model_fold_2_of_5_seed_0.mat
+
+ Not randomizing dataset order
+
+weights =
+
+    0.5164
+    0.0934
+    0.0097
+    0.1099
+   -0.1424
+   -0.1974
+    0.0635
+   -0.1300
+   -0.0181
+   -0.0664
+   -0.1322
+    0.0611
+    0.0587
+    0.0666
+   -0.1361
+    0.0438
+   -0.0767
+    0.1005
+   -0.1218
+   -0.0500
+    0.2151
+   -0.4511
+   -0.1764
+    0.0714
+
+
+ss_hat =
+
+    0.3719
+
+Saved to ../results/16-oct-compare/arcnet_1_lin_model_fold_2_of_5_seed_0.mat

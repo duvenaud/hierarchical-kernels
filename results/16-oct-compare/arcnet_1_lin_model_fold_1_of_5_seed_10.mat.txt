@@ -1,0 +1,60 @@
+
+
+Running
+          Method: lin_model
+         Dataset: arcnet_1 
+            Fold: 1 of 5 
+            Seed: 10 
+Output directory: ../results/16-oct-compare/ 
+ Output filename: ../results/16-oct-compare/arcnet_1_lin_model_fold_1_of_5_seed_10.mat
+
+ Not randomizing dataset order
+       message: 'Undefined function 'gen_kfolds' for input arguments of type 'double'.'
+    identifier: 'MATLAB:UndefinedFunction'
+         stack: [1x1 struct]
+
+
+
+Running
+          Method: lin_model
+         Dataset: arcnet_1 
+            Fold: 1 of 5 
+            Seed: 10 
+Output directory: ../results/16-oct-compare/ 
+ Output filename: ../results/16-oct-compare/arcnet_1_lin_model_fold_1_of_5_seed_10.mat
+
+ Not randomizing dataset order
+
+weights =
+
+    0.4804
+    0.0635
+   -0.0025
+    0.0692
+   -0.1361
+   -0.3158
+    0.0547
+   -0.0415
+    0.0115
+    0.0005
+   -0.1280
+   -0.0031
+    0.1414
+   -0.0131
+   -0.1318
+    0.1465
+   -0.0470
+    0.0753
+   -0.0742
+   -0.0736
+    0.2720
+   -0.5813
+   -0.1455
+    0.1410
+
+
+ss_hat =
+
+    0.4472
+
+Saved to ../results/16-oct-compare/arcnet_1_lin_model_fold_1_of_5_seed_10.mat

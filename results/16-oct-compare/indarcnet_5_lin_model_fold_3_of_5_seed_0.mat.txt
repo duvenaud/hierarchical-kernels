@@ -1,0 +1,45 @@
+
+
+Running
+          Method: lin_model
+         Dataset: indarcnet_5 
+            Fold: 3 of 5 
+            Seed: 0 
+Output directory: ../results/16-oct-compare/ 
+ Output filename: ../results/16-oct-compare/indarcnet_5_lin_model_fold_3_of_5_seed_0.mat
+
+ Not randomizing dataset order
+
+weights =
+
+    0.1385
+   -0.1221
+   -0.1353
+    0.0387
+    0.0274
+   -0.2197
+   -0.0140
+    0.0437
+    0.1127
+    0.0952
+   -0.2058
+    0.0694
+   -0.3029
+    0.2303
+   -0.3215
+    0.2329
+    0.0472
+   -0.0250
+   -0.1087
+    0.2045
+    0.0816
+    0.1386
+   -0.0224
+   -0.1249
+
+
+ss_hat =
+
+    0.5580
+
+Saved to ../results/16-oct-compare/indarcnet_5_lin_model_fold_3_of_5_seed_0.mat
