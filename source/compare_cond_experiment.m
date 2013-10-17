@@ -20,25 +20,22 @@ datafiles = {};
 datafiles{end+1} = 'concatenated_nan.mat';
 datafiles{end+1} = 'concatenated_nan_log.mat';
 
-outdir = '/scratch/results/17-oct-compare/';
+outdir = '/scratch/results/17-oct-overnight-compare/';
+mkdir(outdir);
 
-% Load the data.
-dataset_ix = 1;
-%dataset = [ datadir, datafiles(dataset_ix).name];
-%cur_data = load( dataset );
-
-%[N,D] = size(cur_data.X);
 
 % define methods
 methods = {};
 %methods{end+1} = @linear;
+methods{end+1} = @separate_gp_hierarchical;
 methods{end+1} = @gp_hierarchical;
 methods{end+1} = @separate_linear;
 methods{end+1} = @separate_gp_ard;
 
+
 %methods{2} = @gp_ard;
 
-K = 2;
+K = 5;
 
 for dataset_ix = 1:length(datafiles)
     dataset = [ datadir, datafiles{dataset_ix}]
