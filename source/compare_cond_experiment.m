@@ -34,6 +34,7 @@ methods = {};
 %methods{end+1} = @linear;
 methods{end+1} = @separate_linear;
 methods{end+1} = @separate_gp_ard;
+methods{end+1} = @gp_hierarchical;
 %methods{2} = @gp_ard;
 
 K = 2;
