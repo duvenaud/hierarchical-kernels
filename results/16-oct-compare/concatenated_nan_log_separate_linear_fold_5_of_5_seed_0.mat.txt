@@ -1,0 +1,780 @@
+
+
+Running
+          Method: separate_linear
+         Dataset: concatenated_nan_log 
+            Fold: 5 of 5 
+            Seed: 0 
+Output directory: ../results/16-oct-compare/ 
+ Output filename: ../results/16-oct-compare/concatenated_nan_log_separate_linear_fold_5_of_5_seed_0.mat
+
+ Not randomizing dataset order
+
+ans =
+
+    70
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     0     0     0     0     1     0     0     0     0     1     0     0     0
+
+  Columns 19 through 24
+
+     0     1     0     0     0     0
+
+
+weights =
+
+   -1.4822
+   -0.8230
+    0.8970
+   -0.4120
+   -0.8860
+    0.0380
+   -0.1906
+
+
+ss_hat =
+
+    0.9006
+
+
+ans =
+
+   103
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     1     0     0     0     1     1     0     0     0     1     1     0     0
+
+  Columns 19 through 24
+
+     0     1     1     0     0     0
+
+
+weights =
+
+    0.1596
+   -0.7426
+    0.6086
+   -0.4860
+   -0.7700
+   -1.4628
+   -0.1853
+   -1.3046
+   -0.4275
+    0.1673
+   -0.2858
+
+
+ss_hat =
+
+    0.9963
+
+
+ans =
+
+   136
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     1     1     0     0     1     1     1     0     0     1     1     1     0
+
+  Columns 19 through 24
+
+     0     1     1     1     0     0
+
+
+weights =
+
+    0.2813
+   -0.9782
+    0.2823
+   -0.6700
+   -0.4990
+   -0.6958
+   -1.2958
+   -1.0095
+   -0.2192
+   -0.6795
+   -0.6898
+   -0.0836
+    0.1382
+    0.3048
+    0.3221
+
+
+ss_hat =
+
+    0.8130
+
+
+ans =
+
+   272
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     1     1     1     0     1     1     1     1     0     1     1     1     1
+
+  Columns 19 through 24
+
+     0     1     1     1     1     0
+
+
+weights =
+
+   -0.0205
+   -0.3654
+    0.6470
+   -1.0391
+   -0.1394
+   -0.1640
+    0.2179
+   -0.9520
+   -0.7321
+   -0.3670
+   -0.5867
+   -0.4943
+   -0.7397
+   -0.1409
+   -0.3868
+    0.3575
+    0.0473
+    0.2476
+   -0.3262
+
+
+ss_hat =
+
+    1.0429
+
+
+ans =
+
+    49
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1
+
+  Columns 19 through 24
+
+     1     1     1     1     1     1
+
+
+weights =
+
+   -0.1849
+   -0.0823
+    0.4434
+   -1.4485
+    0.7614
+   -0.1306
+   -0.0835
+   -0.9974
+    0.4312
+   -0.6653
+   -0.7840
+   -1.0495
+    0.2966
+   -0.7688
+   -0.1648
+   -0.3778
+   -0.8770
+   -0.0487
+    0.6754
+    1.6259
+   -0.3957
+   -0.2267
+   -0.1548
+
+
+ss_hat =
+
+    0.7371
+
+
+ans =
+
+   130
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1
+
+  Columns 19 through 24
+
+     1     1     1     1     1     1
+
+
+weights =
+
+    0.2748
+   -1.6217
+    0.9315
+   -0.7530
+    0.2525
+    0.0030
+    0.7610
+   -1.0771
+   -1.4061
+   -0.7443
+   -0.3118
+   -0.6832
+   -0.3721
+   -0.2307
+    0.0942
+    0.6569
+   -0.5005
+   -0.4071
+    0.9013
+    0.9396
+    1.0053
+    0.4815
+   -0.1185
+
+
+ss_hat =
+
+    1.0574
+
+Saved to ../results/16-oct-compare/concatenated_nan_log_separate_linear_fold_5_of_5_seed_0.mat
+
+
+Running
+          Method: separate_linear
+         Dataset: concatenated_nan_log 
+            Fold: 5 of 5 
+            Seed: 0 
+Output directory: ../results/16-oct-compare/ 
+ Output filename: ../results/16-oct-compare/concatenated_nan_log_separate_linear_fold_5_of_5_seed_0.mat
+
+ Not randomizing dataset order
+
+ans =
+
+    70
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     0     0     0     0     1     0     0     0     0     1     0     0     0
+
+  Columns 19 through 24
+
+     0     1     0     0     0     0
+
+
+weights =
+
+   -1.4822
+   -0.8230
+    0.8970
+   -0.4120
+   -0.8860
+    0.0380
+   -0.1906
+
+
+ss_hat =
+
+    0.9006
+
+
+ans =
+
+   103
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     1     0     0     0     1     1     0     0     0     1     1     0     0
+
+  Columns 19 through 24
+
+     0     1     1     0     0     0
+
+
+weights =
+
+    0.1596
+   -0.7426
+    0.6086
+   -0.4860
+   -0.7700
+   -1.4628
+   -0.1853
+   -1.3046
+   -0.4275
+    0.1673
+   -0.2858
+
+
+ss_hat =
+
+    0.9963
+
+
+ans =
+
+   136
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     1     1     0     0     1     1     1     0     0     1     1     1     0
+
+  Columns 19 through 24
+
+     0     1     1     1     0     0
+
+
+weights =
+
+    0.2813
+   -0.9782
+    0.2823
+   -0.6700
+   -0.4990
+   -0.6958
+   -1.2958
+   -1.0095
+   -0.2192
+   -0.6795
+   -0.6898
+   -0.0836
+    0.1382
+    0.3048
+    0.3221
+
+
+ss_hat =
+
+    0.8130
+
+
+ans =
+
+   272
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     1     1     1     0     1     1     1     1     0     1     1     1     1
+
+  Columns 19 through 24
+
+     0     1     1     1     1     0
+
+
+weights =
+
+   -0.0205
+   -0.3654
+    0.6470
+   -1.0391
+   -0.1394
+   -0.1640
+    0.2179
+   -0.9520
+   -0.7321
+   -0.3670
+   -0.5867
+   -0.4943
+   -0.7397
+   -0.1409
+   -0.3868
+    0.3575
+    0.0473
+    0.2476
+   -0.3262
+
+
+ss_hat =
+
+    1.0429
+
+
+ans =
+
+    49
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1
+
+  Columns 19 through 24
+
+     1     1     1     1     1     1
+
+
+weights =
+
+   -0.1849
+   -0.0823
+    0.4434
+   -1.4485
+    0.7614
+   -0.1306
+   -0.0835
+   -0.9974
+    0.4312
+   -0.6653
+   -0.7840
+   -1.0495
+    0.2966
+   -0.7688
+   -0.1648
+   -0.3778
+   -0.8770
+   -0.0487
+    0.6754
+    1.6259
+   -0.3957
+   -0.2267
+   -0.1548
+
+
+ss_hat =
+
+    0.7371
+
+
+ans =
+
+   130
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1
+
+  Columns 19 through 24
+
+     1     1     1     1     1     1
+
+
+weights =
+
+    0.2748
+   -1.6217
+    0.9315
+   -0.7530
+    0.2525
+    0.0030
+    0.7610
+   -1.0771
+   -1.4061
+   -0.7443
+   -0.3118
+   -0.6832
+   -0.3721
+   -0.2307
+    0.0942
+    0.6569
+   -0.5005
+   -0.4071
+    0.9013
+    0.9396
+    1.0053
+    0.4815
+   -0.1185
+
+
+ss_hat =
+
+    1.0574
+
+Saved to ../results/16-oct-compare/concatenated_nan_log_separate_linear_fold_5_of_5_seed_0.mat
+
+
+Running
+          Method: separate_linear
+         Dataset: concatenated_nan_log 
+            Fold: 5 of 5 
+            Seed: 0 
+Output directory: ../results/16-oct-compare/ 
+ Output filename: ../results/16-oct-compare/concatenated_nan_log_separate_linear_fold_5_of_5_seed_0.mat
+
+ Not randomizing dataset order
+
+ans =
+
+    70
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     0     0     0     0     1     0     0     0     0     1     0     0     0
+
+  Columns 19 through 24
+
+     0     1     0     0     0     0
+
+
+weights =
+
+   -1.4822
+   -0.8230
+    0.8970
+   -0.4120
+   -0.8860
+    0.0380
+   -0.1906
+
+
+ss_hat =
+
+    0.9006
+
+
+ans =
+
+   103
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     1     0     0     0     1     1     0     0     0     1     1     0     0
+
+  Columns 19 through 24
+
+     0     1     1     0     0     0
+
+
+weights =
+
+    0.1596
+   -0.7426
+    0.6086
+   -0.4860
+   -0.7700
+   -1.4628
+   -0.1853
+   -1.3046
+   -0.4275
+    0.1673
+   -0.2858
+
+
+ss_hat =
+
+    0.9963
+
+
+ans =
+
+   136
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     1     1     0     0     1     1     1     0     0     1     1     1     0
+
+  Columns 19 through 24
+
+     0     1     1     1     0     0
+
+
+weights =
+
+    0.2813
+   -0.9782
+    0.2823
+   -0.6700
+   -0.4990
+   -0.6958
+   -1.2958
+   -1.0095
+   -0.2192
+   -0.6795
+   -0.6898
+   -0.0836
+    0.1382
+    0.3048
+    0.3221
+
+
+ss_hat =
+
+    0.8130
+
+
+ans =
+
+   272
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     1     1     1     0     1     1     1     1     0     1     1     1     1
+
+  Columns 19 through 24
+
+     0     1     1     1     1     0
+
+
+weights =
+
+   -0.0205
+   -0.3654
+    0.6470
+   -1.0391
+   -0.1394
+   -0.1640
+    0.2179
+   -0.9520
+   -0.7321
+   -0.3670
+   -0.5867
+   -0.4943
+   -0.7397
+   -0.1409
+   -0.3868
+    0.3575
+    0.0473
+    0.2476
+   -0.3262
+
+
+ss_hat =
+
+    1.0429
+
+
+ans =
+
+    49
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1
+
+  Columns 19 through 24
+
+     1     1     1     1     1     1
+
+
+weights =
+
+   -0.1849
+   -0.0823
+    0.4434
+   -1.4485
+    0.7614
+   -0.1306
+   -0.0835
+   -0.9974
+    0.4312
+   -0.6653
+   -0.7840
+   -1.0495
+    0.2966
+   -0.7688
+   -0.1648
+   -0.3778
+   -0.8770
+   -0.0487
+    0.6754
+    1.6259
+   -0.3957
+   -0.2267
+   -0.1548
+
+
+ss_hat =
+
+    0.7371
+
+
+ans =
+
+   130
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1
+
+  Columns 19 through 24
+
+     1     1     1     1     1     1
+
+
+weights =
+
+    0.2748
+   -1.6217
+    0.9315
+   -0.7530
+    0.2525
+    0.0030
+    0.7610
+   -1.0771
+   -1.4061
+   -0.7443
+   -0.3118
+   -0.6832
+   -0.3721
+   -0.2307
+    0.0942
+    0.6569
+   -0.5005
+   -0.4071
+    0.9013
+    0.9396
+    1.0053
+    0.4815
+   -0.1185
+
+
+ss_hat =
+
+    1.0574
+
+Saved to ../results/16-oct-compare/concatenated_nan_log_separate_linear_fold_5_of_5_seed_0.mat

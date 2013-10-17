@@ -20,7 +20,7 @@ datafiles = {};
 datafiles{end+1} = 'concatenated_nan.mat';
 datafiles{end+1} = 'concatenated_nan_log.mat';
 
-outdir = '../results/16-oct-compare/';
+outdir = '/scratch/results/17-oct-compare/';
 
 % Load the data.
 dataset_ix = 1;
@@ -31,8 +31,9 @@ dataset_ix = 1;
 
 % define methods
 methods = {};
-methods{end+1} = @linear;
+%methods{end+1} = @linear;
 methods{end+1} = @separate_linear;
+methods{end+1} = @separate_gp_ard;
 %methods{2} = @gp_ard;
 
 K = 2;

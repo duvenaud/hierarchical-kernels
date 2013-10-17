@@ -1,0 +1,214 @@
+
+
+Running
+          Method: separate_gp_ard
+         Dataset: concatenated_nan 
+            Fold: 1 of 5 
+            Seed: 0 
+Output directory: ../results/16-oct-compare/ 
+ Output filename: ../results/16-oct-compare/concatenated_nan_separate_gp_ard_fold_1_of_5_seed_0.mat
+
+ Not randomizing dataset order
+
+ans =
+
+    99
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     0     0     0     0     1     0     0     0     0     1     0     0     0
+
+  Columns 19 through 24
+
+     0     1     0     0     0     0
+
+
+max_iters =
+
+   100
+
+Function evaluation      0;  Value 9.307706e+01Function evaluation      7;  Value -4.606704e+00Function evaluation      9;  Value -4.271059e+01Function evaluation     12;  Value -4.746956e+01Function evaluation     17;  Value -6.928963e+01Function evaluation     21;  Value -7.264733e+01Function evaluation     28;  Value -9.386339e+01Function evaluation     32;  Value -9.595122e+01Function evaluation     36;  Value -1.102321e+02Function evaluation     37;  Value -1.222849e+02Function evaluation     39;  Value -1.286670e+02Function evaluation     41;  Value -1.337629e+02Function evaluation     43;  Value -1.443588e+02Function evaluation     45;  Value -1.538036e+02Function evaluation     47;  Value -1.726478e+02Function evaluation     48;  Value -1.882230e+02[Warning: Inference method failed [Error using chol
+Matrix must be positive definite.] .. attempting to continue] 
+[> In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/gpml/gp.m',118,1)">gp at 118</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/gpml/util/minimize.m',97,1)">minimize at 97</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/gp_ard_general.m',31,1)">gp_ard_general at 31</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/gp_ard.m',5,1)">gp_ard at 5</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/separate_levels.m',33,1)">separate_levels at 33</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/separate_gp_ard.m',8,1)">separate_gp_ard at 8</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/run_one_fold.m',64,1)">run_one_fold at 64</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/compare_cond_experiment.m',45,1)">compare_cond_experiment at 45</a>] 
+Function evaluation     54;  Value -2.136313e+02Function evaluation     56;  Value -2.217969e+02Function evaluation     58;  Value -2.257374e+02Function evaluation     60;  Value -2.291953e+02Function evaluation     62;  Value -2.309778e+02Function evaluation     64;  Value -2.322034e+02Function evaluation     66;  Value -2.365310e+02Function evaluation     68;  Value -2.438511e+02[Warning: Inference method failed [Error using chol
+Matrix must be positive definite.] .. attempting to continue] 
+[> In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/gpml/gp.m',118,1)">gp at 118</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/gpml/util/minimize.m',97,1)">minimize at 97</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/gp_ard_general.m',31,1)">gp_ard_general at 31</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/gp_ard.m',5,1)">gp_ard at 5</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/separate_levels.m',33,1)">separate_levels at 33</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/separate_gp_ard.m',8,1)">separate_gp_ard at 8</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/run_one_fold.m',64,1)">run_one_fold at 64</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/compare_cond_experiment.m',45,1)">compare_cond_experiment at 45</a>] 
+Function evaluation     73;  Value -2.490206e+02Function evaluation     75;  Value -2.542055e+02Function evaluation     78;  Value -2.551568e+02Function evaluation     80;  Value -2.575676e+02[Warning: Inference method failed [Error using chol
+Matrix must be positive definite.] .. attempting to continue] 
+[> In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/gpml/gp.m',118,1)">gp at 118</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/gpml/util/minimize.m',97,1)">minimize at 97</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/gp_ard_general.m',31,1)">gp_ard_general at 31</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/gp_ard.m',5,1)">gp_ard at 5</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/separate_levels.m',33,1)">separate_levels at 33</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/separate_gp_ard.m',8,1)">separate_gp_ard at 8</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/run_one_fold.m',64,1)">run_one_fold at 64</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/compare_cond_experiment.m',45,1)">compare_cond_experiment at 45</a>] 
+Function evaluation     87;  Value -2.591793e+02Function evaluation     92;  Value -2.602410e+02[Warning: Inference method failed [Error using chol
+Matrix must be positive definite.] .. attempting to continue] 
+[> In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/gpml/gp.m',118,1)">gp at 118</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/gpml/util/minimize.m',97,1)">minimize at 97</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/gp_ard_general.m',31,1)">gp_ard_general at 31</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/gp_ard.m',5,1)">gp_ard at 5</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/separate_levels.m',33,1)">separate_levels at 33</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/separate_gp_ard.m',8,1)">separate_gp_ard at 8</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/run_one_fold.m',64,1)">run_one_fold at 64</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/compare_cond_experiment.m',45,1)">compare_cond_experiment at 45</a>] 
+[Warning: Inference method failed [Error using chol
+Matrix must be positive definite.] .. attempting to continue] 
+[> In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/gpml/gp.m',118,1)">gp at 118</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/gpml/util/minimize.m',97,1)">minimize at 97</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/gp_ard_general.m',31,1)">gp_ard_general at 31</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/gp_ard.m',5,1)">gp_ard at 5</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/separate_levels.m',33,1)">separate_levels at 33</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/separate_gp_ard.m',8,1)">separate_gp_ard at 8</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/run_one_fold.m',64,1)">run_one_fold at 64</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/compare_cond_experiment.m',45,1)">compare_cond_experiment at 45</a>] 
+
+
+ans =
+
+    90
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     1     0     0     0     1     1     0     0     0     1     1     0     0
+
+  Columns 19 through 24
+
+     0     1     1     0     0     0
+
+
+max_iters =
+
+   100
+
+Function evaluation      0;  Value 1.608985e+01Function evaluation      7;  Value -2.529260e+01Function evaluation      9;  Value -2.547364e+01Function evaluation     11;  Value -2.556621e+01Function evaluation     17;  Value -2.719297e+01Function evaluation     20;  Value -2.744305e+01Function evaluation     24;  Value -3.027571e+01Function evaluation     26;  Value -3.099736e+01Function evaluation     31;  Value -3.508286e+01Function evaluation     35;  Value -3.549169e+01Function evaluation     37;  Value -3.623560e+01Function evaluation     39;  Value -3.714326e+01Function evaluation     43;  Value -4.401571e+01Function evaluation     45;  Value -4.601238e+01Function evaluation     46;  Value -4.814628e+01Function evaluation     48;  Value -4.968150e+01Function evaluation     50;  Value -5.165612e+01Function evaluation     52;  Value -5.267696e+01Function evaluation     54;  Value -5.459529e+01Function evaluation     57;  Value -5.547182e+01Function evaluation     59;  Value -5.611592e+01Function evaluation     61;  Value -5.626054e+01Function evaluation     64;  Value -5.760132e+01Function evaluation     65;  Value -5.905028e+01Function evaluation     67;  Value -6.022573e+01Function evaluation     69;  Value -6.222206e+01Function evaluation     71;  Value -6.267482e+01Function evaluation     73;  Value -6.368259e+01Function evaluation     75;  Value -6.457542e+01Function evaluation     77;  Value -6.473430e+01Function evaluation     79;  Value -6.510431e+01Function evaluation     81;  Value -6.525479e+01Function evaluation     83;  Value -6.565090e+01Function evaluation     85;  Value -6.666431e+01Function evaluation     89;  Value -6.681767e+01Function evaluation     91;  Value -6.689142e+01Function evaluation     94;  Value -6.731141e+01Function evaluation     96;  Value -6.750275e+01Function evaluation     98;  Value -6.766262e+01Function evaluation    100;  Value -6.776893e+01
+
+ans =
+
+   195
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     1     1     0     0     1     1     1     0     0     1     1     1     0
+
+  Columns 19 through 24
+
+     0     1     1     1     0     0
+
+
+max_iters =
+
+   100
+
+Function evaluation      0;  Value -2.559250e+00Function evaluation      7;  Value -6.579126e+01Function evaluation      9;  Value -6.615949e+01Function evaluation     11;  Value -6.660069e+01Function evaluation     13;  Value -6.757771e+01Function evaluation     15;  Value -7.017632e+01Function evaluation     16;  Value -7.214557e+01Function evaluation     18;  Value -7.312955e+01Function evaluation     23;  Value -9.845526e+01Function evaluation     27;  Value -9.958430e+01Function evaluation     31;  Value -1.153646e+02Function evaluation     33;  Value -1.341156e+02Function evaluation     37;  Value -1.421577e+02Function evaluation     41;  Value -1.444505e+02Function evaluation     43;  Value -1.474310e+02Function evaluation     45;  Value -1.510308e+02Function evaluation     47;  Value -1.570688e+02Function evaluation     50;  Value -1.600382e+02Function evaluation     52;  Value -1.611360e+02Function evaluation     54;  Value -1.628500e+02Function evaluation     56;  Value -1.663012e+02Function evaluation     58;  Value -1.708947e+02Function evaluation     60;  Value -1.732774e+02Function evaluation     62;  Value -1.743852e+02Function evaluation     65;  Value -1.798746e+02Function evaluation     66;  Value -1.851339e+02Function evaluation     68;  Value -1.892468e+02Function evaluation     70;  Value -1.927719e+02Function evaluation     72;  Value -2.036841e+02Function evaluation     75;  Value -2.070235e+02[Warning: Inference method failed [Error using chol
+Matrix must be positive definite.] .. attempting to continue] 
+[> In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/gpml/gp.m',118,1)">gp at 118</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/gpml/util/minimize.m',97,1)">minimize at 97</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/gp_ard_general.m',31,1)">gp_ard_general at 31</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/gp_ard.m',5,1)">gp_ard at 5</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/separate_levels.m',33,1)">separate_levels at 33</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/separate_gp_ard.m',8,1)">separate_gp_ard at 8</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/run_one_fold.m',64,1)">run_one_fold at 64</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/compare_cond_experiment.m',45,1)">compare_cond_experiment at 45</a>] 
+Function evaluation     81;  Value -2.384390e+02Function evaluation     82;  Value -2.396993e+02Function evaluation     85;  Value -2.490490e+02Function evaluation     89;  Value -2.503905e+02Function evaluation     91;  Value -2.515522e+02Function evaluation     93;  Value -2.541261e+02Function evaluation     95;  Value -2.581821e+02[Warning: Inference method failed [Error using chol
+Matrix must be positive definite.] .. attempting to continue] 
+[> In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/gpml/gp.m',118,1)">gp at 118</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/gpml/util/minimize.m',97,1)">minimize at 97</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/gp_ard_general.m',31,1)">gp_ard_general at 31</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/gp_ard.m',5,1)">gp_ard at 5</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/separate_levels.m',33,1)">separate_levels at 33</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/separate_gp_ard.m',8,1)">separate_gp_ard at 8</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/run_one_fold.m',64,1)">run_one_fold at 64</a>
+  In <a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/compare_cond_experiment.m',45,1)">compare_cond_experiment at 45</a>] 
+
+
+ans =
+
+   224
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     1     1     1     0     1     1     1     1     0     1     1     1     1
+
+  Columns 19 through 24
+
+     0     1     1     1     1     0
+
+
+max_iters =
+
+   100
+
+Function evaluation      0;  Value -5.523792e+01Function evaluation      6;  Value -9.409707e+01Function evaluation      9;  Value -9.475344e+01Function evaluation     11;  Value -9.507127e+01Function evaluation     16;  Value -1.040098e+02Function evaluation     18;  Value -1.054101e+02Function evaluation     20;  Value -1.075141e+02Function evaluation     22;  Value -1.090143e+02Function evaluation     24;  Value -1.101244e+02Function evaluation     29;  Value -1.177690e+02Function evaluation     33;  Value -1.190173e+02Function evaluation     36;  Value -1.268702e+02Function evaluation     38;  Value -1.298655e+02Function evaluation     41;  Value -1.397027e+02Function evaluation     44;  Value -1.413437e+02Function evaluation     46;  Value -1.446870e+02Function evaluation     48;  Value -1.531849e+02Function evaluation     50;  Value -1.555171e+02Function evaluation     52;  Value -1.587092e+02Function evaluation     54;  Value -1.608765e+02Function evaluation     56;  Value -1.619778e+02Function evaluation     59;  Value -1.657484e+02Function evaluation     63;  Value -1.668377e+02Function evaluation     65;  Value -1.673326e+02Function evaluation     68;  Value -1.693964e+02Function evaluation     71;  Value -1.700511e+02Function evaluation     73;  Value -1.705192e+02Function evaluation     76;  Value -1.724128e+02Function evaluation     77;  Value -1.740447e+02Function evaluation     79;  Value -1.750248e+02Function evaluation     81;  Value -1.770318e+02Function evaluation     85;  Value -1.773358e+02Function evaluation     88;  Value -1.783627e+02Function evaluation     90;  Value -1.787444e+02Function evaluation     92;  Value -1.789203e+02Function evaluation     97;  Value -1.837837e+02Function evaluation     99;  Value -1.847300e+02
+
+ans =
+
+    49
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1
+
+  Columns 19 through 24
+
+     1     1     1     1     1     1
+
+
+max_iters =
+
+   100
+
+Function evaluation      0;  Value 3.254580e+01Function evaluation      6;  Value -1.822317e+00Function evaluation      9;  Value -4.170813e+00Function evaluation     11;  Value -4.239844e+00Function evaluation     13;  Value -4.284215e+00Function evaluation     16;  Value -4.486839e+00Function evaluation     18;  Value -4.716974e+00Function evaluation     20;  Value -4.816666e+00Function evaluation     22;  Value -4.905611e+00Function evaluation     24;  Value -4.936281e+00Function evaluation     27;  Value -4.938983e+00Function evaluation     29;  Value -4.941239e+00Function evaluation     32;  Value -4.941268e+00Function evaluation     36;  Value -4.941685e+00Function evaluation     44;  Value -5.007654e+00Function evaluation     46;  Value -5.032338e+00Function evaluation     48;  Value -5.097165e+00Function evaluation     50;  Value -5.111938e+00Function evaluation     53;  Value -5.112587e+00Function evaluation     58;  Value -5.131693e+00Function evaluation     60;  Value -5.171831e+00Function evaluation     64;  Value -5.256653e+00Function evaluation     66;  Value -5.340231e+00Function evaluation     68;  Value -5.458461e+00Function evaluation     77;  Value -5.735771e+00Function evaluation     80;  Value -5.748500e+00Function evaluation     88;  Value -6.284475e+00Function evaluation     90;  Value -6.404995e+00Function evaluation     92;  Value -6.439150e+00Function evaluation     94;  Value -6.446760e+00Function evaluation     95;  Value -6.454652e+00Function evaluation     97;  Value -6.461407e+00Function evaluation     99;  Value -6.478815e+00
+
+ans =
+
+   104
+
+
+nonmissing_cols =
+
+  Columns 1 through 18
+
+     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1     1
+
+  Columns 19 through 24
+
+     1     1     1     1     1     1
+
+
+max_iters =
+
+   100
+
+Function evaluation      0;  Value 2.876557e+02Function evaluation      8;  Value 3.030853e+01Function evaluation     11;  Value 2.282264e+01Function evaluation     14;  Value 1.866993e+01Function evaluation     16;  Value 9.517805e+00Function evaluation     18;  Value 6.648745e+00Function evaluation     20;  Value 1.476733e+00Function evaluation     22;  Value -1.379209e+00Function evaluation     24;  Value -8.471105e+00Function evaluation     26;  Value -1.116453e+01Function evaluation     28;  Value -1.395387e+01Function evaluation     30;  Value -1.770223e+01Function evaluation     32;  Value -1.948885e+01Function evaluation     34;  Value -2.093770e+01Function evaluation     36;  Value -2.200941e+01Function evaluation     38;  Value -2.408904e+01Function evaluation     40;  Value -2.581635e+01Function evaluation     42;  Value -2.723242e+01Function evaluation     44;  Value -2.810087e+01Function evaluation     46;  Value -2.955842e+01Function evaluation     47;  Value -3.105220e+01Function evaluation     49;  Value -3.189248e+01Function evaluation     51;  Value -3.395813e+01Function evaluation     53;  Value -3.500524e+01Function evaluation     55;  Value -3.576328e+01Function evaluation     57;  Value -3.639329e+01Function evaluation     59;  Value -3.665095e+01Function evaluation     61;  Value -3.732262e+01Function evaluation     63;  Value -3.765522e+01Function evaluation     65;  Value -3.803614e+01Function evaluation     67;  Value -3.877103e+01Function evaluation     69;  Value -3.897608e+01Function evaluation     71;  Value -3.942041e+01Function evaluation     73;  Value -3.996411e+01Function evaluation     75;  Value -4.016177e+01Function evaluation     78;  Value -4.081932e+01Function evaluation     80;  Value -4.132675e+01Function evaluation     82;  Value -4.153758e+01Function evaluation     84;  Value -4.213869e+01Function evaluation     85;  Value -4.272415e+01Function evaluation     87;  Value -4.300153e+01Function evaluation     89;  Value -4.371028e+01Function evaluation     91;  Value -4.405206e+01Function evaluation     93;  Value -4.445470e+01Function evaluation     95;  Value -4.492825e+01Function evaluation     97;  Value -4.565025e+01Function evaluation     99;  Value -4.582847e+01
+Saved to ../results/16-oct-compare/concatenated_nan_separate_gp_ard_fold_1_of_5_seed_0.mat
