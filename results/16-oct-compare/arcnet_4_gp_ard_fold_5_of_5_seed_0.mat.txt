@@ -1,18 +1,0 @@
-
-
-Running
-          Method: gp_ard
-         Dataset: arcnet_4 
-            Fold: 5 of 5 
-            Seed: 0 
-Output directory: ../results/16-oct-compare/ 
- Output filename: ../results/16-oct-compare/arcnet_4_gp_ard_fold_5_of_5_seed_0.mat
-
- Not randomizing dataset order
-
-max_iters =
-
-   100
-
-Function evaluation      0;  Value 2.059078e+03Function evaluation     10;  Value 1.368780e+02Function evaluation     12;  Value 1.311044e+02Function evaluation     14;  Value 1.141849e+02Function evaluation     22;  Value 1.103100e+02Function evaluation     26;  Value 1.094326e+02Function evaluation     30;  Value 8.327365e+01Function evaluation     34;  Value 8.059875e+01Function evaluation     36;  Value 7.536239e+01Function evaluation     39;  Value 7.432388e+01Function evaluation     43;  Value 6.477481e+01Function evaluation     46;  Value 6.291004e+01Function evaluation     48;  Value 5.706540e+01Function evaluation     50;  Value 5.375884e+01Function evaluation     52;  Value 5.137852e+01Function evaluation     54;  Value 4.961639e+01Function evaluation     56;  Value 4.757072e+01Function evaluation     58;  Value 4.388202e+01Function evaluation     60;  Value 4.206243e+01Function evaluation     63;  Value 3.764760e+01Function evaluation     66;  Value 3.642612e+01Function evaluation     68;  Value 3.534570e+01Function evaluation     70;  Value 3.498809e+01Function evaluation     72;  Value 3.386143e+01Function evaluation     74;  Value 3.287600e+01Function evaluation     76;  Value 3.213963e+01Function evaluation     78;  Value 3.035047e+01Function evaluation     81;  Value 2.977555e+01Function evaluation     84;  Value 2.779001e+01Function evaluation     86;  Value 2.690892e+01Function evaluation     88;  Value 2.500085e+01Function evaluation     91;  Value 2.430956e+01Function evaluation     93;  Value 2.393722e+01Function evaluation     95;  Value 2.315332e+01Function evaluation     97;  Value 2.293802e+01Function evaluation    100;  Value 2.176991e+01
-Saved to ../results/16-oct-compare/arcnet_4_gp_ard_fold_5_of_5_seed_0.mat

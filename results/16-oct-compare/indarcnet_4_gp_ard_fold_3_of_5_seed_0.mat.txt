@@ -1,18 +1,0 @@
-
-
-Running
-          Method: gp_ard
-         Dataset: indarcnet_4 
-            Fold: 3 of 5 
-            Seed: 0 
-Output directory: ../results/16-oct-compare/ 
- Output filename: ../results/16-oct-compare/indarcnet_4_gp_ard_fold_3_of_5_seed_0.mat
-
- Not randomizing dataset order
-
-max_iters =
-
-   100
-
-Function evaluation      0;  Value 1.928705e+03Function evaluation     10;  Value 1.264429e+02Function evaluation     13;  Value 1.119115e+02Function evaluation     15;  Value 1.032776e+02Function evaluation     17;  Value 9.674044e+01Function evaluation     20;  Value 8.441607e+01Function evaluation     23;  Value 7.771548e+01Function evaluation     25;  Value 6.438231e+01Function evaluation     28;  Value 5.545362e+01Function evaluation     30;  Value 5.215083e+01Function evaluation     32;  Value 4.941119e+01Function evaluation     34;  Value 4.859911e+01Function evaluation     36;  Value 4.814974e+01Function evaluation     38;  Value 4.786930e+01Function evaluation     41;  Value 4.694803e+01Function evaluation     43;  Value 4.500224e+01Function evaluation     45;  Value 4.369000e+01Function evaluation     47;  Value 4.273599e+01Function evaluation     49;  Value 4.249561e+01Function evaluation     50;  Value 4.222750e+01Function evaluation     53;  Value 4.015654e+01Function evaluation     54;  Value 3.783955e+01Function evaluation     58;  Value 3.757397e+01Function evaluation     61;  Value 3.604704e+01Function evaluation     64;  Value 3.575509e+01Function evaluation     67;  Value 3.457388e+01Function evaluation     71;  Value 3.430695e+01Function evaluation     73;  Value 3.352197e+01Function evaluation     75;  Value 3.314213e+01Function evaluation     77;  Value 3.286349e+01Function evaluation     79;  Value 3.254089e+01Function evaluation     81;  Value 3.230196e+01Function evaluation     83;  Value 3.180682e+01Function evaluation     85;  Value 3.166216e+01Function evaluation     87;  Value 3.136202e+01Function evaluation     89;  Value 3.128072e+01Function evaluation     91;  Value 3.099876e+01Function evaluation     93;  Value 3.096099e+01Function evaluation     96;  Value 3.083861e+01Function evaluation     98;  Value 3.066877e+01Function evaluation     99;  Value 3.050643e+01
-Saved to ../results/16-oct-compare/indarcnet_4_gp_ard_fold_3_of_5_seed_0.mat

@@ -1,18 +1,0 @@
-
-
-Running
-          Method: gp_ard
-         Dataset: indarcnet_1 
-            Fold: 1 of 5 
-            Seed: 0 
-Output directory: ../results/16-oct-compare/ 
- Output filename: ../results/16-oct-compare/indarcnet_1_gp_ard_fold_1_of_5_seed_0.mat
-
- Not randomizing dataset order
-
-max_iters =
-
-   100
-
-Function evaluation      0;  Value 2.238146e+03Function evaluation     10;  Value 1.586394e+02Function evaluation     14;  Value 1.226032e+02Function evaluation     17;  Value 1.180386e+02Function evaluation     21;  Value 1.171867e+02Function evaluation     23;  Value 1.171844e+02Function evaluation     37;  Value 1.157118e+02Function evaluation     40;  Value 1.157028e+02Function evaluation     46;  Value 1.137457e+02Function evaluation     48;  Value 1.126111e+02Function evaluation     50;  Value 1.086026e+02Function evaluation     52;  Value 1.067083e+02Function evaluation     56;  Value 1.062560e+02Function evaluation     59;  Value 1.046969e+02Function evaluation     61;  Value 1.040283e+02Function evaluation     63;  Value 1.025638e+02Function evaluation     65;  Value 1.019162e+02Function evaluation     67;  Value 1.005510e+02Function evaluation     69;  Value 1.001462e+02Function evaluation     72;  Value 9.860240e+01Function evaluation     73;  Value 9.717177e+01Function evaluation     75;  Value 9.611921e+01Function evaluation     77;  Value 9.415500e+01Function evaluation     80;  Value 9.400484e+01Function evaluation     83;  Value 9.331882e+01Function evaluation     85;  Value 9.303911e+01Function evaluation     87;  Value 9.244250e+01Function evaluation     89;  Value 9.135699e+01Function evaluation     91;  Value 9.100059e+01Function evaluation     93;  Value 9.034310e+01Function evaluation     97;  Value 9.024772e+01Function evaluation    100;  Value 8.938466e+01
-Saved to ../results/16-oct-compare/indarcnet_1_gp_ard_fold_1_of_5_seed_0.mat
