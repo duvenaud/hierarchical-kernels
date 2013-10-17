@@ -1,6 +1,7 @@
-\documentclass[letterpaper]{article}
+\documentclass{article}
 \renewcommand{\subparagraph}{\paragraph}
-\usepackage{theapa}
+\usepackage{include/nips13submit_e}
+%\usepackage{theapa}
 \usepackage{times}
 \usepackage{amsmath, amsthm, amssymb}
 \usepackage{pstricks}
@@ -29,7 +30,7 @@
 \usepackage{lscape}
 \usepackage{relsize}
 \usepackage{rotating}
-
+\usepackage{tikz}
 
 
 % ============== Mike's commands ==============
@@ -108,7 +109,7 @@
 
 \begin{document}
 
-\title{A Kernel for Hierarchical Parameter Spaces}
+\title{Raiders of the Lost Architecture:\\A Kernel for Hierarchical Parameter Spaces}
 
 \author{Frank Hutter and Michael A. Osborne\\
 {\tt fh@informatik.uni-freiburg.de} and {\tt mosb@robots.ox.ac.uk}
@@ -200,6 +201,9 @@ We'll now define pseudometrics $d_i$ and associated isometries $f_i$ for both th
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Bounded Real Dimensions}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{figures/semicircle.tex}
+
 
 Let's first focus on a bounded real input dimension $i$, i.e., $\sX_i=[l_i, u_i]$.
 To emphasize that we're in this real case, we explicitly denote the pseudometric as $d\br_i$ and the (pseudo-)isometry from $(\sX, d_i)$ to $\reals^2,d_\text{E}$ 
@@ -524,7 +528,9 @@ d\cat_i(\v{x},\v{x}'') + d\cat_i(\v{x}',\v{x}'')
 %\renewcommand{\baselinestretch}{0.97}
 %\footnotesize{\bibliography{abbrev,frankbib}}
 
-\bibliography{hierarchical-kernel}
+\cite{rasmussen38gaussian}
+
+\bibliography{hierarchicalkernel}
 \bibliographystyle{unsrt}
 
 
