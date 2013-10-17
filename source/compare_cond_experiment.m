@@ -15,7 +15,10 @@ addpath(genpath('utils'))
 addpath(genpath('methods'))
 
 datadir = '../data/matlab/';
-datafiles = dir([ datadir, '*.mat']);
+%datafiles = dir([ datadir, '*.mat']);
+datafiles = {};
+datafiles{end+1} = 'concatenated_nan.mat';
+datafiles{end+1} = 'concatenated_nan_log.mat';
 
 outdir = '../results/16-oct-compare/';
 
@@ -24,16 +27,18 @@ dataset_ix = 1;
 %dataset = [ datadir, datafiles(dataset_ix).name];
 %cur_data = load( dataset );
 
-[N,D] = size(cur_data.X);
+%[N,D] = size(cur_data.X);
 
 % define methods
-methods{1} = @lin_model;
-methods{2} = @gp_ard;
+methods = {};
+methods{end+1} = @linear;
+methods{end+1} = @separate_linear;
+%methods{2} = @gp_ard;
 
-K = 5;
+K = 2;
 
 for dataset_ix = 1:length(datafiles)
-    dataset = [ datadir, datafiles(dataset_ix).name]
+    dataset = [ datadir, datafiles{dataset_ix}]
     for fold = 1:K;
         for method_ix = 1:numel(methods)
             run_one_fold( dataset, methods{method_ix}, K, fold, seed, outdir, false )
@@ -51,7 +56,7 @@ folds = 1:K;
 num_missing = 0;
 
 for d_ix = 1:length(datafiles)
-    cur_dataset = [ datadir, datafiles(d_ix).name];
+    cur_dataset = [ datadir, datafiles{d_ix}];
     [~, shortname] = fileparts(cur_dataset);
     fprintf('\nCompiling results for %s dataset...\n', shortname );   
     

@@ -2,7 +2,8 @@
 %
 % David Duvenaud
 % Oct 2013.
-
+close all;
+clear all;
 
 % Fix the seed of the random generators.
 seed = 0;
@@ -10,7 +11,7 @@ randn('state',seed);
 rand('state',seed);
 
 
-datadir = '';
+datadir = 'arcnet/';
 datafiles = dir([ datadir, '*.mat']);
 outdir = '';
 

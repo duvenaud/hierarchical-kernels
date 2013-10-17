@@ -1,0 +1,46 @@
+
+
+Running
+          Method: gp_ard
+         Dataset: concatenated_nan_log 
+            Fold: 1 of 5 
+            Seed: 0 
+Output directory: ../results/16-oct-compare/ 
+ Output filename: ../results/16-oct-compare/concatenated_nan_log_gp_ard_fold_1_of_5_seed_0.mat
+
+ Not randomizing dataset order
+
+max_iters =
+
+   100
+
+Function evaluation      0;  Value 1.126404e+05{Operation terminated by user during <a href="matlab:helpUtils.errorDocCallback('solve_chol', '/scratch/home/git/hierarchical-kernels/source/gpml/util/solve_chol.m', 25)" style="font-weight:bold">solve_chol</a> (<a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/gpml/util/solve_chol.m',25,0)">after line 25</a>)
+
+
+In <a href="matlab:helpUtils.errorDocCallback('infExact', '/scratch/home/git/hierarchical-kernels/source/gpml/inf/infExact.m', 33)" style="font-weight:bold">infExact</a> (<a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/gpml/inf/infExact.m',33,0)">line 33</a>)
+    Q = solve_chol(L,eye(n))/sn2 - alpha*alpha';    % precompute for convenience
+
+In <a href="matlab:helpUtils.errorDocCallback('gp', '/scratch/home/git/hierarchical-kernels/source/gpml/gp.m', 112)" style="font-weight:bold">gp</a> (<a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/gpml/gp.m',112,0)">line 112</a>)
+      [post nlZ dnlZ] = inf(hyp, mean, cov, lik, x, y);
+
+In <a href="matlab:helpUtils.errorDocCallback('minimize', '/scratch/home/git/hierarchical-kernels/source/gpml/util/minimize.m', 141)" style="font-weight:bold">minimize</a> (<a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/gpml/util/minimize.m',141,0)">line 141</a>)
+    [f3 df3] = feval(f, rewrap(Z,X+x3*s), varargin{:});
+
+In <a href="matlab:helpUtils.errorDocCallback('gp_ard_general', '/scratch/home/git/hierarchical-kernels/source/methods/gp_ard_general.m', 31)" style="font-weight:bold">gp_ard_general</a> (<a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/gp_ard_general.m',31,0)">line 31</a>)
+[cur_hyp, nlZ] = minimize(hyp, @gp, -max_iters, ...
+
+In <a href="matlab:helpUtils.errorDocCallback('gp_ard', '/scratch/home/git/hierarchical-kernels/source/methods/gp_ard.m', 5)" style="font-weight:bold">gp_ard</a> (<a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/gp_ard.m',5,0)">line 5</a>)
+[predictions, log_prob_y, model] = ...
+
+In <a href="matlab:helpUtils.errorDocCallback('run_one_fold', '/scratch/home/git/hierarchical-kernels/source/methods/run_one_fold.m', 64)" style="font-weight:bold">run_one_fold</a> (<a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/methods/run_one_fold.m',64,0)">line 64</a>)
+    [predictions, loglik, model ] = ...
+
+In <a href="matlab:helpUtils.errorDocCallback('compare_cond_experiment', '/scratch/home/git/hierarchical-kernels/source/compare_cond_experiment.m', 40)" style="font-weight:bold">compare_cond_experiment</a> (<a href="matlab: opentoline('/scratch/home/git/hierarchical-kernels/source/compare_cond_experiment.m',40,0)">line 40</a>)
+            run_one_fold( dataset, methods{method_ix}, K, fold, seed, outdir, false )
+} 
+compare_cond_experiment
+
+dataset =
+
+../data/matlab/concatenated_nan_log.mat
+

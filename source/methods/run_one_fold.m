@@ -37,14 +37,14 @@ fprintf(' Output filename: %s\n', filename );
     assert(size(y,2) == 1 );
 
     % Normalize the data.
-    X = X - repmat(mean(X), size(X,1), 1 );
-    X = X ./ repmat(std(X), size(X,1), 1 );
+    %X = X - repmat(mean(X), size(X,1), 1 );
+    %X = X ./ repmat(std(X), size(X,1), 1 );
 
     % Only normalize the y if it's not a classification experiment. Hacky.
-    if ~all(y == 1 | y == -1 )
-        y = y - mean(y);
-        y = y / std(y);
-    end
+    %if ~all(y == 1 | y == -1 )
+    %    y = y - mean(y);
+    %    y = y / std(y);
+    %end
 
 
     % Reset the random seed, always the same for the datafolds.
