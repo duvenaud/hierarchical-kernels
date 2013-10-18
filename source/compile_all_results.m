@@ -102,18 +102,18 @@ stdfunc = @std;
 
 likelihoods = squeeze(mean(log_likelihood_table,1));
 fprintf('\n\n');
-print_table( 'Log Likelihood', dataset_names, method_names, likelihoods );
-if any(isnan(log_likelihood_table(:)))
-    warning('Some log likelihood entries missing!')
-end
+print_table( 'Log Likelihood', method_names, dataset_names, likelihoods' );
+%if any(isnan(log_likelihood_table(:)))
+%    warning('Some log likelihood entries missing!')
+%end
 
 mses = squeeze(mean(mse_table,1));
 stds = squeeze(std(mse_table,1));
 fprintf('\n\n');
-print_table( 'Normalized MSE', dataset_names, method_names, mses );
-if any(isnan(mse_table(:)))
-    warning('Some Mean Squared Error entries missing!')
-end
+print_table( 'Normalized MSE', method_names, dataset_names, mses' );
+%if any(isnan(mse_table(:)))
+%    warning('Some Mean Squared Error entries missing!')
+%end
 
 %for f = folds
 %    ratio(f,1:3) = mse_table(f,1,2:end)./mse_table(f,1,1);

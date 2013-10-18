@@ -441,6 +441,13 @@ d_{\text{E}}^{m_i}\biggl(
 \end{proof}
 \end{prop}
 
+\section{Experiments}
+
+All the separate models split the data into 6 different datasets, one for each level, and build a separate model for each level.  The gp-hierarchical model gets all the data together because it can handle it.  
+
+However, The gp-hierarchical model changes two things at once compared to the separate-gp-ard model: besides embedding the missing data in a different spot, it also has embeds the fully-observed data on semi-circles, and has a different parameterization.  
+So, it could be the case that even when the data are fully observed, embedding the data on a semi-circle and using a different parameterization might cause better or worse performance than a standard squared-exp.  To find out if this is the case, we compare separate-gp-ard and separate-hierarchical to find out if these two models have different performance even in the standard fully-observed case.
+
 
 \appendix
 
