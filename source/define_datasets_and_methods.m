@@ -2,8 +2,8 @@ function [datafiles, methods] = define_datasets_and_methods()
     
 
 datafiles = {};
-datafiles{end+1} = '../data/matlab/sanity_easy.mat';
-datafiles{end+1} = '../data/matlab/sanity_hard.mat';
+%datafiles{end+1} = '../data/matlab/sanity_easy.mat';
+%datafiles{end+1} = '../data/matlab/sanity_hard.mat';
 datafiles{end+1} = '../data/matlab/concatenated_nan.mat';
 datafiles{end+1} = '../data/matlab/concatenated_nan_log.mat';
 
