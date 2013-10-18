@@ -5,5 +5,5 @@
 #
 # This script should be what is passed to qsub; its job is just to run one matlab job.
 
-/usr/local/apps/matlab/matlabR2007a/bin/matlab -nodisplay -nojvm -logfile "matlab_log_$1_$2_$3_$4_5_fold.txt" -r "ls; cd /home/mlg/dkd23/git/hierarchical-kernels/source/; ls; run_one_experiment($1, $2, $5, $3, $4, $5, '../../../results/oct-18-fear/); exit" 
+/usr/local/apps/matlab/matlabR2007a/bin/matlab -nodisplay -nojvm -logfile "matlab_log_$1_$2_$3_$4_5_fold.txt" -r "ls; cd /home/mlg/dkd23/git/hierarchical-kernels/source/; ls; run_one_experiment($1, $2, $3, $4, $5, '../../../results/oct-18-fear/'); exit" 
                                                                                                                                                                           #method_number, dataset_number, K, fold, seed, outdir

@@ -18,7 +18,7 @@ do
 			do
 				for methodNum in {1..6}
 				do
-				    qsub -l lr=0 -o "logs/run_log_reg_$methodNum_$dataSetNum_$fold.txt" -e "logs/error_log_reg_$methodNum_$dataSetNum_$fold.txt" run_one_job.sh $methodNum $dataSetNum $fold $K $Seed
+				    qsub -l lr=0 -o "logs/run_log_reg_$methodNum_$dataSetNum_$fold.txt" -e "logs/error_log_reg_$methodNum_$dataSetNum_$fold.txt" run_one_job.sh $methodNum $dataSetNum $K $fold $Seed
 				done
 			done
 		done
