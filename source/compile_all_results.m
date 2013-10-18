@@ -6,7 +6,7 @@
 
 
 % Fix the seed of the random generators.
-seed = 0;
+seed = 1;
 randn('state',seed);
 rand('state',seed);
 
@@ -14,27 +14,15 @@ addpath(genpath('gpml'))
 addpath(genpath('utils'))
 addpath(genpath('methods'))
 
-datadir = '../data/matlab/';
-%datafiles = dir([ datadir, '*.mat']);
-datafiles = {};
-datafiles{end+1} = 'concatenated_nan.mat';
-datafiles{end+1} = 'concatenated_nan_log.mat';
+[datafiles, methods] = define_datasets_and_methods()
 
-outdir = '/scratch/results/17-oct-overnight-compare/';
-mkdir(outdir);
+%outdir = '/scratch/results/17-oct-overnight-compare/';
+outdir = '/home/dkd23/results/oct-18-fear/';
 
 
-% define methods
-methods = {};
-%methods{end+1} = @linear;
-methods{end+1} = @separate_linear;
-methods{end+1} = @separate_gp_ard;
-methods{end+1} = @separate_gp_hierarchical;
-methods{end+1} = @gp_hierarchical;
 
-%methods{2} = @gp_ard;
 
-K = 5;
+K = 10;
 
 
 % Now summarize results
