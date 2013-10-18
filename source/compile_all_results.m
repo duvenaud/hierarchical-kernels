@@ -17,7 +17,8 @@ addpath(genpath('methods'))
 [datafiles, methods] = define_datasets_and_methods()
 
 %outdir = '/scratch/results/17-oct-overnight-compare/';
-outdir = '/home/dkd23/results/oct-18-fear/';
+outdir = '/scratch/results/18-oct-fast-compare/';
+%outdir = '/home/dkd23/results/oct-18-fear/';
 
 
 

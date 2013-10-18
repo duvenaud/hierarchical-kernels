@@ -31,6 +31,12 @@ for dataset_ix = 1:length(datafiles)
     end
 end
 
+% Map the level bins to discrete values
+num_levels = 6;
+X(X(:,1) == 0, 1) = eps;
+X(:, 1) = (ceil(X(:,1) .* num_levels)./num_levels);
+length(unique(X(:,1)))
+
 save('concatenated.mat', 'X', 'y', 'D' );
 orig_y = y;
 y = log(y);
@@ -46,6 +52,20 @@ orig_y = y;
 y = log(y);
 save('concatenated_nan_log.mat', 'X', 'y', 'D' );
 y = orig_y;
+
+
+% Now make versions of the data with half as much data.
+load concatenated_nan.mat
+X = X(1:2:end, :);
+D = D(1:2:end, :);
+y = y(1:2:end);
+save('concatenated_nan_half.mat', 'X', 'y', 'D' );
+
+load concatenated_nan_log.mat
+X = X(1:2:end, :);
+D = D(1:2:end, :);
+y = y(1:2:end);
+save('concatenated_nan_log_half.mat', 'X', 'y', 'D' );
 
 
 

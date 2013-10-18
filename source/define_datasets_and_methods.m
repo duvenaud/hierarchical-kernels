@@ -6,6 +6,9 @@ datafiles = {};
 %datafiles{end+1} = '../data/matlab/sanity_hard.mat';
 datafiles{end+1} = '../data/matlab/concatenated_nan.mat';
 datafiles{end+1} = '../data/matlab/concatenated_nan_log.mat';
+datafiles{end+1} = '../data/matlab/concatenated_nan_half.mat';
+datafiles{end+1} = '../data/matlab/concatenated_nan_log_half.mat';
+
 
 
 % define methods

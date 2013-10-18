@@ -6,7 +6,7 @@
 
 
 % Fix the seed of the random generators.
-seed = 0;
+seed = 1;
 randn('state',seed);
 rand('state',seed);
 
@@ -15,18 +15,18 @@ addpath(genpath('utils'))
 addpath(genpath('methods'))
 
 
-outdir = '/scratch/results/18-oct-overnight-compare/';
+outdir = '/scratch/results/18-oct-fast-compare/';
 mkdir(outdir);
 
 
 [datafiles, methods] = define_datasets_and_methods();
 
 
-K = 5;
+K = 10;
 
 for dataset_ix = 1:length(datafiles)
     for fold = 1:K;
-        for method_ix = 1:numel(methods)
+        for method_ix = [1,5]%1:numel(methods)
             run_one_fold( datafiles{dataset_ix}, methods{method_ix}, K, ...
                           fold, seed, outdir, false )
         end
