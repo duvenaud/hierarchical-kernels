@@ -11,7 +11,7 @@ fprintf('\n---------------------------------------------------------------------
 for r = 1:rows
     fprintf('%-20s | ', row_titles{r} );
     for c = 1:cols
-        fprintf('   %7.3f       | ', data(r,c) );
+        fprintf('   %7.4f       | ', data(r,c) );
     end
     fprintf('\n');
 end
