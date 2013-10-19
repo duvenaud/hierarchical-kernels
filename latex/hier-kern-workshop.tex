@@ -31,7 +31,7 @@
 \usepackage{relsize}
 \usepackage{rotating}
 \usepackage{tikz}
-
+\usetikzlibrary{calc}
 
 % ============== Mike's commands ==============
 \usepackage{nicefrac}
@@ -203,6 +203,99 @@ We'll now define pseudometrics $d_i$ and associated isometries $f_i$ for both th
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \input{figures/semicircle.tex}
+
+\newcommand{\anglemax}{150}
+\newcommand{\angleone}{70}
+\newcommand{\angletwo}{120}
+\newcommand{\bigradius}{3}
+\newcommand{\smallradius}{0.5}
+
+\begin{figure}
+\begin{center}
+  \begin{tikzpicture}
+
+\tikzset{state/.style={circle,draw=black, very thick,minimum size=4em}}
+
+\def\centerarc[#1] (#2) (#3:#4:#5)% [draw options] (center) (initial angle:final angle:radius)
+{ \draw[#1] (#2) ++(#3:#5) arc (#3:#4:#5);
+}
+	\coordinate (left) at ({\bigradius*cos(\anglemax)}, {3*sin(\anglemax)});
+	\coordinate (right) at (\bigradius, 0);
+
+	\coordinate (O1) at (-2, 0);
+	\coordinate (O2) at (4, 2);
+	
+	\coordinate (left1) at ($ (left) + (O1) $);
+	\coordinate (right1) at ($ (right) + (O1) $);
+	\coordinate (left2) at ($ (left) + (O2) $);
+	\coordinate (right2) at ($ (right) + (O2) $);
+	
+	% First arc
+	% ==================
+	
+	% Draw arcs
+	\centerarc[thick] (O1) (0:\anglemax:\bigradius)
+	\centerarc[thick] (O1) (0:\anglemax:\smallradius)
+
+	\draw[fill] (left1) circle (1.5pt);
+	\draw (left1) node[below, left] {$f(u, \textnormal{true})$};
+	
+	\draw[fill] (right1) circle (1.5pt);
+	\draw (right1) node[below] {$f(\ell, \textnormal{true})$};
+
+	\draw[fill] (O1) circle (1.5pt);
+	\draw (O1) node[below] {$f(\cdot, \textnormal{false})$};
+
+	\draw (left1) -- (O1) node[above] {$\rho \pi$};
+	\draw (right1) -- (O1) node[above] {$\rho \pi$};
+	
+	
+	% Second arc
+	% ================================
+	% Draw arcs
+	\centerarc[thick] (O2) (0:\anglemax:\bigradius)
+	\centerarc[thick] (O2) (0:\anglemax:\smallradius)
+
+	\draw[fill] (left2) circle (1.5pt);
+	\draw (left2) node[below, left] {$f(u, \textnormal{true})$};
+	
+	\draw[fill] (right2) circle (1.5pt);
+	\draw (right2) node[below] {$f(\ell, \textnormal{true})$};
+
+	\draw[fill] (O2) circle (1.5pt);
+	\draw (O2) node[below] {$f(\cdot, \textnormal{false})$};
+
+	\draw[dashed] (left2) -- (O2) node[above] {$\rho \pi$};
+	\draw[dashed] (right2) -- (O2) node[above] {$\rho \pi$};
+
+
+	% Connect the arcs
+	\draw (left1) -- (left2);
+	\draw (right1) -- (right2);
+	\draw[thick] (O1) -- (O2);
+	
+	% Draw surface
+	\foreach \i in {1, ..., \anglemax}
+	{
+		\coordinate (arc) at ({\bigradius*cos(\i)}, {3*sin(\i)});
+		\coordinate (arc1) at ($ (arc) + (O1) $);
+		\coordinate (arc2) at ($ (arc) + (O2) $);
+		\draw[green] (arc1) -- (arc2);
+	}
+
+%	\coordinate (x1) at ({\bigradius*cos(\angletwo)}, {\bigradius*sin(\angletwo)});
+%	\coordinate (x2) at ({\bigradius*cos(\angleone)}, {\bigradius*sin(\angleone)});
+%	\draw[fill] (x1) circle (1.5pt);
+%	\draw (x1) node[above, left] {$f(x_1, \textnormal{true})$};
+%	\draw[fill] (x2) circle (1.5pt);
+%	\draw (x2) node[above, right] {$f(x_2, \textnormal{true})$};
+
+	
+  \end{tikzpicture}
+\end{center}
+%\caption{A demonstration of the embedding giving rise to the pseduo-metric: All points for which $\delta_i(x) =$ false are mapped to the same point.  Points for which $\delta_i(x) =$ true are mapped to a semicircle.  This embedding gives a constant distance between pairs of points which have differing values of $\delta$.  The parameter $\rho$ determines how much distance there is along the arc.}
+\end{figure}
+end{document}
 
 
 Let's first focus on a bounded real input dimension $i$, i.e., $\sX_i=[l_i, u_i]$.
@@ -449,7 +542,6 @@ However, The gp-hierarchical model changes two things at once compared to the se
 So, it could be the case that even when the data are fully observed, embedding the data on a semi-circle and using a different parameterization might cause better or worse performance than a standard squared-exp.  To find out if this is the case, we compare separate-gp-ard and separate-hierarchical to find out if these two models have different performance even in the standard fully-observed case.
 
 \input{tables/gpml-table.tex}
-
 
 \appendix
 
