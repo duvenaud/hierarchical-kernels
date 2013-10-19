@@ -3,7 +3,7 @@
 %
 % David Duvenaud
 % Sept 2013.
-
+function compile_all_results
 
 % Fix the seed of the random generators.
 seed = 1;
@@ -17,12 +17,13 @@ addpath(genpath('methods'))
 [datafiles, methods] = define_datasets_and_methods()
 
 %outdir = '/scratch/results/17-oct-overnight-compare/';
-outdir = '/scratch/results/18-oct-fast-compare/';
+outdir = '/scratch/results/18-oct-overnight-fear-backup/';
+
 %outdir = '/home/dkd23/results/oct-18-fear/';
 
 
 
-
+datadir = 'arcnet/'
 K = 10;
 
 
@@ -30,7 +31,7 @@ K = 10;
 log_likelihood_table = NaN( 5, length(datafiles), length(methods));
 mse_table = NaN( 5, length(datafiles), length(methods));
 
-folds = 1:K;
+folds = [1:2, 4:K] %1:K;
 
 num_missing = 0;
 
@@ -38,6 +39,9 @@ for d_ix = 1:length(datafiles)
     cur_dataset = [ datadir, datafiles{d_ix}];
     [~, shortname] = fileparts(cur_dataset);
     fprintf('\nCompiling results for %s dataset...\n', shortname );   
+    
+    cur_data = load([ '../' cur_dataset]);
+    cur_dataset_variance = var(cur_data.y);
     
     dataset_names{d_ix} = shortname;
     for m_ix = 1:length(methods)        
@@ -52,7 +56,7 @@ for d_ix = 1:length(datafiles)
                 results = load( filename );               
 
                 log_likelihood_table(fold, d_ix, m_ix) = mean( results.loglik );
-                mse_table(fold, d_ix, m_ix) = mean( (results.predictions - results.actuals).^2 ) ./ std(results.actuals);
+                mse_table(fold, d_ix, m_ix) = mean( (results.predictions - results.actuals).^2 ) ./ cur_dataset_variance;% ./ std(results.actuals);
 
                 if ~isfinite(mean( results.loglik ))
                     fprintf('N');   % Failed because of a Nan or Inf.
@@ -84,22 +88,30 @@ for d_ix = 1:length(datafiles)
 end
 
 
+% Make the names nicer
+dataset_names = shorten_names( dataset_names );
+method_names = replace_method_names( method_names );
+
+
 % Now make figures and tables.
 
-meanfunc = @mean;
-stdfunc = @std;
+meanfunc = @nanmean;
+stdfunc = @nanstd;
 
-likelihoods = squeeze(mean(log_likelihood_table,1));
+likelihoods = squeeze(meanfunc(log_likelihood_table,1));
 fprintf('\n\n');
 print_table( 'Log Likelihood', method_names, dataset_names, likelihoods' );
 %if any(isnan(log_likelihood_table(:)))
 %    warning('Some log likelihood entries missing!')
 %end
 
-mses = squeeze(mean(mse_table,1));
-stds = squeeze(std(mse_table,1));
+mses = squeeze(meanfunc(mse_table,1));
+stds = squeeze(stdfunc(mse_table,1));
 fprintf('\n\n');
 print_table( 'Normalized MSE', method_names, dataset_names, mses' );
+
+mset_table = mse_table([1,2,4:K], : ,:);
+latex_table('../latex/tables/gpml-table.tex', mset_table, method_names, dataset_names, 'Normalized Mean Squared Error' );
 %if any(isnan(mse_table(:)))
 %    warning('Some Mean Squared Error entries missing!')
 %end
@@ -111,3 +123,24 @@ print_table( 'Normalized MSE', method_names, dataset_names, mses' );
 %errorbar( mean(ratio,1), errs)
 %bar(mses')
 %errorbar(mses(1,:)', stds(1,:)')
+end
+
+function nicenames = shorten_names( names )
+    for i = 1:length(names)
+        nicenames{i} = names{i};
+        nicenames{i} = strrep(nicenames{i}, 'concatenated_', 'NN ' );
+        nicenames{i} = strrep(nicenames{i}, '_', ' ' );     
+    end
+end
+
+function nicenames = replace_method_names( names )
+    for i = 1:length(names)
+        nicenames{i} = names{i};
+        nicenames{i} = strrep(nicenames{i}, 'separate_linear', 'Separate Linear' );
+        nicenames{i} = strrep(nicenames{i}, 'separate_gp_ard', 'Separate GP' );
+        nicenames{i} = strrep(nicenames{i}, 'linear_nonan', 'Poor Man''s embedding Linear' );
+        nicenames{i} = strrep(nicenames{i}, 'gp_ard_nonan', 'Poor Man''s embedding GP' );
+        nicenames{i} = strrep(nicenames{i}, 'sep_hierarchical', 'Separate Hierarchical GP' );
+        nicenames{i} = strrep(nicenames{i}, 'gp_hierarchical', 'Hierarchical GP' );
+    end
+end

@@ -15,18 +15,20 @@ addpath(genpath('utils'))
 addpath(genpath('methods'))
 
 
-outdir = '/scratch/results/18-oct-fast-compare/';
+outdir = '/scratch/results/18-oct-overnight-fear-backup/';
 mkdir(outdir);
 
 
 [datafiles, methods] = define_datasets_and_methods();
 
+methods{1} = @separate_linear;
+methods(2:end) = [];
 
 K = 10;
 
 for dataset_ix = 1:length(datafiles)
     for fold = 1:K;
-        for method_ix = [1,5]%1:numel(methods)
+        for method_ix = 1%1:numel(methods)
             run_one_fold( datafiles{dataset_ix}, methods{method_ix}, K, ...
                           fold, seed, outdir, false )
         end

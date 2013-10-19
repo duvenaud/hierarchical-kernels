@@ -13,9 +13,9 @@ datafiles{end+1} = '../data/matlab/concatenated_nan_log_half.mat';
 
 % define methods
 methods = {};
+methods{end+1} = @separate_linear;
+methods{end+1} = @separate_gp_ard;
 methods{end+1} = @linear_nonan;
 methods{end+1} = @gp_ard_nonan;
 methods{end+1} = @sep_hierarchical;
 methods{end+1} = @gp_hierarchical;
-methods{end+1} = @separate_linear;
-methods{end+1} = @separate_gp_ard;
