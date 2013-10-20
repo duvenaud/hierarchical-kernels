@@ -106,14 +106,36 @@
 \newcommand{\tbold}[1]{\textbf{#1}}
 \newcommand{\interrowspace}{.6em}
 
+\nipsfinalcopy
 
 \begin{document}
 
 \title{Raiders of the Lost Architecture:\\A Kernel for Conditional Parameter Spaces}
 
-\author{Frank Hutter and Michael A. Osborne\\
-{\tt fh@informatik.uni-freiburg.de} and {\tt mosb@robots.ox.ac.uk}
+\author{
+Kevin Swersky \\
+University of Toronto \\
+\texttt{kswesrky@cs.utoronto.edu} \\
+\And
+David Duvenaud \\
+University of Cambridge \\
+\texttt{dkd23@cam.ac.uk} \\
+\And
+Jasper Snoek\\
+Harvard University \\
+\texttt{jsnoek@seas.harvard.edu} \\
+\AND
+Frank Hutter  \\
+Freiburg University \\
+{\tt fh@informatik.uni-freiburg.de} \\
+\And
+Michael A. Osborne \\
+University of Oxford \\
+{\tt mosb@robots.ox.ac.uk} \\
 }
+
+
+
 
 \maketitle
 \begin{abstract}
@@ -126,122 +148,50 @@ When performing model-based optimization, we must often search over structures w
 \section{Introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\cite{rasmussen38gaussian}
+Recently, Bayesian optimization has been used to learn parameters for neural networks \cite{snoek-etal-2012b}.
+Because different neural net architectures have different numbers of parameters (or their parameters have different meanings), it is not clear how to combine information or extrapolate between the performance of different architectures.
+Historically, practitioners have simply built a separate model for each type of architecture \cite{bergstra2011algorithms}.  However, if there is any relation between networks with different architectures, seperately modeling each architecture is wasteful.
+
+Bayesian optimization methods rely on constructing a model of the function being optimized.  We model this function using Gaussian process priors \cite{rasmussen38gaussian}, where model assumptions are defined through the kernel.  In this paper, we introduce a simple method for building a Gaussian process model over parameter spaces with varying numbers of parameters.  We do this by defining an embedding of datapoints depending on which parameters are active, then perform standard regression in this new space.
+
 
 
 
 
 \section{A Kernel for Conditional Parameter Spaces}
-We aim to do inference about some function $g$ with domain (input space) $\sX$. $\sX = \prod_{i=1}^D \sX_i$ is a $D$-dimensional input space, where each individual dimension is either bounded real or categorical, that is, $\sX_i$ is either $[l_i, u_i] \subset \reals$ (with lower and upper bounds $l_i$ and $u_i$, respectively) or $\{v_{i,1}, \dots, v_{i,m_i}\}$. 
-
-Associated with $\sX$, there is a DAG structure $\sD$, whose vertices are the dimensions $\{1,\,\ldots,\,D\}$. $\sX$ will be restricted by $\sD$: if vertex $i$ has children under $\sD$, $\sX_i$ must be categorical. $\sD$ is also used to specify when each input is \emph{active} (that is, relevant to inference about $g$). In particular, we assume each input dimension is only active under some instantiations of its ancestor dimensions in $\sD$. More precisely, we define $D$ functions $\delta_i\colon \sX\to \mathcal{B}$, for $i \in \{1,\,\ldots,\,D\}$, and where $\mathcal{B} = \{\text{true}, \text{false}\}$. We take 
-\begin{equation}
- \delta_i(\v{x}) = \delta_i\bigl(\v{x}(\text{anc}_i)\bigr),
-\end{equation}
-where $\text{anc}_i$ are the ancestor vertices of $i$ in $\sD$, such that $\delta_i(\v{x})$ is true only for appropriate values of those entries of $\v{x}$ corresponding to ancestors of $i$ in $\sD$. We say $i$ is active for $\v{x}$ iff $\delta_i(\v{x})$.
-
-%if all its parent dimensions $P_i$ are active themselves and each parent $p\in P_i$ takes one of the values in the finite set $V_{i,p}$. 
-Our aim is to specify a kernel for $\sX$, \emph{i.e.}, a positive semi-definite function  $k\colon \sX \times \sX \to \reals$. We will first specify an individual kernel for each input dimension, \emph{i.e.}, a positive semi-definite function $k_i\colon \sX \times \sX \to \reals$. $k$ can then be taken as either a sum,
-\begin{equation}
- k(\v{x}, \v{x}') = \sum_{i=1}^D k_i(\v{x},\v{x}'),
-\end{equation}
-product,
-\begin{equation}
- k(\v{x}, \v{x}') = \prod_{i=1}^D k_i(\v{x},\v{x}'),
-\end{equation}
-or any other permitted combination, of these individual kernels. Note that each individual kernel $k_i$ will depend on an input vector $\v{x}$ only through dependence on $x_i$ and $\delta_i(\v{x})$,
-\begin{equation}
-  k_i(\v{x},\v{x}') = \tilde{k}_i\bigl(x_i,\delta_i(\v{x}),x_i', \delta_i(\v{x}') \bigr).
-\end{equation}
-That is, $x_j$ for $j\neq i$ will influence $k_i(\v{x},\v{x}')$ only if $j \in \text{anc}_i$, and only by affecting whether $i$ is active.
-
-Below we will construct pseudometrics $d{_i}\colon \sX \times \sX \to \reals^+$: that is, $d_i$ satisfies the requirements of a metric aside from the identity of indiscernibles. As for $k_i$, these pseudometrics will depend on an input vector $\v{x}$ only through dependence on both $x_i$ and $\delta_i(\v{x})$. $d{_i}(\v{x}, \v{x}')$ will be designed to provide an intuitive measure of how different $g(\v{x})$ is from $g(\v{x}')$. 
-For each $i$, we will then construct a (pseudo-)isometry $f_i$ from
-$\sX$ 
-to a Euclidean space ($\reals^2$ for bounded real parameters, and $\reals^m$ for categorical-valued parameters with $m$ choices). That is, denoting the Euclidean metric on the appropriate space as $d{_E}$, $f_i$ will be such that
-\begin{equation}
-\label{eqn:d_i}
- d{_i}(\v{x},\v{x}')
-=
-d_{\text{E}}(f{_i}\bigl(\v{x}), f{_i}(\v{x}')\bigr)
-\end{equation}
-for all $\v{x}, \v{x}' \in \sX$. We can then use our transformed inputs, $f_i(\v{x})$, within any standard Euclidean kernel $\kappa$. We'll make this explicit in Proposition \ref{prop:psd_if_isometry}. 
-
-
-
-
-We'll now define pseudometrics $d_i$ and associated isometries $f_i$ for both the bounded real and categorical cases. 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Bounded Real Dimensions}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 
 \begin{figure}
 \input{figures/semicylinder}
-\caption{A demonstration of the embedding giving rise to the pseduo-metric: All points for which $\delta_i(x) =$ false are mapped onto a line depending only on $x_1$.  Points for which $\delta_i(x) =$ true are mapped to the surfrace of a semicylinder, having an extra dimension $x_2$.  This embedding gives a constant distance between pairs of points which have differing values of $\delta$ but the same values of $x_1$.  The parameter $\rho$ determines how much distance there is along the arc.}
+\caption{A demonstration of the embedding giving rise to the pseduo-metric in 2 dimensions.  All points for which $\delta_i(x) =$ false are mapped onto a line varying only along $x_1$.  Points for which $\delta_i(x) =$ true are mapped to the surface of a semicylinder, depending on both $x_1$ and $x_2$.  This embedding gives a constant distance between pairs of points which have differing values of $\delta$ but the same values of $x_1$.  The parameter $\rho$ determines how much distance there is along the arc.}
 \end{figure}
 
 
 
-Let's first focus on a bounded real input dimension $i$, i.e., $\sX_i=[l_i, u_i]$.
-To emphasize that we're in this real case, we explicitly denote the pseudometric as $d\br_i$ and the (pseudo-)isometry from $(\sX, d_i)$ to $\reals^2,d_\text{E}$ 
-as $f\br_i$. For the definitions, recall that $\delta_i(\v{x})$ is true iff dimension $i$ is active given the instantiation of $i$'s ancestors in $\v{x}$.
+% Insert description of kernel here
 
-\begin{eqnarray}
-\nonumber{}f_i\br(\v{x}) & = & \left\{\begin{array}{ll}
-[0,0]^\transpose & \textrm{ if } \delta_i(\v{x}) = \textrm{ false }\\
-\nonumber{} \omega_i [\sin{\pi\rho_i\frac{x_i}{u_i-l_i}}, \cos{\pi\rho_i\frac{x_i}{u_i-l_i}}]^\transpose & \textrm{ otherwise.}\end{array}\right..
-\end{eqnarray}
-
-\begin{eqnarray}
-\nonumber{}d\br_i(\v{x}, \v{x}') & = & \left\{\begin{array}{ll}
-\nonumber{} 0 & \textrm{ if } \delta_i(\v{x}) = \delta_i(\v{x}') = \textrm{false}\\
-\nonumber{} \omega_i & \textrm{ if } \delta_i(\v{x}) \neq \delta_i(\v{x}')\\
-\nonumber{} \omega_i \sqrt{2} \sqrt{1 - \cos(\pi\rho_i \frac{x_i-x_i'}{u_i-l_i})} & \textrm{ if } \delta_i(\v{x}) = \delta_i(\v{x}') = \textrm{true}. \end{array}\right.
-\end{eqnarray}
-
-
-
-Although our formal arguments do not rely on this, Proposition \ref{prop:dbr_pseudometric} in the appendix shows that $d\br_i$ is a pseudometric. 
-This pseudometric is defined by two parameters: $\omega_i \in [0,1]$ and $\rho_i \in [0,1]$. We firstly define 
-\begin{equation}\label{eq:gamma}
-\omega_i = \prod_{j \in \text{anc}_i \cup \{i\}} \gamma_j, 
-\end{equation}
-where $\gamma_j \in [0,1]$. This encodes the intuitive notion that differences on lower levels of the hierarchy count less than differences in their ancestors.
-
-Also note that, as desired, if $i$ is inactive for both $\v{x}$ and $\v{x}'$, $d\br_i$ specifies that $g(\v{x})$ and $g(\v{x}')$ should not differ owing to differences between $x_i$ and $x_i'$. Secondly, if $i$ is active for both $\v{x}$ and $\v{x}'$, the difference between $g(\v{x})$ and $g(\v{x}')$ due to $x_i$ and $x_i'$ increases monotonically with increasing $\left|x_i-x_i'\right|$. Parameter $\rho_i$ controls whether differing in the activity of $i$ contributes more or less to the distance than differing in $x_i$ should $i$ be active. If $\rho = \nicefrac{1}{3}$, and if $i$ is inactive for exactly one of $\v{x}$ and $\v{x}'$, $g(\v{x})$ and $g(\v{x}')$ are as different as is possible due to dimension $i$; that is, $g(\v{x})$ and $g(\v{x}')$ are exactly as different in that case as if $x_i=l_i$ and $x_i'=u_i$. For $\rho>\nicefrac{1}{3}$, $i$ being active for both $\v{x}$ and $\v{x}'$ means that $g(\v{x})$ and $g(\v{x}')$ could potentially be more different than if
-$i$ was active in only one of them. For $\rho<\nicefrac{1}{3}$, the converse is true.
-%\footnote{Note that $\v{x}$ and $\v{x}'$ must differ in at least one ancestor dimension of $i$ in order for $\delta_i(\v{x}) \neq \delta_i(\v{x}')$ to hold, such that in the final kernel combining kernels $k_i$ due to each dimension $i$, differences in the activity of dimension $i$ are penalized both in kernel $k_i$ and in the distance for the kernel of the ancestor dimension causing the difference in $i$'s activity.}
-
-We now show that $d\br_i$ and $f\br_i$ can be plugged into a positive semi-definite kernel over Euclidean space to define a valid kernel over space $\sX$.
-
-\begin{prop}
-Let $\kappa$ be a positive semi-definite covariance function over Euclidean space.
-Then, $k_i\colon \sX \times \sX\to \reals^+$, defined by 
-%\[k_i(\v{x},\v{x}') = \kappa( d_{\text{E}}(f_i(\v{x}), f_i(\v{x}')) )\]
-\[k_i(\v{x},\v{x}') = \kappa\bigl( d\br_i(\v{x}, \v{x}') \bigr)\]
-is a positive semi-definite covariance function over input space $\sX$. 
-\label{prop:cont_psd}
-\end{prop}
-A proof of proposition \ref{prop:cont_psd} can be found in the supplementary material.
-
-
-\paragraph{Categorical Dimensions}  The pseduometric can also be extended to handle categorical dimensions - see the supplementary material.
 
 
 
 
 \section{Experiments}
 
-All the separate models split the data into 6 different datasets, one for each level, and build a separate model for each level.  The gp-hierarchical model gets all the data together because it can handle it.  
+\paragraph{Regression}   Bayesian optimization requires building a model of the function being optimized, and better models can be expected to lead to better outcomes.  However, because of the many interating components of BO, optimizer performance might not correspond directly to the quality of the model.  In this section, we isolate to what extent the conditional kernel is a better model than the alternatives.
 
-However, The gp-hierarchical model changes two things at once compared to the separate-gp-ard model: besides embedding the missing data in a different spot, it also has embeds the fully-observed data on semi-circles, and has a different parameterization.  
+\begin{table}[h!]
+\caption{{\small
+Normalized Mean Squared Error on Neural Network data
+}}
+\label{tbl:nn_nmse}
+\input{tables/gpml-table.tex}
+\end{table}
+
+Separate Linear and Seperate {\sc gp} split the data into 6 different datasets, one for each level, and build a separate model for each level.  The gp-hierarchical model gets all the data together because it can handle it.  
+
+However, The gp-hierarchical model changes two things at once compared to the separate-gp-ard model: besides embedding the missing data in a different spot, it also embeds the fully-observed data on semi-circles, and has a different parameterization.  
 So, it could be the case that even when the data are fully observed, embedding the data on a semi-circle and using a different parameterization might cause better or worse performance than a standard squared-exp.  To find out if this is the case, we compare separate-gp-ard and separate-hierarchical to find out if these two models have different performance even in the standard fully-observed case.
 
-\input{tables/gpml-table.tex}
+
 
 
 \section{Conclusion}

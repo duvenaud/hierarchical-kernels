@@ -138,10 +138,10 @@ function nicenames = replace_method_names( names )
     for i = 1:length(names)
         nicenames{i} = names{i};
         nicenames{i} = strrep(nicenames{i}, 'separate_linear', 'Separate Linear' );
-        nicenames{i} = strrep(nicenames{i}, 'separate_gp_ard', 'Separate GP' );
+        nicenames{i} = strrep(nicenames{i}, 'separate_gp_ard', 'Separate {\\sc gp}' );
         nicenames{i} = strrep(nicenames{i}, 'linear_nonan', 'Poor Man''s embedding Linear' );
-        nicenames{i} = strrep(nicenames{i}, 'gp_ard_nonan', 'Poor Man''s embedding GP' );
-        nicenames{i} = strrep(nicenames{i}, 'sep_hierarchical', 'Separate Hierarchical GP' );
-        nicenames{i} = strrep(nicenames{i}, 'gp_hierarchical', 'Hierarchical GP' );
+        nicenames{i} = strrep(nicenames{i}, 'gp_ard_nonan', 'Poor Man''s embedding {\\sc gp}' );
+        nicenames{i} = strrep(nicenames{i}, 'sep_hierarchical', 'Separate Hierarchical {\\sc gp}' );
+        nicenames{i} = strrep(nicenames{i}, 'gp_hierarchical', 'Hierarchical {\\sc gp}' );
     end
 end
