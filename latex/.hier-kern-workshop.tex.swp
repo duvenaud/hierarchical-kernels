@@ -110,7 +110,7 @@
 
 \begin{document}
 
-\title{Raiders of the Lost Architecture:\\A Kernel for Conditional Parameter Spaces}
+\title{Raiders of the Lost Architecture:\\Kernels for Conditional Parameter Spaces}
 
 \author{
 Kevin Swersky \\
@@ -163,7 +163,9 @@ Bayesian optimization methods rely on constructing a model of the function being
 
 \begin{figure}
 \input{figures/semicylinder}
-\caption{A demonstration of the embedding giving rise to the pseduo-metric in 2 dimensions.  All points for which $\delta_i(x) =$ false are mapped onto a line varying only along $x_1$.  Points for which $\delta_i(x) =$ true are mapped to the surface of a semicylinder, depending on both $x_1$ and $x_2$.  This embedding gives a constant distance between pairs of points which have differing values of $\delta$ but the same values of $x_1$.  The parameter $\rho$ determines how much distance there is along the arc.}
+\caption{A demonstration of the embedding giving rise to the pseduo-metric in 2 dimensions.  All points for which $\delta_i(x) =$ false are mapped onto a line varying only along $x_1$.  Points for which $\delta_i(x) =$ true are mapped to the surface of a semicylinder, depending on both $x_1$ and $x_2$.  This embedding gives a constant distance between pairs of points which have differing values of $\delta$ but the same values of $x_1$.
+%  The parameter $\rho$ determines how much distance there is along the arc.
+}
 \end{figure}
 
 
@@ -186,12 +188,12 @@ Normalized Mean Squared Error on Neural Network data
 \input{tables/gpml-table.tex}
 \end{table}
 
-Separate Linear and Seperate {\sc gp} split the data into 6 different datasets, one for each level, and build a separate model for each level.  The gp-hierarchical model gets all the data together because it can handle it.  
-
-However, The gp-hierarchical model changes two things at once compared to the separate-gp-ard model: besides embedding the missing data in a different spot, it also embeds the fully-observed data on semi-circles, and has a different parameterization.  
-So, it could be the case that even when the data are fully observed, embedding the data on a semi-circle and using a different parameterization might cause better or worse performance than a standard squared-exp.  To find out if this is the case, we compare separate-gp-ard and separate-hierarchical to find out if these two models have different performance even in the standard fully-observed case.
-
-
+\paragraph{Models}
+Separate Linear and Seperate {\sc gp} build a separate model for each neural net architecture, as in \cite{bergstra2011algorithms}.  The hierarchical {\sc gp} model combines all data together using the conditional kernel.
+%
+In the case where all data comes from the same architecture, the hierarchical {\sc gp} model makes slightly different assumptions than a standard {\sc gp}, because it places the data on a semi-circle.  To check whether this alternate assumption affects performance, we also include a Separate-Hierarchical {\sc gp} model.
+%
+We also compare against a simpler embedding method, or ``Poor Man's Embedding''.  In this procedure, we combine data from all models into a single model, replacing any unused parameters with a heuristic constant, set to $-1$ in these experiments.
 
 
 \section{Conclusion}
