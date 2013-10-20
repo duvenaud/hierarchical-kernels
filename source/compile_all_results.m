@@ -31,7 +31,7 @@ K = 10;
 log_likelihood_table = NaN( 5, length(datafiles), length(methods));
 mse_table = NaN( 5, length(datafiles), length(methods));
 
-folds = [1:2, 4:K] %1:K;
+folds = 1:K;%[1:2, 4:K] %1:K;
 
 num_missing = 0;
 
@@ -95,8 +95,8 @@ method_names = replace_method_names( method_names );
 
 % Now make figures and tables.
 
-meanfunc = @nanmean;
-stdfunc = @nanstd;
+meanfunc = @mean;
+stdfunc = @std;
 
 likelihoods = squeeze(meanfunc(log_likelihood_table,1));
 fprintf('\n\n');
@@ -110,8 +110,8 @@ stds = squeeze(stdfunc(mse_table,1));
 fprintf('\n\n');
 print_table( 'Normalized MSE', method_names, dataset_names, mses' );
 
-mset_table = mse_table([1,2,4:K], : ,:);
-latex_table('../latex/tables/gpml-table.tex', mset_table, method_names, dataset_names, 'Normalized Mean Squared Error' );
+%mset_table = mse_table([1,2,4:K], : ,:);
+latex_table('../latex/tables/gpml-table.tex', mse_table, method_names, dataset_names, 'Normalized Mean Squared Error' );
 %if any(isnan(mse_table(:)))
 %    warning('Some Mean Squared Error entries missing!')
 %end
@@ -129,6 +129,7 @@ function nicenames = shorten_names( names )
     for i = 1:length(names)
         nicenames{i} = names{i};
         nicenames{i} = strrep(nicenames{i}, 'concatenated_', 'NN ' );
+        nicenames{i} = strrep(nicenames{i}, 'nan', ' ' );
         nicenames{i} = strrep(nicenames{i}, '_', ' ' );     
     end
 end
