@@ -92,9 +92,6 @@
 \newtheorem{define}[thm]{Definition}
 \hyphenation{ge-ne-ral-ize}
 
-
-
-
 \newcommand{\Var}{\ensuremath\text{Var}}
 \newcommand{\indicator}{\ensuremath\mathds{I}}
 
@@ -143,12 +140,13 @@ When performing model-based optimization, we must often search over structures w
 \end{abstract}
 
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Recently, Bayesian optimization has been used to learn parameters for neural networks \cite{snoek-etal-2012b}.
+Bayesian optimization is a framework for the global optimization of noisy and expensive, black-box functions.  For a detailed overview of the Bayesian optimization methodology see~\cite{Brochu2010}. The methodology relies on a statistical distribution over functions to reason about the expected value of the function at any given input and critically also a measure of the uncertainty over that value.  When determining which input to next evaluate, the methodology balances the evaluation of the expected best result (exploitation) with the reduction of uncertainty over the parameter space (exploration).  Naturally the quality of the statistical distribution, which acts as a surrogate of the function subject to the optimization, plays a major role in the effectiveness of the methodology.  Gaussian processes (GPs) are the common choice for forming this distribution, as they are powerful and flexible priors over functions for which the marginal and conditional expected values and variances can be computed efficiently.  Some problem domains remain challenging to model well with GPs, however, and the efficiency and effectiveness of the optimization routine suffers as a result.  Common among these are problems that contain parameters to be optimized for which their existence or effect is conditional on a categorical variable.  GP priors, which generally assume smooth, continuous functions, can not model this problem domain well as it introduces sharp discontinuities.  This paper introduces a prior over functions, in the form of a novel GP covariance, which elegantly models mixed conditional and hierarchical parameter spaces.  We follow the nomenclature of one such problem domain, deep neural networks, for which a particular configuration of these conditional parameters is known as model \emph{architecture}.  The Bayesian optimization routine in such a space thus searches simultaneously for the best settings of the parameters and the best architecture.
+
+Bayesian optimization has recently been applied successfully to the domain of deep neural networks~\cite{snoek-etal-2012b, BergstraJ2011}, to optimize high level model parameters and optimization parameters, which we will refer to collectively as \emph{hyperparameters}.  Deep neural networks, which represent the state-of-the-art on multiple machine learning benchmarks such as object recognition~\cite{krizhevsky-2012}, by definition are multi-layered models.  However, 
 Because different neural net architectures have different numbers of parameters (or their parameters have different meanings), it is not clear how to combine information or extrapolate between the performance of different architectures.
 Historically, practitioners have simply built a separate model for each type of architecture \cite{bergstra2011algorithms}.  However, if there is any relation between networks with different architectures, seperately modeling each architecture is wasteful.
 
