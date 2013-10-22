@@ -137,7 +137,7 @@ University of Oxford \\
 
 \maketitle
 \begin{abstract}
-When performing model-based optimization, we must often search over structures with differing numbers of parameters.  For instance, we may wish to search over neural network architectures with an unkown number of layers.  To combine information between different architectures, we define a family of kernels for conditional parameter spaces.
+In practical Bayesian optimization, we must often search over structures with differing numbers of parameters.  For instance, we may wish to search over neural network architectures with an unkown number of layers.  To relate performance data gathered for different architectures, we define a new kernel for conditional parameter spaces that explicitly includes information about which parameters are active in a given structure. We show that this kernel improves GP model quality and GP-based Bayesian optimization results over several simpler baseline kernels.
 \end{abstract}
 
 \note{FH: I left notes throughout using this mechanism. These notes stand out ugly on purpose -- so that they can't be overlooked easily. Once a note is dealt with, please remove it or comment it out in the source. For checking e.g. length, all notes can also be disabled at once by commenting out a single line towards the top of the source.}
