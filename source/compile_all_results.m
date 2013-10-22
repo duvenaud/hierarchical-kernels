@@ -17,9 +17,10 @@ addpath(genpath('methods'))
 [datafiles, methods] = define_datasets_and_methods()
 
 %outdir = '/scratch/results/17-oct-overnight-compare/';
-outdir = '/scratch/results/18-oct-overnight-fear-backup/';
+%outdir = '/scratch/results/18-oct-overnight-fear-backup/';
 
 %outdir = '/home/dkd23/results/oct-18-fear/';
+outdir = '/home/dkd23/results/oct-22-fear/';
 
 
 
@@ -111,7 +112,7 @@ fprintf('\n\n');
 print_table( 'Normalized MSE', method_names, dataset_names, mses' );
 
 %mset_table = mse_table([1,2,4:K], : ,:);
-latex_table('../latex/tables/gpml-table.tex', mse_table, method_names, dataset_names, 'Normalized Mean Squared Error' );
+%latex_table('../latex/tables/gpml-table.tex', mse_table, method_names, dataset_names, 'Normalized Mean Squared Error' );
 %if any(isnan(mse_table(:)))
 %    warning('Some Mean Squared Error entries missing!')
 %end
