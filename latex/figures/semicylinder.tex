@@ -4,12 +4,18 @@
 \begin{tikzpicture}
 [trans/.style={thick,->,shorten >=2pt,shorten <=2pt,>=stealth}]
 \newcommand{\anglemin}{40}
+\newcommand{\angleminplusone}{41}
 \newcommand{\anglemax}{150}
 \newcommand{\angleone}{70}
 \newcommand{\angletwo}{120}
 \newcommand{\bigradius}{3}
 \newcommand{\biggerradius}{3.3}
 \newcommand{\smallradius}{0.5}
+\newcommand{\xtwolabelangle}{80}
+\newcommand{\belowamount}{0.2cm}
+\newcommand{\belowamounttwo}{0.11cm}
+
+\newcommand{\embedding}{g}
 
 \tikzset{state/.style={circle,draw=black, very thick,minimum size=4em}}
 %\tikzstyle{cylfill} = 
@@ -37,13 +43,15 @@
 
 	\draw[fill] (left1) circle (1.5pt);
 	%\draw (left1) node[below, left] {$f(x_1 = u, \delta = \textnormal{true}, x_2 = 0$)};
-	\draw (left1) node[below, left] {$f(u, \textnormal{true}, 0$)};
+	\draw (left1) node[below = \belowamount, left] {$\embedding(u, \textnormal{true}, 0$)};
 	
 	\draw[fill] (right1) circle (1.5pt);
-	\draw (right1) node[below] (r1below) {$f(\ell, \textnormal{true}, 0)$};
+	\draw (right1) node[below = \belowamount] (r1below) {};
+	\draw (right1) node[left] {$\embedding(\ell, \textnormal{true}, 0)$};
 
 	\draw[fill] (O1) circle (1.5pt);
-	\draw (O1) node[below] {$f(\cdot, \textnormal{false}, 0)$};
+	\draw (O1) node[below = \belowamount] (o1below) {};
+	\draw (O1) node[below] {$\embedding(\cdot, \textnormal{false}, 0)$};
 
 	\draw (left1) -- (O1) node[above] {$\rho \pi$};
 	\draw (right1) -- (O1);
@@ -59,9 +67,11 @@
 %	\draw (left2) node[below, left] {$f(u, \textnormal{true})$};
 	
 	\draw[fill] (right2) circle (1.5pt);
-	\draw (right2) node[below] (r2below) {$f(\ell, \textnormal{true}, 1)$};
+	\draw (right2) node[below = \belowamount] (r2below) {};
+	\draw (right2) node[right] {$\embedding(\ell, \textnormal{true}, 1)$};
 
 	\draw[fill] (O2) circle (1.5pt);
+	\draw (O2) node[below = \belowamount] (o2below) {};
 %	\draw (O2) node[below] {$f(\cdot, \textnormal{false})$};
 
 	\draw[dashed] (left2) -- (O2);
@@ -74,7 +84,7 @@
 	\draw[thick] (O1) -- (O2);
 	
 	% Draw surface
-	\foreach \i in {\anglemin, ..., \anglemax}
+	\foreach \i in {\angleminplusone, ..., \anglemax}
 	{
 		\coordinate (arca) at ({\bigradius*cos(\i)}, {\bigradius*sin(\i)});
 		\coordinate (arcb) at ({\bigradius*cos(\i - 1)}, {\bigradius*sin(\i - 1)});
@@ -88,15 +98,20 @@
 
 	% Draw arrows showing in which direction x1 varies.
 	\coordinate(x1half) at ($ (right1)!0.5!(right2) $);
-	\draw (x1half) node[below] (x1halfbelow) {$x_1$};
+	\draw (x1half) node[below = \belowamounttwo] (x1halfbelow) {$x_1$};
 	\draw[trans] ($ (r1below)!0.45!(r2below) $) -- ($ (r1below)!0.3!(r2below) $);
 	\draw[trans] ($ (r1below)!0.55!(r2below) $) -- ($ (r1below)!0.7!(r2below) $);
 
+	\coordinate(x2half) at ($ (O1)!0.5!(O2) $);
+	\draw (x2half) node[below = \belowamounttwo] (x2halfbelow) {$x_1$};
+	\draw[trans] ($ (o1below)!0.45!(o2below) $) -- ($ (o1below)!0.3!(o2below) $);
+	\draw[trans] ($ (o1below)!0.55!(o2below) $) -- ($ (o1below)!0.7!(o2below) $);
+
 	% Draw arrows showing in which direction x2 varies.
-	\coordinate (arclabel) at ($ (O2) + ({\biggerradius*cos(70)}, {\biggerradius*sin(70)}) $);
+	\coordinate (arclabel) at ($ (O2) + ({\biggerradius*cos(\xtwolabelangle)}, {\biggerradius*sin(\xtwolabelangle)}) $);
 	\draw (arclabel) node {$x_2$};
-	\centerarc[trans] (O2) (75:100:\biggerradius)
-	\centerarc[trans] (O2) (65:40:\biggerradius)
+	\centerarc[trans] (O2) ( \xtwolabelangle + 5  :  \xtwolabelangle + 30  :\biggerradius)
+	\centerarc[trans] (O2) ( \xtwolabelangle - 5  :  \xtwolabelangle - 30  :\biggerradius)
 
 %	\coordinate (x1) at ({\bigradius*cos(\angletwo)}, {\bigradius*sin(\angletwo)});
 %	\coordinate (x2) at ({\bigradius*cos(\angleone)}, {\bigradius*sin(\angleone)});

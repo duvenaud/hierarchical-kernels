@@ -104,8 +104,6 @@
 \newcommand{\tbold}[1]{\textbf{#1}}
 \newcommand{\interrowspace}{.6em}
 
-\newcommand{\embeddingletter}{g}
-
 \nipsfinalcopy
 
 \begin{document}
@@ -145,13 +143,14 @@ In practical Bayesian optimization, we must often search over structures with di
 \note{FH: I left notes throughout using this mechanism. These notes stand out ugly on purpose -- so that they can't be overlooked easily. Once a note is dealt with, please remove it or comment it out in the source. For checking e.g. length, all notes can also be disabled at once by commenting out a single line towards the top of the source.}
 
 \note{FH: changed title to include ``Bayesian Optimization in'' since its the BayesOpt workshop. I mildly prefer that but it's longer, so I'm also happy if someone wants to undo hte change.}
+\note{MAO: I agree with title change, at least for this version of the paper. }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %FH: substituted this nice description with a more concise version - we don't need to tell people at BayesOpt in detail what Bayesian optimization is.
-%Bayesian optimization is a framework for the global optimization of noisy and expensive, black-box functions.  For a detailed overview of the Bayesian optimization methodology see~\cite{Brochu2010}. The methodology relies on a statistical distribution over functions to reason about the expected value of the function at any given input and critically also a measure of the uncertainty over that value.  When determining which input to next evaluate, the methodology balances the evaluation of the expected best result (exploitation) with the reduction of uncertainty over the parameter space (exploration).  Naturally the quality of the statistical distribution, which acts as a surrogate of the function subject to the optimization, plays a major role in the effectiveness of the methodology.  Gaussian processes (GPs~\cite{rasmussen38gaussian}) are the common choice for forming this distribution, as they are powerful and flexible priors over functions for which the marginal and conditional expected values and variances can be computed efficiently.  Some problem domains remain challenging to model well with GPs, however, and the efficiency and effectiveness of the optimization routine suffers as a result.  Common among these are problems that contain parameters to be optimized for which their existence or effect is conditional on a categorical variable.  GP priors, which generally assume smooth, continuous functions, can not model this problem domain well as it introduces sharp discontinuities.  This paper introduces a prior over functions, in the form of a novel GP covariance, which elegantly models mixed conditional and hierarchical parameter spaces.  We follow the nomenclature of one such problem domain, deep neural networks, for which a particular configuration of these conditional parameters is known as model \emph{architecture}.  The Bayesian optimization routine in such a space thus searches simultaneously for the best settings of the parameters and the best architecture.
+%Bayesian optimization is a framework for the global optimization of noisy and expensive, black-box functions.  For a detailed overview of the Bayesian optimization methodology see~\cite{Brochu2010}. The methodology relies on a statistical distribution over functions to reason about the expected value of the function at any given input and critically also a measure of the uncertainty over that value.  When determining which input to next evaluate, the methodology balances the evaluation of the expected best result (exploitation) with the reduction of uncertainty over the parameter space (exploration).  Naturally the quality of the statistical distribution, which acts as a surrogate of the function subject to the optimization, plays a major role in the effectiveness of the methodology.  Gaussian processes (GPs~\cite{rasmussen38gaussian}) are the common choice for forming this distribution, as they are powerful and flexible priors over functions for which the marginal and conditional expected values and  variances can be computed efficiently.  Some problem domains remain challenging to model well with GPs, however, and the efficiency and effectiveness of the optimization routine suffers as a result.  Common among these are problems that contain parameters to be optimized for which their existence or effect is conditional on a categorical variable.  GP priors, which generally assume smooth, continuous functions, can not model this problem domain well as it introduces sharp discontinuities.  This paper introduces a prior over functions, in the form of a novel GP covariance, which elegantly models mixed conditional and hierarchical parameter spaces.  We follow the nomenclature of one such problem domain, deep neural networks, for which a particular configuration of these conditional parameters is known as model \emph{architecture}.  The Bayesian optimization routine in such a space thus searches simultaneously for the best settings of the parameters and the best architecture.
 
 Bayesian optimization (see~\cite{Brochu2010} for a detailed overview) is an efficient approach for solving blackbox optimization problems of the form $\arg\min_{x \in X} f(x)$, where $f$ is expensive to evaluate. 
 It employs a prior distribution $p(f)$ over functions that is updated as new information on $f$ becomes available.
@@ -168,42 +167,50 @@ While GPs with standard kernels fail to model the performance of architectures w
 
 
 \section{A Kernel for Conditional Parameter Spaces}
+In this section, we construct a kernel between points whose features may be irrelevant under known conditions. As an explicit example, we consider the case in which points may potentially have differing numbers of features: here no relevance can be assigned to the value of a feature in the first point which is missing in the second. 
 
-In this section, we construct a kernel between points having potentially differing numbers of dimensions.  
+Formally, we aim to do inference about some function $g$ with domain (input space) $\sX$. $\sX = \prod_{i=1}^D \sX_i$ is a $D$-dimensional input space, where each individual dimension is 
+ bounded real, that is, $\sX_i$ is $[l_i, u_i] \subset \reals$ (with lower and upper bounds $l_i$ and $u_i$, respectively). We define functions $\delta_i\colon \sX\to \mathcal{B}$, for $i \in \{1,\,\ldots,\,D\}$, and where $\mathcal{B} = \{\text{true}, \text{false}\}$. $\delta_i(\v{x})$ stipulates the relevance of the $i$th feature, $x_i$, to inference about $g(\v{x})$. 
 
 \subsection{The problem}
-To begin with, we can imagine trying to model the performance of neural networks with either one or two layers, with respect to the regualization parameters for each layer, $x_1$ and $x_2$.  If $y$ represents the performance of a one layer-net with regularization parameters $x_1$ and $x_2$, then the value $x_2$ doesn't matter, since there is no second layer to the network.
+To begin with, we can imagine trying to model the performance of neural networks with either one or two layers, with respect to the regularization parameters for each layer, $x_1$ and $x_2$.  If $y$ represents the performance of a one layer-net with regularization parameters $x_1$ and $x_2$, then the value $x_2$ doesn't matter, since there is no second layer to the network. In the below, we'll write an input triple as $(x_1, \delta_2(\v{x}), x_2)$ and assume that $\delta_1(\v{x}) = \text{true}$; that is, the regularization parameter for the first layer is always relevant. 
 
-In this setting, we want a kernel on conditional spaces to have the following properties:
+In this setting, we want a kernel $k$ to be dependent only on parameters relevant for both points.
 
 \begin{itemize}
-\item If we are comparing two points with the same number of parameters, the value of any unused parameters shouldn't matter.  
-$k(x_1, \textnormal{false}, x_2, x_1', \textnormal{false}, x_2') 
-= k(x_1, \textnormal{false}, x_2'', x_1', \textnormal{false}, x_2''')
-\forall x_2, x_2', x_2'', x_2'''$
-\item The covariance between points using both parameters and points only using one should again only depend on their shared parameters.
-$k(x_1, \textnormal{false}, x_2, x_1', \textnormal{true}, x_2') 
-= k(x_1, \textnormal{false}, x_2'', x_1', \textnormal{true}, x_2''')
-\forall x_2, x_2', x_2'', x_2'''$
+\item If we are comparing two points with the same number of parameters, the value of any unused parameters shouldn't matter,  
+\begin{equation}
+ k\bigl((x_1, \textnormal{false}, x_2), (x_1', \textnormal{false}, x_2') \bigr)
+= k\bigl((x_1, \textnormal{false}, x_2''), (x_1', \textnormal{false}, x_2''')\bigr),\ 
+\forall x_2, x_2', x_2'', x_2'''.
+\end{equation}
+\item The covariance between a point using both parameters and a point using only one should again only depend on their shared parameters,
+\begin{equation}
+ k\bigl((x_1, \textnormal{false}, x_2), (x_1', \textnormal{true}, x_2') \bigr)
+= k\bigl((x_1, \textnormal{false}, x_2''), (x_1', \textnormal{true}, x_2''')\bigr),\ 
+\forall x_2, x_2', x_2'', x_2'''.
+\end{equation}
 \end{itemize}
+
+Further, if 
 
 \subsection{Cylindrical Embedding}
 
-We can build a kernel with these properties by and embedding of points into a hiher-dimensional space than they began, and performing regression in that space.  Specifically, the embedding we use is:
+We can build a kernel with these properties by an embedding of points into a higher-dimensional space than they began, and performing regression in that space.  Specifically, the embedding we use is:
 %
 %To emphasize that we're in the real case, we explicitly denote the pseudometric as $d\br_i$ and the (pseudo-)isometry from $(\sX, d_i)$ to $\reals^2,d_\text{E}$ 
 %as $f\br_i$. For the definitions, recall that $\delta_i(\v{x})$ is true iff dimension $i$ is active given the instantiation of $i$'s ancestors in $\v{x}$.
 %
 %
 \begin{eqnarray}
-\nonumber{}\embeddingletter_i\br(\v{x}) & = & \left\{\begin{array}{ll}
+\nonumber{}f_i\br(\v{x}) & = & \left\{\begin{array}{ll}
 [0,0]^\transpose & \textrm{ if } \delta_i(\v{x}) = \textrm{ false }\\
 \nonumber{} \omega_i [\sin{\pi\rho_i\frac{x_i}{u_i-l_i}}, \cos{\pi\rho_i\frac{x_i}{u_i-l_i}}]^\transpose & \textrm{ otherwise.}\end{array}\right..
 \end{eqnarray}
 %
 \begin{figure}
 \input{figures/semicylinder}
-\caption{A demonstration of the embedding giving rise to the pseduo-metric in 2 dimensions.  All points for which $\delta_i(x) =$ false are mapped onto a line varying only along $x_1$.  Points for which $\delta_i(x) =$ true are mapped to the surface of a semicylinder, depending on both $x_1$ and $x_2$.  This embedding gives a constant distance between pairs of points which have differing values of $\delta$ but the same values of $x_1$.
+\caption{A demonstration of the embedding giving rise to the pseduo-metric in 2 dimensions.  All points for which $\delta_2(x) =$ false are mapped onto a line varying only along $x_1$.  Points for which $\delta_2(x) =$ true are mapped to the surface of a semicylinder, depending on both $x_1$ and $x_2$.  This embedding gives a constant distance between pairs of points which have differing values of $\delta$ but the same values of $x_1$.
 %  The parameter $\rho$ determines how much distance there is along the arc.
 }
 \label{fig:cylinder}
@@ -211,7 +218,7 @@ We can build a kernel with these properties by and embedding of points into a hi
 %
 Figure \ref{fig:cylinder} shows a visualization of the embedding of points $x$ into a higher-dimensional space with relative distances that only depend on active parameters.
 %
-This embedding gives rise to the Euclidian distances:
+This embedding gives rise to the Euclidean distances:
 %
 \begin{eqnarray}
 \nonumber{}d\br_i(\v{x}, \v{x}') & = & \left\{\begin{array}{ll}
@@ -220,7 +227,20 @@ This embedding gives rise to the Euclidian distances:
 \nonumber{} \omega_i \sqrt{2} \sqrt{1 - \cos(\pi\rho_i \frac{x_i-x_i'}{u_i-l_i})} & \textrm{ if } \delta_i(\v{x}) = \delta_i(\v{x}') = \textrm{true}. \end{array}\right.
 \end{eqnarray}
 
-For kernels such as the exponentiated quadratic $k(x, x') = \sigma^2_o \exp \left( \nicefrac{-(x - x')^2}{2\ell^2} \right)$, or the Mat\'{e}rn, which only depend on the Euclidian distance, the covariance has the desired properties.
+For kernels such as the exponentiated quadratic $k(x, x') = \sigma^2_f \exp \left( \nicefrac{-(x - x')^2}{2\ell^2} \right)$, or the Mat\'{e}rn, which only depend on the Euclidian distance, the covariance has the desired properties.
+
+
+\begin{define}
+\label{def:psd_fun_euclid}
+A function $\kappa\colon \reals^+ \to \reals$ is \emph{a positive semi-definite covariance function over Euclidean space} if $K \in \reals^{N\times N}$, defined by 
+\begin{equation}
+\nonumber K_{m, n} = \kappa\bigl(d_{\text{E}}(\v{y}_m, \v{y}_n)\bigr),\quad \text{for }
+\v{y}_m, \v{y}_n \in \reals^P,\quad m, n = 1, \ldots, N, 
+\end{equation}
+is positive semi-definite for any $\v{y}_1, \dots, \v{y}_N \in \reals^P$. 
+\end{define}
+
+A popular example of such a $\kappa$ is the exponentiated quadratic, for which $\kappa(\delta) = \sigma^2 \exp(-\frac{1}{2} \frac{\delta^2}{\lambda^2})$; another popular choice is the rational quadratic, for which $\kappa(\delta) = \sigma^2 (1+\frac{1}{2\alpha} \frac{\delta^2}{\lambda^2})^{-\alpha}$.
 
 
 

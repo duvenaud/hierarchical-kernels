@@ -104,6 +104,8 @@
 \newcommand{\tbold}[1]{\textbf{#1}}
 \newcommand{\interrowspace}{.6em}
 
+\newcommand{\embeddingletter}{g}
+
 \nipsfinalcopy
 
 \begin{document}
@@ -150,7 +152,8 @@ In practical Bayesian optimization, we must often search over structures with di
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %FH: substituted this nice description with a more concise version - we don't need to tell people at BayesOpt in detail what Bayesian optimization is.
-%Bayesian optimization is a framework for the global optimization of noisy and expensive, black-box functions.  For a detailed overview of the Bayesian optimization methodology see~\cite{Brochu2010}. The methodology relies on a statistical distribution over functions to reason about the expected value of the function at any given input and critically also a measure of the uncertainty over that value.  When determining which input to next evaluate, the methodology balances the evaluation of the expected best result (exploitation) with the reduction of uncertainty over the parameter space (exploration).  Naturally the quality of the statistical distribution, which acts as a surrogate of the function subject to the optimization, plays a major role in the effectiveness of the methodology.  Gaussian processes (GPs~\cite{rasmussen38gaussian}) are the common choice for forming this distribution, as they are powerful and flexible priors over functions for which the marginal and conditional expected values and  variances can be computed efficiently.  Some problem domains remain challenging to model well with GPs, however, and the efficiency and effectiveness of the optimization routine suffers as a result.  Common among these are problems that contain parameters to be optimized for which their existence or effect is conditional on a categorical variable.  GP priors, which generally assume smooth, continuous functions, can not model this problem domain well as it introduces sharp discontinuities.  This paper introduces a prior over functions, in the form of a novel GP covariance, which elegantly models mixed conditional and hierarchical parameter spaces.  We follow the nomenclature of one such problem domain, deep neural networks, for which a particular configuration of these conditional parameters is known as model \emph{architecture}.  The Bayesian optimization routine in such a space thus searches simultaneously for the best settings of the parameters and the best architecture.
+%Bayesian optimization is a framework for the global optimization of noisy and expensive, black-box functions.  For a detailed overview of the Bayesian optimization methodology see~\cite{Brochu2010}. The methodology relies on a statistical distribution over functions to reason about the expected value of the function at any given input and critically also a measure of the uncertainty over that value.  When determining which input to next evaluate, the methodology balances the evaluation of the expected best result (exploitation) with the reduction of uncertainty over the parameter space (exploration).  Naturally the quality of the statistical distribution, which acts as a surrogate of the function subject to the optimization, plays a major role in the effectiveness of the methodology.  Gaussian processes (GPs~\cite{rasmussen38gaussian}) are the common choice for forming this distribution, as they are powerful and flexible priors over functions for which the marginal and conditional expected values and  
+variances can be computed efficiently.  Some problem domains remain challenging to model well with GPs, however, and the efficiency and effectiveness of the optimization routine suffers as a result.  Common among these are problems that contain parameters to be optimized for which their existence or effect is conditional on a categorical variable.  GP priors, which generally assume smooth, continuous functions, can not model this problem domain well as it introduces sharp discontinuities.  This paper introduces a prior over functions, in the form of a novel GP covariance, which elegantly models mixed conditional and hierarchical parameter spaces.  We follow the nomenclature of one such problem domain, deep neural networks, for which a particular configuration of these conditional parameters is known as model \emph{architecture}.  The Bayesian optimization routine in such a space thus searches simultaneously for the best settings of the parameters and the best architecture.
 
 Bayesian optimization (see~\cite{Brochu2010} for a detailed overview) is an efficient approach for solving blackbox optimization problems of the form $\arg\min_{x \in X} f(x)$, where $f$ is expensive to evaluate. 
 It employs a prior distribution $p(f)$ over functions that is updated as new information on $f$ becomes available.
@@ -215,7 +218,7 @@ We can build a kernel with these properties by an embedding of points into a hig
 %
 %
 \begin{eqnarray}
-\nonumber{}f_i\br(\v{x}) & = & \left\{\begin{array}{ll}
+\nonumber{}\embeddingletter_i\br(\v{x}) & = & \left\{\begin{array}{ll}
 [0,0]^\transpose & \textrm{ if } \delta_i(\v{x}) = \textrm{ false }\\
 \nonumber{} \omega_i [\sin{\pi\rho_i\frac{x_i}{u_i-l_i}}, \cos{\pi\rho_i\frac{x_i}{u_i-l_i}}]^\transpose & \textrm{ otherwise.}\end{array}\right..
 \end{eqnarray}
@@ -239,8 +242,6 @@ This embedding gives rise to the Euclidean distances:
 \nonumber{} \omega_i \sqrt{2} \sqrt{1 - \cos(\pi\rho_i \frac{x_i-x_i'}{u_i-l_i})} & \textrm{ if } \delta_i(\v{x}) = \delta_i(\v{x}') = \textrm{true}. \end{array}\right.
 \end{eqnarray}
 
-For kernels such as the exponentiated quadratic $k(x, x') = \sigma^2_f \exp \left( \nicefrac{-(x - x')^2}{2\ell^2} \right)$, or the Mat\'{e}rn, which only depend on the Euclidean distance, the covariance has the desired properties.
-
 
 \begin{define}
 \label{def:psd_fun_euclid}
@@ -253,6 +254,9 @@ is positive semi-definite for any $\v{y}_1, \dots, \v{y}_N \in \reals^P$.
 \end{define}
 
 A popular example of such a $\kappa$ is the exponentiated quadratic, for which $\kappa(\delta) = \sigma^2 \exp(-\frac{1}{2} \frac{\delta^2}{\lambda^2})$; another popular choice is the rational quadratic, for which $\kappa(\delta) = \sigma^2 (1+\frac{1}{2\alpha} \frac{\delta^2}{\lambda^2})^{-\alpha}$.
+
+For kernels such as the exponentiated quadratic $k(x, x') = \sigma^2_o \exp \left( \nicefrac{-(x - x')^2}{2\ell^2} \right)$, or the Mat\'{e}rn, which only depend on the Euclidian distance, the covariance has the desired properties.
+
 
 
 
