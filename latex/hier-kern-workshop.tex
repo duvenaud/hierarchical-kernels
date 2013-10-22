@@ -108,7 +108,7 @@
 
 \begin{document}
 
-\title{Raiders of the Lost Architecture:\\Kernels for Conditional Parameter Spaces}
+\title{Raiders of the Lost Architecture:\\Kernels for Bayesian Optimization in Conditional Parameter Spaces}
 
 \author{
 Kevin Swersky \\
@@ -141,6 +141,8 @@ When performing model-based optimization, we must often search over structures w
 \end{abstract}
 
 \note{FH: I left notes throughout using this mechanism. These notes stand out ugly on purpose -- so that they can't be overlooked easily. Once a note is dealt with, please remove it or comment it out in the source. For checking e.g. length, all notes can also be disabled at once by commenting out a single line towards the top of the source.}
+
+\note{FH: changed title to include ``Bayesian Optimization in'' since its the BayesOpt workshop. I mildly prefer that but it's longer, so I'm also happy if someone wants to undo hte change.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
@@ -225,22 +227,42 @@ For kernels such as the exponentiated quadratic $k(x, x') = \sigma^2_f \exp \lef
 
 \section{Experiments}
 
-\paragraph{Regression}   Bayesian optimization requires building a model of the function being optimized, and better models can be expected to lead to better outcomes.  However, because of the many interating components of BO, optimizer performance might not correspond directly to the quality of the model.  In this section, we isolate to what extent the conditional kernel is a better model than the alternatives.
+We now show that our new kernel yields better results than other alternatives. 
+Bayesian optimization requires building a model of the function being optimized, and better models can be expected to lead to better outcomes.  However, because of the many interacting components of BO, optimizer performance might not correspond directly to the quality of the model.  Thus, we perform two types of experiments: first, we study model quality in isolation in a regression task; second, we demonstrate that the improved model indeed yields improved Bayesian optimization performance.
 
-\begin{table}[h!]
-\caption{{\small
-Normalized Mean Squared Error on Neural Network data
-}}
-\label{tbl:nn_nmse}
-\input{tables/gpml-table.tex}
-\end{table}
+\paragraph{Data.} Both types of experiments used similar data obtained from a blackbox function that models the performance of a deep neural networks with up to six layers. The function takes XXX inputs, out of which YYY are conditional: the parameters in layer $k$ are only relevant if the network depth is at least $k$.
+Function evaluations were performed on a \note{type of GPU} and required ZZZ seconds on average.
+\note{FH: please fill in XXX, YYY, and ZZZ.}
 
-\paragraph{Models}
+\subsection{Model Quality Experiments}   
+
+\paragraph{Models.}
 Separate Linear and Seperate {\sc gp} build a separate model for each neural net architecture, as in \cite{bergstra2011algorithms}.  The hierarchical {\sc gp} model combines all data together using the conditional kernel.
 %
 In the case where all data comes from the same architecture, the hierarchical {\sc gp} model makes slightly different assumptions than a standard {\sc gp}, because it places the data on a semi-circle.  To check whether this alternate assumption affects performance, we also include a Separate-Hierarchical {\sc gp} model.
 %
 We also compare against a simpler embedding method, or ``Poor Man's Embedding''.  In this procedure, we combine data from all models into a single model, replacing any unused parameters with a heuristic constant, set to $-1$ in these experiments.
+
+\paragraph{Data.}
+\note{FH: very briefly describe the number of data points, where they come from, and how they were split to obtain error bars (I assume cross-validation).}
+
+\begin{table}[h!]
+\caption{{\small Normalized Mean Squared Error on Neural Network data\label{tab:nn_error}}}
+\label{tbl:nn_nmse}
+\input{tables/gpml-table.tex}
+\end{table}
+
+\paragraph{Results.}
+\note{FH: Describe Table \ref{tab:nn_error}.}
+
+\subsection{Bayesian Optimization Experiments}   
+
+\paragraph{Experimental Setup.}
+For Bayesian optimization, we used the same process as in~\cite{snoek-etal-2012b}, including slice sampling and \emph{expected} expected improvement, but not expected improvement per time spent.
+\note{FH: mention anything that differed in the setup.}
+
+\paragraph{Results.}
+\note{FH: Discuss results including the nice figure of error over time. Also briefly mention experiments on datasets that did \emph{not} look awesome (we can't pick and choose!)}
 
 
 \section{Conclusion}
