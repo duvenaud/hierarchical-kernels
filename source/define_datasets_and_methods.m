@@ -7,7 +7,8 @@ datafiles = {};
 datafiles{end+1} = '../data/matlab/concatenated_nan.mat';
 datafiles{end+1} = '../data/matlab/concatenated_nan_log.mat';
 datafiles{end+1} = '../data/matlab/concatenated_nan_half.mat';
-datafiles{end+1} = '../data/matlab/concatenated_nan_log_half.mat';
+datafiles{end+1} = '../data/matlab/concrete_500';
+datafiles{end+1} = '../data/matlab/housing.mat';
 
 
 

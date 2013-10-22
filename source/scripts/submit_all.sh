@@ -14,7 +14,7 @@ do
 		for fold in {1..10}
 		do
 			# Regression jobs
-			for dataSetNum in {1..4}
+			for dataSetNum in {1..6}
 			do
 				for methodNum in {1..6}
 				do
