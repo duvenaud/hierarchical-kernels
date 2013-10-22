@@ -40,7 +40,7 @@
 \newcommand{\reals}{\mathds{R}}
 \newcommand{\sX}{\mathcal{X}}
 \newcommand{\sD}{\mathcal{D}}
-\newcommand{\br}{^{\text{\textnormal{ r}}}}
+\newcommand{\br}{}%{^{\text{\textnormal{ r}}}}
 \newcommand{\cat}{^{\text{\textnormal{c}}}}
 % ============== ==============
 
@@ -139,7 +139,7 @@ University of Oxford \\
 
 \maketitle
 \begin{abstract}
-In practical Bayesian optimization, we must often search over structures with differing numbers of parameters.  For instance, we may wish to search over neural network architectures with an unkown number of layers.  To relate performance data gathered for different architectures, we define a new kernel for conditional parameter spaces that explicitly includes information about which parameters are active in a given structure. We show that this kernel improves GP model quality and GP-based Bayesian optimization results over several simpler baseline kernels.
+In practical Bayesian optimization, we must often search over structures with differing numbers of parameters.  For instance, we may wish to search over neural network architectures with an unkown number of layers.  To relate performance data gathered for different architectures, we define a new kernel for conditional parameter spaces that explicitly includes information about which parameters are relevant in a given structure. We show that this kernel improves GP model quality and GP-based Bayesian optimization results over several simpler baseline kernels.
 \end{abstract}
 
 \note{FH: I left notes throughout using this mechanism. These notes stand out ugly on purpose -- so that they can't be overlooked easily. Once a note is dealt with, please remove it or comment it out in the source. For checking e.g. length, all notes can also be disabled at once by commenting out a single line towards the top of the source.}
@@ -172,8 +172,8 @@ While GPs with standard kernels fail to model the performance of architectures w
 \section{A Kernel for Conditional Parameter Spaces}
 In this section, we construct a kernel between points whose features may be irrelevant under known conditions. As an explicit example, we consider the case in which points may potentially have differing numbers of features: here no relevance can be assigned to the value of a feature in the first point which is missing in the second. 
 
-Formally, we aim to do inference about some function $g$ with domain (input space) $\sX$. $\sX = \prod_{i=1}^D \sX_i$ is a $D$-dimensional input space, where each individual dimension is 
- bounded real, that is, $\sX_i$ is $[l_i, u_i] \subset \reals$ (with lower and upper bounds $l_i$ and $u_i$, respectively). We define functions $\delta_i\colon \sX\to \mathcal{B}$, for $i \in \{1,\,\ldots,\,D\}$, and where $\mathcal{B} = \{\text{true}, \text{false}\}$. $\delta_i(\v{x})$ stipulates the relevance of the $i$th feature, $x_i$, to inference about $g(\v{x})$. 
+Formally, we aim to do inference about some function $f$ with domain (input space) $\sX$. $\sX = \prod_{i=1}^D \sX_i$ is a $D$-dimensional input space, where each individual dimension is 
+ bounded real, that is, $\sX_i$ is $[l_i, u_i] \subset \reals$ (with lower and upper bounds $l_i$ and $u_i$, respectively). We define functions $\delta_i\colon \sX\to \{\text{true}, \text{false}\}$, for $i \in \{1,\,\ldots,\,D\}$. $\delta_i(\v{x})$ stipulates the relevance of the $i$th feature, $x_i$, to inference about $f(\v{x})$. 
 
 \subsection{The problem}
 To begin with, we can imagine trying to model the performance of neural networks with either one or two layers, with respect to the regularization parameters for each layer, $x_1$ and $x_2$.  If $y$ represents the performance of a one layer-net with regularization parameters $x_1$ and $x_2$, then the value $x_2$ doesn't matter, since there is no second layer to the network. In the below, we'll write an input triple as $(x_1, \delta_2(\v{x}), x_2)$ and assume that $\delta_1(\v{x}) = \text{true}$; that is, the regularization parameter for the first layer is always relevant. 
@@ -206,22 +206,22 @@ Elaborating on the first consideration:
 & = k_{\text{FT}},\ \forall x_2, x_2'.
 \end{align}
 \end{itemize}
-We usually additionally want $k_{\text{FF}}>k_{\text{FT}}$, expressing the fact that points that have identical relevances $\delta_2({\v{x}})$ are more similar than points that differ in relevance $\delta_2({\v{x}})$.
+We usually additionally want $k_{\text{FF}}>k_{\text{FT}}$, expressing the fact that points that have identical relevance $\delta_2({\v{x}})$ are more similar than points that differ in relevance $\delta_2({\v{x}})$.
 
 
 \subsection{Cylindrical Embedding}
 
-We can build a kernel with these properties by an embedding of points into a higher-dimensional space than they began, and performing regression in that space.  Specifically, the embedding we use is:
+We can build a kernel with these properties by embedding our points into a Euclidean space.  Specifically, the embedding we use is
 %
 %To emphasize that we're in the real case, we explicitly denote the pseudometric as $d\br_i$ and the (pseudo-)isometry from $(\sX, d_i)$ to $\reals^2,d_\text{E}$ 
-%as $f\br_i$. For the definitions, recall that $\delta_i(\v{x})$ is true iff dimension $i$ is active given the instantiation of $i$'s ancestors in $\v{x}$.
+%as $f\br_i$. For the definitions, recall that $\delta_i(\v{x})$ is true iff dimension $i$ is relevant given the instantiation of $i$'s ancestors in $\v{x}$.
 %
 %
-\begin{eqnarray}
-\nonumber{}\embeddingletter_i\br(\v{x}) & = & \left\{\begin{array}{ll}
+\begin{equation}
+\embeddingletter_i\br(\v{x}) = \left\{\begin{array}{ll}
 [0,0]^\transpose & \textrm{ if } \delta_i(\v{x}) = \textrm{ false }\\
-\nonumber{} \omega_i [\sin{\pi\rho_i\frac{x_i}{u_i-l_i}}, \cos{\pi\rho_i\frac{x_i}{u_i-l_i}}]^\transpose & \textrm{ otherwise.}\end{array}\right..
-\end{eqnarray}
+\omega_i [\sin{\pi\rho_i\frac{x_i}{u_i-l_i}}, \cos{\pi\rho_i\frac{x_i}{u_i-l_i}}]^\transpose & \textrm{ otherwise.}\end{array}\right.
+\end{equation}
 %
 \begin{figure}
 \input{figures/semicylinder}
@@ -230,32 +230,25 @@ We can build a kernel with these properties by an embedding of points into a hig
 }
 \label{fig:cylinder}
 \end{figure}
-%
-Figure \ref{fig:cylinder} shows a visualization of the embedding of points $x$ into a higher-dimensional space with relative distances that only depend on active parameters.
-%
-This embedding gives rise to the Euclidean distances:
-%
-\begin{eqnarray}
-\nonumber{}d\br_i(\v{x}, \v{x}') & = & \left\{\begin{array}{ll}
-\nonumber{} 0 & \textrm{ if } \delta_i(\v{x}) = \delta_i(\v{x}') = \textrm{false}\\
-\nonumber{} \omega_i & \textrm{ if } \delta_i(\v{x}) \neq \delta_i(\v{x}')\\
-\nonumber{} \omega_i \sqrt{2} \sqrt{1 - \cos(\pi\rho_i \frac{x_i-x_i'}{u_i-l_i})} & \textrm{ if } \delta_i(\v{x}) = \delta_i(\v{x}') = \textrm{true}. \end{array}\right.
-\end{eqnarray}
 
-
-\begin{define}
-\label{def:psd_fun_euclid}
-A function $\kappa\colon \reals^+ \to \reals$ is \emph{a positive semi-definite covariance function over Euclidean space} if $K \in \reals^{N\times N}$, defined by 
+Figure \ref{fig:cylinder} shows a visualization of the embedding of points $(x_1, \delta_2(\v{x}), x_2)$ into $\reals^3$. 
+%
+In this space, we have the Euclidean distance,
+%
 \begin{equation}
-\nonumber K_{m, n} = \kappa\bigl(d_{\text{E}}(\v{y}_m, \v{y}_n)\bigr),\quad \text{for }
-\v{y}_m, \v{y}_n \in \reals^P,\quad m, n = 1, \ldots, N, 
+d\br_i(\v{x}, \v{x}') = \left\{\begin{array}{ll}
+0 & \textrm{ if } \delta_i(\v{x}) = \delta_i(\v{x}') = \textrm{false}\\
+\omega_i & \textrm{ if } \delta_i(\v{x}) \neq \delta_i(\v{x}')\\
+\omega_i \sqrt{2} \sqrt{1 - \cos(\pi\rho_i \frac{x_i-x_i'}{u_i-l_i})} & \textrm{ if } \delta_i(\v{x}) = \delta_i(\v{x}') = \textrm{true}. \end{array}\right.
+\label{eq:distance}
 \end{equation}
-is positive semi-definite for any $\v{y}_1, \dots, \v{y}_N \in \reals^P$. 
-\end{define}
 
-A popular example of such a $\kappa$ is the exponentiated quadratic, for which $\kappa(\delta) = \sigma^2 \exp(-\frac{1}{2} \frac{\delta^2}{\lambda^2})$; another popular choice is the rational quadratic, for which $\kappa(\delta) = \sigma^2 (1+\frac{1}{2\alpha} \frac{\delta^2}{\lambda^2})^{-\alpha}$.
 
-For kernels such as the exponentiated quadratic $k(x, x') = \sigma^2_o \exp \left( \nicefrac{-(x - x')^2}{2\ell^2} \right)$, or the Mat\'{e}rn, which only depend on the Euclidian distance, the covariance has the desired properties.
+
+We can use this to define a covariance over our original space. In particular, we consider the class of covariances which are functions only of the Euclidean distance $\Delta$ between points. A popular example of such a covariance is the exponentiated quadratic, for which $\kappa(\Delta) = \sigma^2 \exp(-\frac{1}{2} \Delta^2)$; another popular choice is the rational quadratic, for which $\kappa(\Delta) = \sigma^2 (1+\frac{1}{2\alpha} \Delta^2)^{-\alpha}$. We can simply take \eqref{eq:distance} in the place of $\Delta$, returning a valid covariance that satisfies all desiderata above. 
+
+Explicitly, note that, as desired, if $i$ is irrelevant for both $\v{x}$ and $\v{x}'$, $d\br_i$ specifies that $g(\v{x})$ and $g(\v{x}')$ should not differ owing to differences between $x_i$ and $x_i'$. Secondly, if $i$ is relevant for both $\v{x}$ and $\v{x}'$, the difference between $f(\v{x})$ and $f(\v{x}')$ due to $x_i$ and $x_i'$ increases monotonically with increasing $\left|x_i-x_i'\right|$. Parameter $\rho_i$ controls whether differing in the activity of $i$ contributes more or less to the distance than differing in $x_i$ should $i$ be relevant. If $\rho = \nicefrac{1}{3}$, and if $i$ is irrelevant for exactly one of $\v{x}$ and $\v{x}'$, $f(\v{x})$ and $f(\v{x}')$ are as different as is possible due to dimension $i$; that is, $f(\v{x})$ and $f(\v{x}')$ are exactly as different in that case as if $x_i=l_i$ and $x_i'=u_i$. For $\rho>\nicefrac{1}{3}$, $i$ being relevant for both $\v{x}$ and $\v{x}'$ means that $f(\v{x})$ and $f(\v{x}')$ could potentially be more different than if
+$i$ was relevant in only one of them. For $\rho<\nicefrac{1}{3}$, the converse is true. Hyperparameter $\omega_i$ defines a length scale for the $i$th feature. 
 
 
 
