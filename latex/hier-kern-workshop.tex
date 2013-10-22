@@ -104,6 +104,8 @@
 \newcommand{\tbold}[1]{\textbf{#1}}
 \newcommand{\interrowspace}{.6em}
 
+\newcommand{\embeddingletter}{g}
+
 \nipsfinalcopy
 
 \begin{document}
@@ -194,7 +196,7 @@ We can build a kernel with these properties by and embedding of points into a hi
 %
 %
 \begin{eqnarray}
-\nonumber{}f_i\br(\v{x}) & = & \left\{\begin{array}{ll}
+\nonumber{}\embeddingletter_i\br(\v{x}) & = & \left\{\begin{array}{ll}
 [0,0]^\transpose & \textrm{ if } \delta_i(\v{x}) = \textrm{ false }\\
 \nonumber{} \omega_i [\sin{\pi\rho_i\frac{x_i}{u_i-l_i}}, \cos{\pi\rho_i\frac{x_i}{u_i-l_i}}]^\transpose & \textrm{ otherwise.}\end{array}\right..
 \end{eqnarray}
@@ -218,7 +220,7 @@ This embedding gives rise to the Euclidian distances:
 \nonumber{} \omega_i \sqrt{2} \sqrt{1 - \cos(\pi\rho_i \frac{x_i-x_i'}{u_i-l_i})} & \textrm{ if } \delta_i(\v{x}) = \delta_i(\v{x}') = \textrm{true}. \end{array}\right.
 \end{eqnarray}
 
-For kernels such as the exponentiated quadratic $k(x, x') = \sigma^2_f \exp \left( \nicefrac{-(x - x')^2}{2\ell^2} \right)$, or the Mat\'{e}rn, which only depend on the Euclidian distance, the covariance has the desired properties.
+For kernels such as the exponentiated quadratic $k(x, x') = \sigma^2_o \exp \left( \nicefrac{-(x - x')^2}{2\ell^2} \right)$, or the Mat\'{e}rn, which only depend on the Euclidian distance, the covariance has the desired properties.
 
 
 
