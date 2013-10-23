@@ -39,6 +39,8 @@
 \titlespacing{\subsection}{0pt}{0pt}{0pt}
 \titlespacing{\subsubsection}{0pt}{0pt}{0pt}
 \titlespacing{\paragraph}{0pt}{0pt}{10pt}
+\usepackage{enumitem}
+\setlist[itemize]{noitemsep, topsep=0pt} % Makes els 1 and 2 fit more nicely
 % ===========================================
 
 % ============== Mike's commands ==============
@@ -193,7 +195,7 @@ As an example, imagine trying to model the performance of neural networks with e
 
 In this setting, we want a kernel $k$ to be dependent on which parameters are relevant, and the values of relevant parameters for both points. For example, suppose we have first-layer parameters $x_1$ and $x_1'$:
 %
-\begin{itemize}
+\begin{itemize}[leftmargin=0.8cm]
 \item If we are comparing two points for which the same parameters are relevant, the value of any unused parameters shouldn't matter,  
 \begin{equation}
  k\bigl((x_1, \textnormal{false}, x_2), (x_1', \textnormal{false}, x_2') \bigr)
@@ -210,7 +212,7 @@ In this setting, we want a kernel $k$ to be dependent on which parameters are re
 
 Elaborating on the first consideration:
 %
-\begin{itemize}
+\begin{itemize}[leftmargin=0.8cm]
 \item For points that have identical values for all jointly relevant parameters, their covariance should depend only on the relative relevances of the remaining parameters,
 \begin{align}
  k\bigl((x_1, \textnormal{false}, x_2), (x_1, \textnormal{false}, x_2') \bigr)
