@@ -16,6 +16,7 @@ addpath(genpath('methods'))
 
 
 outdir = '/scratch/results/18-oct-overnight-fear-backup/';
+outdir = '/home/dkd23/results/oct-22-fear/';
 mkdir(outdir);
 
 
