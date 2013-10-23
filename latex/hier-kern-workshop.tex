@@ -193,7 +193,7 @@ Formally, we aim to do inference about some function $f$ with domain (input spac
 \vspace{-0.1in}
 As an example, imagine trying to model the performance of neural networks with either one or two layers, with respect to the regularization parameters for each layer, $x_1$ and $x_2$.  If $y$ represents the performance of a one layer-net with regularization parameters $x_1$ and $x_2$, then the value $x_2$ doesn't matter, since there is no second layer to the network. Below, we'll write an input triple as $(x_1, \delta_2(\v{x}), x_2)$ and assume that $\delta_1(\v{x}) = \text{true}$; that is, the regularization parameter for the first layer is always relevant. 
 
-In this setting, we want a kernel $k$ to be dependent on which parameters are relevant, and the values of relevant parameters for both points. For example, suppose we have first-layer parameters $x_1$ and $x_1'$:
+In this setting, we want a kernel $k$ to be dependent on which parameters are relevant, and the values of relevant parameters for both points. For example, consider first-layer parameters $x_1$ and $x_1'$:
 %
 \begin{itemize}[leftmargin=0.8cm]
 \item If we are comparing two points for which the same parameters are relevant, the value of any unused parameters shouldn't matter,  
