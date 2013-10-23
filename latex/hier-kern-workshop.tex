@@ -34,11 +34,12 @@
 \usetikzlibrary{calc}
 \usepackage{titlesec}
 
-
+% ============== Jasper Spacing Hackery =========
 \titlespacing{\section}{0pt}{0pt}{0pt}
 \titlespacing{\subsection}{0pt}{0pt}{0pt}
 \titlespacing{\subsubsection}{0pt}{0pt}{0pt}
 \titlespacing{\paragraph}{0pt}{0pt}{10pt}
+% ===========================================
 
 % ============== Mike's commands ==============
 \usepackage{nicefrac}
@@ -186,14 +187,9 @@ Formally, we aim to do inference about some function $f$ with domain (input spac
 \gp{}s employ a positive-definite kernel function $k: \sX \times \sX \rightarrow \mathbb{R}$ to model the covariance between function values. Typical \gp{} models cannot, however, model the covariance between function values whose inputs have different (possibly overlapping) sets of relevant variables. We address this issue next.
 
 \subsection{The problem}
-<<<<<<< HEAD
-To begin with, we can imagine trying to model the performance of neural networks with either one or two layers, with respect to the regularization parameters for each layer, $x_1$ and $x_2$.  If $y$ represents the performance of a one layer-net with regularization parameters $x_1$ and $x_2$, then the value $x_2$ doesn't matter, since there is no second layer to the network. Below, we'll write an input triple as $(x_1, \delta_2(\v{x}), x_2)$ and assume that $\delta_1(\v{x}) = \text{true}$; that is, the regularization parameter for the first layer is always relevant. 
 
-In this setting, we want a kernel $k$ to be dependent on whether parameters are relevant and the values of relevant parameters for both points. For example, consider first-layer parameters $x_1$ and $x_1'$:
-=======
 \vspace{-0.1in}
 As an example, imagine trying to model the performance of neural networks with either one or two layers, with respect to the regularization parameters for each layer, $x_1$ and $x_2$.  If $y$ represents the performance of a one layer-net with regularization parameters $x_1$ and $x_2$, then the value $x_2$ doesn't matter, since there is no second layer to the network. Below, we'll write an input triple as $(x_1, \delta_2(\v{x}), x_2)$ and assume that $\delta_1(\v{x}) = \text{true}$; that is, the regularization parameter for the first layer is always relevant. 
->>>>>>> 9fe7849f5ddce186d8e75b87bea078da380dd798
 
 In this setting, we want a kernel $k$ to be dependent on which parameters are relevant, and the values of relevant parameters for both points. For example, suppose we have first-layer parameters $x_1$ and $x_1'$:
 %
