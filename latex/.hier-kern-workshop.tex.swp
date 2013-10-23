@@ -134,23 +134,23 @@
 \author{
 Kevin Swersky \\
 University of Toronto \\
-\texttt{kswersky@cs.utoronto.edu} \\
+{\small \texttt{kswersky@cs.utoronto.edu}} \\
 \And
 David Duvenaud \\
 University of Cambridge \\
-\texttt{dkd23@cam.ac.uk} \\
+{\small \texttt{dkd23@cam.ac.uk}} \\
 \And
 Jasper Snoek\\
 Harvard University \\
-\texttt{jsnoek@seas.harvard.edu} \\
+{\small \texttt{jsnoek@seas.harvard.edu}} \\
 \AND
 Frank Hutter  \\
 Freiburg University \\
-{\tt fh@informatik.uni-freiburg.de} \\
+{\small {\tt fh@informatik.uni-freiburg.de}} \\
 \And
 Michael A. Osborne \\
 University of Oxford \\
-{\tt mosb@robots.ox.ac.uk} \\
+{\small{\tt mosb@robots.ox.ac.uk}} \\
 }
 
 
@@ -298,7 +298,9 @@ We dub this new kernel the \emph{arc kernel}. Its parameters, $\omega_i$ and $\r
 \section{Experiments}
 \vspace{-0.05in} 
 
-We now show that the arc kernel yields better results than other alternatives.  Bayesian optimization requires building a surrogate model of the function being optimized, and better models can be expected to lead to more efficient optimization.  However, because of the many interacting components of BO, optimizer performance might not correspond directly to the quality of the model.  Thus, we perform two types of experiments: first, we study model quality in isolation in a regression task; second, we demonstrate that the improved model indeed yields improved BO performance.
+We now show that the arc kernel yields better results than other alternatives. 
+% Bayesian optimization requires building a surrogate model of the function being optimized, and better models can be expected to lead to more efficient optimization.  However, because of the many interacting components of BO, optimizer performance might not correspond directly to the quality of the model.  Thus, w
+We perform two types of experiments: first, we study model quality in isolation in a regression task; second, we demonstrate that the improved model indeed yields improved BO performance.
 
 \paragraph{Data.} We use two different datasets, both of which are common in the deep learning literature. The first is the canonical MNIST digits dataset~\cite{lecun-1998a} where the task is to classify handwritten digits. The second is the CIFAR-10 object recognition dataset. We pre-processed CIFAR-10 by extracting features according to the pipeline given in~\cite{coates2010analysis}. We allow the neural networks for these problems to use up to $5$ hidden layers. We optimize over learning rates, weight constraints, dropout rate~\cite{hinton2012improving}, and the number of hidden units per layer leading to a total of up to $23$ hyperparameters and $6$ architectures. On MNIST, most effort is spent improving the error by a fraction of a percent, therefore we optimize this dataset using the log-classification error. For CIFAR-10, we just use the regular classification error as the objective. We use the Deepnet\footnote{https://github.com/nitishsrivastava/deepnet} package, and each function evaluation took approximately $1000$ to $2000$ seconds to run on NVIDIA GTX Titan GPUs.
 
