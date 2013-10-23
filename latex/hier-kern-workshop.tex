@@ -120,6 +120,8 @@
 
 \nipsfinalcopy
 
+
+
 \begin{document}
 
 \title{Raiders of the Lost Architecture:\\Kernels for Bayesian Optimization in Conditional Parameter Spaces}
@@ -162,6 +164,7 @@ In practical Bayesian optimization, we must often search over structures with di
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{-0.05in} 
 
 %FH: substituted this nice description with a more concise version - we don't need to tell people at BayesOpt in detail what Bayesian optimization is.
 
@@ -180,17 +183,17 @@ The contribution of this paper is the introduction of a kernel that allows obser
 
 
 \section{A Kernel for Conditional Parameter Spaces}
-\vspace{-0.1in}
+\vspace{-0.05in} 
 
-In this section, we construct a kernel between points whose features may be irrelevant under known conditions (further details are available in \cite{arxiv_hierarchical_kernel}). As an explicit example, we consider the case in which points may potentially have differing numbers of features: here no relevance can be assigned to the value of a feature in the first point which is missing in the second. 
+In this section, we construct a kernel between points in a space that may have dimensions which are irrelevant under known conditions (further details are available in \cite{arxiv_hierarchical_kernel}). As an explicit example, we consider a deep neural network: if we set the network depth to 2 we know that the 3rd layer's hyperparameters do not have any effect (as there is no 3rd layer).
 
 Formally, we aim to do inference about some function $f$ with domain (input space) $\sX$. $\sX = \prod_{i=1}^D \sX_i$ is a $D$-dimensional input space, where each individual dimension is bounded real, that is, $\sX_i = [l_i, u_i] \subset \reals$ (with lower and upper bounds $l_i$ and $u_i$, respectively). We define functions $\delta_i\colon \sX\to \{\text{true}, \text{false}\}$, for $i \in \{1,\,\ldots,\,D\}$. $\delta_i(\v{x})$ stipulates the relevance of the $i$th feature, $x_i$, to inference about $f(\v{x})$.
 
 \gp{}s employ a positive-definite kernel function $k: \sX \times \sX \rightarrow \mathbb{R}$ to model the covariance between function values. Typical \gp{} models cannot, however, model the covariance between function values whose inputs have different (possibly overlapping) sets of relevant variables. We address this issue next.
 
 \subsection{The problem}
+\vspace{-0.05in}
 
-\vspace{-0.1in}
 As an example, imagine trying to model the performance of neural networks with either one or two layers, with respect to the regularization parameters for each layer, $x_1$ and $x_2$.  If $y$ represents the performance of a one layer-net with regularization parameters $x_1$ and $x_2$, then the value $x_2$ doesn't matter, since there is no second layer to the network. Below, we'll write an input triple as $(x_1, \delta_2(\v{x}), x_2)$ and assume that $\delta_1(\v{x}) = \text{true}$; that is, the regularization parameter for the first layer is always relevant. 
 
 In this setting, we want a kernel $k$ to be dependent on which parameters are relevant, and the values of relevant parameters for both points. For example, consider first-layer parameters $x_1$ and $x_1'$:
@@ -225,8 +228,9 @@ We usually additionally want $k_{\text{FF}}>k_{\text{FT}}$, expressing the fact 
 
 
 \subsection{Cylindrical Embedding}
+\vspace{-0.05in} 
 
-We can build a kernel with these properties by embedding our points into a Euclidean space.  Specifically, the embedding we use is
+We can build a kernel with these properties for each possibly irrelevant input dimension $i$ by embedding our points into a Euclidean space.  Specifically, the embedding we use is
 %
 %To emphasize that we're in the real case, we explicitly denote the pseudometric as $d\br_i$ and the (pseudo-)isometry from $(\sX, d_i)$ to $\reals^2,d_\text{E}$ 
 %as $f\br_i$. For the definitions, recall that $\delta_i(\v{x})$ is true iff dimension $i$ is relevant given the instantiation of $i$'s ancestors in $\v{x}$.
@@ -261,17 +265,25 @@ d\br_i(\v{x}, \v{x}') = ||\embeddingletter_i\br(\v{x})-\embeddingletter_i\br(\v{
 
 
 
-We can use this to define a covariance over our original space. In particular, we consider the class of covariances that are functions only of the Euclidean distance $\Delta$ between points. A popular example of such a covariance is the exponentiated quadratic, for which $\kappa(\Delta) = \sigma^2 \exp(-\frac{1}{2} \Delta^2)$; another popular choice is the rational quadratic, for which $\kappa(\Delta) = \sigma^2 (1+\frac{1}{2\alpha} \Delta^2)^{-\alpha}$. We can simply take \eqref{eq:distance} in the place of $\Delta$, returning a valid covariance that satisfies all desiderata above. 
-
-Explicitly, note that, as desired, if $i$ is irrelevant for both $\v{x}$ and $\v{x}'$, $d\br_i$ specifies that $g(\v{x})$ and $g(\v{x}')$ should not differ owing to differences between $x_i$ and $x_i'$. Secondly, if $i$ is relevant for both $\v{x}$ and $\v{x}'$, the difference between $f(\v{x})$ and $f(\v{x}')$ due to $x_i$ and $x_i'$ increases monotonically with increasing $\left|x_i-x_i'\right|$. The parameter $\rho_i$ controls whether differing in the relevance of $i$ contributes more or less to the distance than differing in the value of $x_i$ should $i$ be relevant. If $\rho = \nicefrac{1}{3}$, and if $i$ is irrelevant for exactly one of $\v{x}$ and $\v{x}'$, $f(\v{x})$ and $f(\v{x}')$ are as different as is possible due to dimension $i$; that is, $f(\v{x})$ and $f(\v{x}')$ are exactly as different in that case as if $x_i=l_i$ and $x_i'=u_i$. For $\rho>\nicefrac{1}{3}$, $i$ being relevant for both $\v{x}$ and $\v{x}'$ means that $f(\v{x})$ and $f(\v{x}')$ could potentially be more different than if
-$i$ was relevant in only one of them. For $\rho<\nicefrac{1}{3}$, the converse is true. Hyperparameter $\omega_i$ defines a length scale for the $i$th feature. 
-
-We call the kernel defined above the \emph{arc kernel}. The parameters of the kernel, $\omega$ and $\rho$, can be optimized using the \gp{} marginal likelihood, or integrated out using Markov chain Monte Carlo.
+We can use this to define a covariance over our original space. In particular, we consider the class of covariances that are functions only of the Euclidean distance $\Delta$ between points. There are many examples of such covariances. Popular examples are the exponentiated quadratic, for which $\kappa(\Delta) = \sigma^2 \exp(-\frac{1}{2} \Delta^2)$, or the rational quadratic, for which $\kappa(\Delta) = \sigma^2 (1+\frac{1}{2\alpha} \Delta^2)^{-\alpha}$. We can simply take \eqref{eq:distance} in the place of $\Delta$, returning a valid covariance that satisfies all desiderata above. 
 
 
+Explicitly, note that, as desired, if $i$ is irrelevant for both $\v{x}$ and $\v{x}'$, $d\br_i$ specifies that $g(\v{x})$ and $g(\v{x}')$ should not differ owing to differences between $x_i$ and $x_i'$. Secondly, if $i$ is relevant for both $\v{x}$ and $\v{x}'$, the difference between $f(\v{x})$ and $f(\v{x}')$ due to $x_i$ and $x_i'$ increases monotonically with increasing $\left|x_i-x_i'\right|$. The parameter $\rho_i$ controls whether differing in the relevance of $i$ contributes more or less to the distance than differing in the value of $x_i$, should $i$ be relevant. 
+%
+%
+\note{FH: the following 3 sentences are details that could be dropped if we're in need of space.}
+If $\rho = \nicefrac{1}{3}$, and if $i$ is irrelevant for exactly one of $\v{x}$ and $\v{x}'$, $f(\v{x})$ and $f(\v{x}')$ are as different as is possible due to dimension $i$; that is, $f(\v{x})$ and $f(\v{x}')$ are exactly as different in that case as if $x_i=l_i$ and $x_i'=u_i$. For $\rho>\nicefrac{1}{3}$, $i$ being relevant for both $\v{x}$ and $\v{x}'$ means that $f(\v{x})$ and $f(\v{x}')$ could potentially be more different than if
+$i$ was relevant in only one of them. For $\rho<\nicefrac{1}{3}$, the converse is true. 
+%
+%
+Hyperparameter $\omega_i$ defines a length scale for the $i$th feature. 
+
+Note that so far we only have defined a kernel for dimension $i$. To obtain a kernel for the entire input space, we simply take the product over kernels for each dimension (which is valid since the space of valid kernels is closed under multiplication).
+We dub this new kernel the \emph{arc kernel}. Its parameters, $\omega_i$ and $\rho_i$ for each dimension, can be optimized using the \gp{} marginal likelihood, or integrated out using Markov chain Monte Carlo.
 
 
 \section{Experiments}
+\vspace{-0.05in} 
 
 We now show that the arc kernel yields better results than other alternatives.  Bayesian optimization requires building a surrogate model of the function being optimized, and better models can be expected to lead to more efficient optimization.  However, because of the many interacting components of BO, optimizer performance might not correspond directly to the quality of the model.  Thus, we perform two types of experiments: first, we study model quality in isolation in a regression task; second, we demonstrate that the improved model indeed yields improved BO performance.
 
@@ -304,6 +316,7 @@ Table \ref{tbl:nn_nmse} shows that a \gp{} using the arc kernel performs favoura
 %\note{FH: Describe Table \ref{tab:nn_error}.}
 
 \subsection{Bayesian Optimization Experiments}  
+\vspace{-0.05in} 
 
 \note{KS: Will add plots in the morning and finish this section.} 
 
@@ -316,6 +329,7 @@ For Bayesian optimization, we used the same process as in~\cite{snoek-etal-2012b
 
 
 \section{Conclusion}
+\vspace{-0.05in} 
 
 We introduced a kernel for conditional parameter spaces that facilitates modelling the performance of deep neural network architectures by enabling the sharing of information across architectures where useful.
 Empirical results show that this kernel improves \gp{} model quality and \gp{}-based Bayesian optimization results over several simpler baseline kernels.

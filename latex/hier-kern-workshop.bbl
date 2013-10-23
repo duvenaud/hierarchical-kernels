@@ -1,0 +1,108 @@
+\begin{thebibliography}{10}
+
+\bibitem{Brochu2010}
+Eric Brochu, T~Brochu, and Nando {de Freitas}.
+\newblock {A Bayesian interactive optimization approach to procedural animation
+  design}.
+\newblock In {\em ACM SIGGRAPH/Eurographics Symposium on Computer Animation},
+  2010.
+
+\bibitem{rasmussen38gaussian}
+C.E. Rasmussen and CKI Williams.
+\newblock {Gaussian Processes for Machine Learning}.
+\newblock {\em The MIT Press, Cambridge, MA, USA}, 2006.
+
+\bibitem{TadGraPol11}
+M.A. Taddy, R.B. Gramacy, and N.G. Polson.
+\newblock Dynamic trees for learning and design.
+\newblock {\em Journal of the American Statistical Association},
+  106(493):109--123, 2011.
+
+\bibitem{HutHooLey11}
+F.~Hutter, H.~H. Hoos, and K.~Leyton-Brown.
+\newblock Sequential model-based optimization for general algorithm
+  configuration.
+\newblock In {\em {Proc.~of LION-5}}, pages 507--523, 2011.
+
+\bibitem{BerEtAl11}
+J.~Bergstra, R.~Bardenet, Y.~Bengio, and B.~K{\'e}gl.
+\newblock {Algorithms for Hyper-Parameter Optimization}.
+\newblock In {\em {Proc.~of NIPS'11}}, 2011.
+
+\bibitem{Hut09:phd}
+F.~Hutter.
+\newblock {\em Automated Configuration of Algorithms for Solving Hard
+  Computational Problems}.
+\newblock PhD thesis, University of British Columbia, Department of Computer
+  Science, Vancouver, Canada, October 2009.
+
+\bibitem{BergstraJ2011}
+James~S. Bergstra, R\'emi Bardenet, Yoshua Bengio, and B\'al\'azs K\'egl.
+\newblock Algorithms for hyper-parameter optimization.
+\newblock In {\em NIPS}. 2011.
+
+\bibitem{HinOsiTeh06}
+G.~E. Hinton, S.~Osindero, and Y~Teh.
+\newblock A fast learning algorithm for deep belief nets.
+\newblock {\em Neural Comput.}, 18(7):1527--1554, July 2006.
+
+\bibitem{BerYamCox13}
+J.~Bergstra, D.~Yamins, and D.~D. Cox.
+\newblock Making a science of model search: Hyperparameter optimization in
+  hundreds of dimensions for vision architectures.
+\newblock In {\em {Proc.~of ICML'12}}, pages 115--123, 2013.
+
+\bibitem{ThoEtAl13}
+C.~Thornton, F.~Hutter, H.~H. Hoos, and K.~Leyton-Brown.
+\newblock Auto-{WEKA}: Combined selection and hyperparameter optimization of
+  classification algorithms.
+\newblock In {\em {Proc.~of KDD'13}}, pages 847--855, 2013.
+
+\bibitem{snoek-etal-2012b}
+Jasper Snoek, Hugo Larochelle, and Ryan~Prescott Adams.
+\newblock Practical bayesian optimization of machine learning algorithms.
+\newblock In {\em Neural Information Processing Systems}, 2012.
+
+\bibitem{krizhevsky-2012}
+Alex Krizhevsky, Ilya Sutskever, and Geoff Hinton.
+\newblock Imagenet classification with deep convolutional neural networks.
+\newblock In {\em Advances in Neural Information Processing Systems}. 2012.
+
+\bibitem{deepSpeechReviewSPM2012}
+Geoffrey~E. Hinton, Li~Deng, Dong Yu, George~E. Dahl, Abdel rahman Mohamed,
+  Navdeep Jaitly, Andrew Senior, Vincent Vanhoucke, Patrick Nguyen, Tara~N.
+  Sainath, and Brian Kingsbury.
+\newblock Deep neural networks for acoustic modeling in speech recognition: The
+  shared views of four research groups.
+\newblock {\em IEEE Signal Process. Mag.}, 29(6):82--97, 2012.
+
+\bibitem{mikolov2010recurrent}
+Tomas Mikolov, Martin Karafi{\'a}t, Lukas Burget, Jan Cernock{\`y}, and Sanjeev
+  Khudanpur.
+\newblock Recurrent neural network based language model.
+\newblock In {\em INTERSPEECH}, pages 1045--1048, 2010.
+
+\bibitem{bergstra2011algorithms}
+James Bergstra, R{\'e}mi Bardenet, Yoshua Bengio, Bal{\'a}zs K{\'e}gl, et~al.
+\newblock Algorithms for hyper-parameter optimization.
+\newblock In {\em 25th Annual Conference on Neural Information Processing
+  Systems (NIPS 2011)}, 2011.
+
+\bibitem{arxiv_hierarchical_kernel}
+Frank Hutter and Michael~A. Osborne.
+\newblock A kernel for hierarchical parameter spaces, 2013.
+\newblock arXiv:1310.5738.
+
+\bibitem{lecun-1998a}
+Yann Lecun, LŽon Bottou, Yoshua Bengio, and Patrick Haffner.
+\newblock Gradient-based learning applied to document recognition.
+\newblock In {\em Proceedings of the IEEE}, pages 2278--2324, 1998.
+
+\bibitem{hinton2012improving}
+Geoffrey~E. Hinton, Nitish Srivastava, Alex Krizhevsky, Ilya Sutskever, and
+  Ruslan Salakhutdinov.
+\newblock Improving neural networks by preventing co-adaptation of feature
+  detectors.
+\newblock {\em arXiv preprint arXiv:1207.0580}, 2012.
+
+\end{thebibliography}
