@@ -1,8 +1,7 @@
 % A simple figure to illustrate Mike and Frank's embedding
 % Sept 2013
-\begin{center}
-\begin{tikzpicture}
-[trans/.style={thick,->,shorten >=2pt,shorten <=2pt,>=stealth}]
+
+\newcommand{\scaleamount}{0.7}
 \newcommand{\anglemin}{40}
 \newcommand{\angleminplusone}{41}
 \newcommand{\anglemax}{150}
@@ -15,8 +14,13 @@
 \newcommand{\belowamount}{0.2cm}
 \newcommand{\belowamounttwo}{0.11cm}
 \newcommand{\myell}{l}
-
 \newcommand{\embedding}{g}
+
+
+\begin{center}
+%\framebox{
+\begin{tikzpicture}
+[trans/.style={thick,->,shorten >=2pt,shorten <=2pt,>=stealth},scale=\scaleamount, every node/.style={transform shape}]
 
 \tikzset{state/.style={circle,draw=black, very thick,minimum size=4em}}
 
@@ -42,7 +46,7 @@
 	\centerarc[thick] (O1) (\anglemin:\anglemax:\smallradius)
 
 	\draw[fill] (left1) circle (1.5pt);
-	\draw (left1) node[below = \belowamount, left] {$\embedding(0, \textnormal{true}, u$)};
+	\draw (left1) node[below = \belowamount, right] {$\embedding(0, \textnormal{true}, u$)};
 	
 	\draw[fill] (right1) circle (1.5pt);
 	\draw (right1) node[below = \belowamount] (r1below) {}
@@ -52,9 +56,8 @@
 	\draw (O1) node[below = \belowamount] (o1below) {}
 	           node[left = 0.3cm] {$\embedding(0, \textnormal{false}, \cdot)$};
 
-	\draw (left1) -- (O1) node[above] {$\rho \pi$} 
-			      node[midway, above] {$\omega$};
-	\draw (right1) -- (O1);
+	\draw (left1) -- (O1) node[above] {$\rho \pi$};
+	\draw (right1) -- (O1) node[midway, below] {$\omega$};
 	
 	
 	% Second arc
@@ -66,7 +69,7 @@
 	
 	\draw[fill] (right2) circle (1.5pt);
 	\draw (right2) node[below = \belowamount] (r2below) {};
-	\draw (right2) node[right] {$\embedding(1, \textnormal{true}, \myell)$};
+	
 
 	\draw[fill] (O2) circle (1.5pt);
 	\draw (O2) node[below = \belowamount] (o2below) {}
@@ -94,6 +97,8 @@
 		\fill[fill=blue!40,fill opacity=0.8](arca1)--(arca2)--(arcb2)--(arcb1)--cycle;
 	}
 
+	\draw (right2) node[left] {$\embedding(1, \textnormal{true}, \myell)$};
+
 	% Draw arrows showing in which direction x1 varies.
 	\coordinate(x1half) at ($ (right1)!0.5!(right2) $);
 	\draw (x1half) node[below = \belowamounttwo] (x1halfbelow) {$x_1$};
@@ -118,4 +123,5 @@
 %	\draw[fill] (x2) circle (1.5pt);
 %	\draw (x2) node[above, right] {$f(x_2, \textnormal{true})$};
 \end{tikzpicture}
+%}
 \end{center}
