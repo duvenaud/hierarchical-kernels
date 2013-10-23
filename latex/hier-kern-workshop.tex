@@ -190,11 +190,17 @@ The contribution of this paper is the introduction of a kernel that allows obser
 \section{A Kernel for Conditional Parameter Spaces}
 \vspace{-0.05in} 
 
+\gp{}s employ a positive-definite kernel function $k: \sX \times \sX \rightarrow \mathbb{R}$ to model the covariance between function values. Typical \gp{} models cannot, however, model the covariance between function values whose inputs have different (possibly overlapping) sets of relevant variables.
+
 In this section, we construct a kernel between points in a space that may have dimensions which are irrelevant under known conditions (further details are available in \cite{arxiv_hierarchical_kernel}). As an explicit example, we consider a deep neural network: if we set the network depth to 2 we know that the 3rd layer's hyperparameters do not have any effect (as there is no 3rd layer).
 
-Formally, we aim to do inference about some function $f$ with domain (input space) $\sX$. $\sX = \prod_{i=1}^D \sX_i$ is a $D$-dimensional input space, where each individual dimension is bounded real, that is, $\sX_i = [l_i, u_i] \subset \reals$ (with lower and upper bounds $l_i$ and $u_i$, respectively). We define functions $\delta_i\colon \sX\to \{\text{true}, \text{false}\}$, for $i \in \{1,\,\ldots,\,D\}$. $\delta_i(\v{x})$ stipulates the relevance of the $i$th feature, $x_i$, to inference about $f(\v{x})$.
+Formally, we aim to do inference about some function $f$ with domain 
+%(input space)
+ $\sX$. $\sX = \prod_{i=1}^D \sX_i$ is a $D$-dimensional input space, where each individual dimension is bounded real, that is, $\sX_i = [l_i, u_i] \subset \reals$ (with lower and upper bounds $l_i$ and $u_i$, respectively). We define functions $\delta_i\colon \sX\to \{\text{true}, \text{false}\}$, for $i \in \{1,\,\ldots,\,D\}$. $\delta_i(\v{x})$ stipulates the relevance of the $i$th feature $x_i$ to 
+ %inference about
+  $f(\v{x})$.
 
-\gp{}s employ a positive-definite kernel function $k: \sX \times \sX \rightarrow \mathbb{R}$ to model the covariance between function values. Typical \gp{} models cannot, however, model the covariance between function values whose inputs have different (possibly overlapping) sets of relevant variables. We address this issue next.
+
 
 \subsection{The problem}
 \vspace{-0.05in}
@@ -218,18 +224,18 @@ In this setting, we want a kernel $k$ to be dependent on which parameters are re
 \end{equation}
 \end{itemize}
 
-Elaborating on the first consideration:
+%Elaborating on the first consideration:
 %
-\begin{itemize}[leftmargin=0.8cm]
-\item The covariance between two points with identical values for their jointly relevant parameters should only depend on whether their remaining parameters are relevant,
-\begin{align}
- k\bigl((x_1, \textnormal{false}, x_2), (x_1, \textnormal{false}, x_2') \bigr)
-& = k_{\text{FF}},\ \forall x_2, x_2'\\
- k\bigl((x_1, \textnormal{false}, x_2), (x_1, \textnormal{true}, x_2') \bigr)
-& = k_{\text{FT}},\ \forall x_2, x_2'.
-\end{align}
-\end{itemize}
-We usually additionally want $k_{\text{FF}}>k_{\text{FT}}$, expressing the fact that points that have identical relevance $\delta_2({\v{x}})$ are more similar than points that differ in relevance $\delta_2({\v{x}})$.
+%\begin{itemize}[leftmargin=0.8cm]
+%\item The covariance between two points with identical values for their jointly relevant parameters should only depend on whether their remaining parameters are relevant,
+%\begin{align}
+% k\bigl((x_1, \textnormal{false}, x_2), (x_1, \textnormal{false}, x_2') \bigr)
+%& = k_{\text{FF}},\ \forall x_2, x_2'\\
+% k\bigl((x_1, \textnormal{false}, x_2), (x_1, \textnormal{true}, x_2') \bigr)
+%& = k_{\text{FT}},\ \forall x_2, x_2'.
+%\end{align}
+%\end{itemize}
+%We usually additionally want $k_{\text{FF}}>k_{\text{FT}}$, expressing the fact that points that have identical relevance $\delta_2({\v{x}})$ are more similar than points that differ in relevance $\delta_2({\v{x}})$.
 
 
 \subsection{Cylindrical Embedding}
@@ -252,8 +258,7 @@ Where $\omega_i \in \mathbb{R}^+$ and $\rho_i \in [0,1]$.
 \begin{figure}
 	\floatbox[{\capbeside\thisfloatsetup{capbesideposition={right,top}}}]{figure}[\FBwidth]
 	{\caption{A demonstration of the embedding giving rise to the pseudo-metric in 2 dimensions.  All points for which $\delta_2(x) =$ false are mapped onto a line varying only along $x_1$.  Points for which $\delta_2(x) =$ true are mapped to the surface of a semicylinder, depending on both $x_1$ and $x_2$.  This embedding gives a constant distance between pairs of points which have differing values of $\delta$ but the same values of $x_1$.}}
-	{\input{figures/semicylinder}}
-	
+	{\hspace{-1cm}\input{figures/semicylinder}}
 	%\caption{}
 %  The parameter $\rho$ determines how much distance there is along the arc.
 \label{fig:cylinder}
@@ -293,7 +298,9 @@ We dub this new kernel the \emph{arc kernel}. Its parameters, $\omega_i$ and $\r
 \section{Experiments}
 \vspace{-0.05in} 
 
-We now show that the arc kernel yields better results than other alternatives.  Bayesian optimization requires building a surrogate model of the function being optimized, and better models can be expected to lead to more efficient optimization.  However, because of the many interacting components of BO, optimizer performance might not correspond directly to the quality of the model.  Thus, we perform two types of experiments: first, we study model quality in isolation in a regression task; second, we demonstrate that the improved model indeed yields improved BO performance.
+We now show that the arc kernel yields better results than other alternatives. 
+% Bayesian optimization requires building a surrogate model of the function being optimized, and better models can be expected to lead to more efficient optimization.  However, because of the many interacting components of BO, optimizer performance might not correspond directly to the quality of the model.  Thus, w
+We perform two types of experiments: first, we study model quality in isolation in a regression task; second, we demonstrate that the improved model indeed yields improved BO performance.
 
 \paragraph{Data.} We use two different datasets, both of which are common in the deep learning literature. The first is the canonical MNIST digits dataset~\cite{lecun-1998a} where the task is to classify handwritten digits. The second is the CIFAR-10 object recognition dataset. We pre-processed CIFAR-10 by extracting features according to the pipeline given in~\cite{coates2010analysis}. We allow the neural networks for these problems to use up to $5$ hidden layers. We optimize over learning rates, weight constraints, dropout rate~\cite{hinton2012improving}, and the number of hidden units per layer leading to a total of up to $23$ hyperparameters and $6$ architectures. On MNIST, most effort is spent improving the error by a fraction of a percent, therefore we optimize this dataset using the log-classification error. For CIFAR-10, we just use the regular classification error as the objective. We use the Deepnet\footnote{https://github.com/nitishsrivastava/deepnet} package, and each function evaluation took approximately $1000$ to $2000$ seconds to run on NVIDIA GTX Titan GPUs.
 
@@ -317,8 +324,8 @@ Our first experiments concern the quality of the regression models used to form 
 \caption{{\small Normalized Mean Squared Error on MNIST Bayesian optimization data\label{tab:nn_error}}}
 \label{tbl:nn_nmse}
 \input{tables/mcmc-table.tex}
-\input{tables/mcmc-table-transposed.tex}
-\caption{Regression errors for a GP with the arc kernel compared to baselines.}
+%\input{tables/mcmc-table-transposed.tex}
+%\caption{Regression errors for a GP with the arc kernel compared to baselines.}
 \end{table}
 
 \paragraph{Results.}

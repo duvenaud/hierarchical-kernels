@@ -13,6 +13,7 @@
 \usepackage{epsfig}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{floatrow}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{color}
@@ -43,6 +44,9 @@
 \usepackage{enumitem}
 \setlist[itemize]{noitemsep, topsep=0pt} % Makes els 1 and 2 fit more nicely
 % ===========================================
+
+% ==============Kevin's commands ===============
+\newfloatcommand{capbtabbox}{table}[][\FBwidth]
 
 % ============== Mike's commands ==============
 \usepackage{nicefrac}
@@ -186,11 +190,17 @@ The contribution of this paper is the introduction of a kernel that allows obser
 \section{A Kernel for Conditional Parameter Spaces}
 \vspace{-0.05in} 
 
+\gp{}s employ a positive-definite kernel function $k: \sX \times \sX \rightarrow \mathbb{R}$ to model the covariance between function values. Typical \gp{} models cannot, however, model the covariance between function values whose inputs have different (possibly overlapping) sets of relevant variables.
+
 In this section, we construct a kernel between points in a space that may have dimensions which are irrelevant under known conditions (further details are available in \cite{arxiv_hierarchical_kernel}). As an explicit example, we consider a deep neural network: if we set the network depth to 2 we know that the 3rd layer's hyperparameters do not have any effect (as there is no 3rd layer).
 
-Formally, we aim to do inference about some function $f$ with domain (input space) $\sX$. $\sX = \prod_{i=1}^D \sX_i$ is a $D$-dimensional input space, where each individual dimension is bounded real, that is, $\sX_i = [l_i, u_i] \subset \reals$ (with lower and upper bounds $l_i$ and $u_i$, respectively). We define functions $\delta_i\colon \sX\to \{\text{true}, \text{false}\}$, for $i \in \{1,\,\ldots,\,D\}$. $\delta_i(\v{x})$ stipulates the relevance of the $i$th feature, $x_i$, to inference about $f(\v{x})$.
+Formally, we aim to do inference about some function $f$ with domain 
+%(input space)
+ $\sX$. $\sX = \prod_{i=1}^D \sX_i$ is a $D$-dimensional input space, where each individual dimension is bounded real, that is, $\sX_i = [l_i, u_i] \subset \reals$ (with lower and upper bounds $l_i$ and $u_i$, respectively). We define functions $\delta_i\colon \sX\to \{\text{true}, \text{false}\}$, for $i \in \{1,\,\ldots,\,D\}$. $\delta_i(\v{x})$ stipulates the relevance of the $i$th feature $x_i$ to 
+ %inference about
+  $f(\v{x})$.
 
-\gp{}s employ a positive-definite kernel function $k: \sX \times \sX \rightarrow \mathbb{R}$ to model the covariance between function values. Typical \gp{} models cannot, however, model the covariance between function values whose inputs have different (possibly overlapping) sets of relevant variables. We address this issue next.
+
 
 \subsection{The problem}
 \vspace{-0.05in}
@@ -214,18 +224,18 @@ In this setting, we want a kernel $k$ to be dependent on which parameters are re
 \end{equation}
 \end{itemize}
 
-Elaborating on the first consideration:
+%Elaborating on the first consideration:
 %
-\begin{itemize}[leftmargin=0.8cm]
-\item The covariance between two points with identical values for their jointly relevant parameters should only depend on whether their remaining parameters are relevant,
-\begin{align}
- k\bigl((x_1, \textnormal{false}, x_2), (x_1, \textnormal{false}, x_2') \bigr)
-& = k_{\text{FF}},\ \forall x_2, x_2'\\
- k\bigl((x_1, \textnormal{false}, x_2), (x_1, \textnormal{true}, x_2') \bigr)
-& = k_{\text{FT}},\ \forall x_2, x_2'.
-\end{align}
-\end{itemize}
-We usually additionally want $k_{\text{FF}}>k_{\text{FT}}$, expressing the fact that points that have identical relevance $\delta_2({\v{x}})$ are more similar than points that differ in relevance $\delta_2({\v{x}})$.
+%\begin{itemize}[leftmargin=0.8cm]
+%\item The covariance between two points with identical values for their jointly relevant parameters should only depend on whether their remaining parameters are relevant,
+%\begin{align}
+% k\bigl((x_1, \textnormal{false}, x_2), (x_1, \textnormal{false}, x_2') \bigr)
+%& = k_{\text{FF}},\ \forall x_2, x_2'\\
+% k\bigl((x_1, \textnormal{false}, x_2), (x_1, \textnormal{true}, x_2') \bigr)
+%& = k_{\text{FT}},\ \forall x_2, x_2'.
+%\end{align}
+%\end{itemize}
+%We usually additionally want $k_{\text{FF}}>k_{\text{FT}}$, expressing the fact that points that have identical relevance $\delta_2({\v{x}})$ are more similar than points that differ in relevance $\delta_2({\v{x}})$.
 
 
 \subsection{Cylindrical Embedding}
@@ -246,10 +256,10 @@ We can build a kernel with these properties for each possibly irrelevant input d
 Where $\omega_i \in \mathbb{R}^+$ and $\rho_i \in [0,1]$.
 %
 \begin{figure}
-\begin{subfigure}[]{0.3\textwidth}
-	\input{figures/semicylinder}
-	\caption{A demonstration of the embedding giving rise to the pseudo-metric in 2 dimensions.  All points for which $\delta_2(x) =$ false are mapped onto a line varying only along $x_1$.  Points for which $\delta_2(x) =$ true are mapped to the surface of a semicylinder, depending on both $x_1$ and $x_2$.  This embedding gives a constant distance between pairs of points which have differing values of $\delta$ but the same values of $x_1$.}
-\end{subfigure}
+	\floatbox[{\capbeside\thisfloatsetup{capbesideposition={right,top}}}]{figure}[\FBwidth]
+	{\caption{A demonstration of the embedding giving rise to the pseudo-metric in 2 dimensions.  All points for which $\delta_2(x) =$ false are mapped onto a line varying only along $x_1$.  Points for which $\delta_2(x) =$ true are mapped to the surface of a semicylinder, depending on both $x_1$ and $x_2$.  This embedding gives a constant distance between pairs of points which have differing values of $\delta$ but the same values of $x_1$.}}
+	{\hspace{-1cm}\input{figures/semicylinder}}
+	%\caption{}
 %  The parameter $\rho$ determines how much distance there is along the arc.
 \label{fig:cylinder}
 \end{figure}
@@ -307,11 +317,12 @@ Our first experiments concern the quality of the regression models used to form 
 %\paragraph{Data.} 951 datapoints were generated by performing Bayesian optimization on MNIST.  Results are averaged over 10-fold train/test splits.
 %\note{FH: very briefly describe the number of data points, where they come from, and how they were split to obtain error bars (I assume cross-validation).}
 
+
 \begin{table}[h!]
 \caption{{\small Normalized Mean Squared Error on MNIST Bayesian optimization data\label{tab:nn_error}}}
 \label{tbl:nn_nmse}
 \input{tables/mcmc-table.tex}
-\input{tables/mcmc-table-transposed.tex}
+%\input{tables/mcmc-table-transposed.tex}
 %\caption{Regression errors for a GP with the arc kernel compared to baselines.}
 \end{table}
 
