@@ -112,7 +112,7 @@ fprintf('\n\n');
 print_table( 'Normalized MSE', method_names, dataset_names, mses' );
 
 %mset_table = mse_table([1,2,4:K], : ,:);
-%latex_table('../latex/tables/gpml-table.tex', mse_table, method_names, dataset_names, 'Normalized Mean Squared Error' );
+latex_table('../latex/tables/gpml-table.tex', mse_table, method_names, dataset_names, 'Normalized Mean Squared Error' );
 %if any(isnan(mse_table(:)))
 %    warning('Some Mean Squared Error entries missing!')
 %end

@@ -115,7 +115,7 @@
 \author{
 Kevin Swersky \\
 University of Toronto \\
-\texttt{kswesrky@cs.utoronto.edu} \\
+\texttt{kswersky@cs.utoronto.edu} \\
 \And
 David Duvenaud \\
 University of Cambridge \\
@@ -155,15 +155,14 @@ In practical Bayesian optimization, we must often search over structures with di
 %Bayesian optimization is a framework for the global optimization of noisy and expensive, black-box functions.  For a detailed overview of the Bayesian optimization methodology see~\cite{Brochu2010}. The methodology relies on a statistical distribution over functions to reason about the expected value of the function at any given input and critically also a measure of the uncertainty over that value.  When determining which input to next evaluate, the methodology balances the evaluation of the expected best result (exploitation) with the reduction of uncertainty over the parameter space (exploration).  Naturally the quality of the statistical distribution, which acts as a surrogate of the function subject to the optimization, plays a major role in the effectiveness of the methodology.  Gaussian processes (GPs~\cite{rasmussen38gaussian}) are the common choice for forming this distribution, as they are powerful and flexible priors over functions for which the marginal and conditional expected values and  
 variances can be computed efficiently.  Some problem domains remain challenging to model well with GPs, however, and the efficiency and effectiveness of the optimization routine suffers as a result.  Common among these are problems that contain parameters to be optimized for which their existence or effect is conditional on a categorical variable.  GP priors, which generally assume smooth, continuous functions, can not model this problem domain well as it introduces sharp discontinuities.  This paper introduces a prior over functions, in the form of a novel GP covariance, which elegantly models mixed conditional and hierarchical parameter spaces.  We follow the nomenclature of one such problem domain, deep neural networks, for which a particular configuration of these conditional parameters is known as model \emph{architecture}.  The Bayesian optimization routine in such a space thus searches simultaneously for the best settings of the parameters and the best architecture.
 
-Bayesian optimization (see~\cite{Brochu2010} for a detailed overview) is an efficient approach for solving blackbox optimization problems of the form $\arg\min_{x \in X} f(x)$, where $f$ is expensive to evaluate. 
+Bayesian optimization (BO) is an efficient approach for solving blackbox optimization problems of the form $\arg\min_{x \in X} f(x)$ (see~\cite{Brochu2010} for a detailed overview), where $f$ is expensive to evaluate. 
 It employs a prior distribution $p(f)$ over functions that is updated as new information on $f$ becomes available.
 %
 The most common choice of prior distribution are Gaussian processes (GPs~\cite{rasmussen38gaussian}), as they are powerful and flexible models for which the marginal and conditional distributions can be computed efficiently.\footnote{There are prominent exceptions to this rule, though. In particular, tree-based models, such as random forests, tend to be the better choice if there are many data points (and GPs thus become computationally inefficient), if the input dimensionality is high, if the noise is not normally distributed, or if there are non-stationarities~\cite{TadGraPol11,HutHooLey11,BerEtAl11}.}
 %
 However, some problem domains remain challenging to model well with GPs, and the efficiency and effectiveness of Bayesian optimization suffers as a result. In this paper, we tackle the common problem of input dimensions that are only relevant if other inputs take certain values~\cite{Hut09:phd,BergstraJ2011}. This is a general problem in algorithm configuration~\cite{Hut09:phd} that occurs in many machine learning contexts, such as, for example, in deep neural networks~\cite{HinOsiTeh06}; flexible computer vision architectures~\cite{BerYamCox13}; and the combined selection and hyperparameter optimization of machine learning algorithms~\cite{ThoEtAl13}. We detail the case of deep neural networks below.
 
-Bayesian optimization has recently been applied successfully to deep neural networks~\cite{snoek-etal-2012b, BergstraJ2011} to optimize high level model parameters and optimization parameters, which we will refer to collectively as \emph{hyperparameters}.  Deep neural networks represent the state-of-the-art on multiple machine learning benchmarks such as object recognition~\cite{krizhevsky-2012}.
-\note{FH: TODO: as we're saying they are the state of the art in \emph{multiple} benchmarks, we have to list at least two examples, better more.}
+Bayesian optimization has recently been applied successfully to deep neural networks~\cite{snoek-etal-2012b, BergstraJ2011} to optimize high level model parameters and optimization parameters, which we will refer to collectively as \emph{hyperparameters}.  Deep neural networks represent the state-of-the-art on multiple machine learning benchmarks such as object recognition~\cite{krizhevsky-2012}, speech recognition~\cite{deepSpeechReviewSPM2012}, natural language processing~\cite{mikolov2010recurrent} and more.
 They are multi-layered models by definition, and each layer is typically parameterized by a unique set of hyperparameters, such as regularization parameters and the layer capacity or number of hidden units.  Thus adding additional layers introduces additional hyperparameters to be optimized.  The result is a complex hierarchical conditional parameter space, which is difficult to search over.  Historically, practitioners have simply built a separate model for each type of architecture \cite{bergstra2011algorithms} or assumed a fixed architecture~\cite{snoek-etal-2012b}.  However, if there is any relation between networks with different architectures, separately modeling each is wasteful. 
 
 While GPs with standard kernels fail to model the performance of architectures with such conditional parameters, the innovation of this paper is the introduction of a kernel that allows observed information to be shared across architectures when this is appropriate. We demonstrate empirically on a GP regression task and a Bayesian optimization task that this kernel models the conditional parameter space of a typical deep learning problem better than previous adhoc methods. 
@@ -172,13 +171,14 @@ While GPs with standard kernels fail to model the performance of architectures w
 \section{A Kernel for Conditional Parameter Spaces}
 In this section, we construct a kernel between points whose features may be irrelevant under known conditions (further details are available in \cite{arxiv_hierarchical_kernel}). As an explicit example, we consider the case in which points may potentially have differing numbers of features: here no relevance can be assigned to the value of a feature in the first point which is missing in the second. 
 
-Formally, we aim to do inference about some function $f$ with domain (input space) $\sX$. $\sX = \prod_{i=1}^D \sX_i$ is a $D$-dimensional input space, where each individual dimension is 
- bounded real, that is, $\sX_i$ is $[l_i, u_i] \subset \reals$ (with lower and upper bounds $l_i$ and $u_i$, respectively). We define functions $\delta_i\colon \sX\to \{\text{true}, \text{false}\}$, for $i \in \{1,\,\ldots,\,D\}$. $\delta_i(\v{x})$ stipulates the relevance of the $i$th feature, $x_i$, to inference about $f(\v{x})$. 
+Formally, we aim to do inference about some function $f$ with domain (input space) $\sX$. $\sX = \prod_{i=1}^D \sX_i$ is a $D$-dimensional input space, where each individual dimension is bounded real, that is, $\sX_i = [l_i, u_i] \subset \reals$ (with lower and upper bounds $l_i$ and $u_i$, respectively). We define functions $\delta_i\colon \sX\to \{\text{true}, \text{false}\}$, for $i \in \{1,\,\ldots,\,D\}$. $\delta_i(\v{x})$ stipulates the relevance of the $i$th feature, $x_i$, to inference about $f(\v{x})$.
+
+Standard GPs employ a positive-definite kernel function $k: \sX \times \sX \rightarrow \mathbb{R}$ to model the covariance between function values. They cannot, however, model the covariance between function values whose inputs have different (possibly overlapping) sets of relevant variables. We address this issue next.
 
 \subsection{The problem}
-To begin with, we can imagine trying to model the performance of neural networks with either one or two layers, with respect to the regularization parameters for each layer, $x_1$ and $x_2$.  If $y$ represents the performance of a one layer-net with regularization parameters $x_1$ and $x_2$, then the value $x_2$ doesn't matter, since there is no second layer to the network. In the below, we'll write an input triple as $(x_1, \delta_2(\v{x}), x_2)$ and assume that $\delta_1(\v{x}) = \text{true}$; that is, the regularization parameter for the first layer is always relevant. 
+To begin with, we can imagine trying to model the performance of neural networks with either one or two layers, with respect to the regularization parameters for each layer, $x_1$ and $x_2$.  If $y$ represents the performance of a one layer-net with regularization parameters $x_1$ and $x_2$, then the value $x_2$ doesn't matter, since there is no second layer to the network. Below, we'll write an input triple as $(x_1, \delta_2(\v{x}), x_2)$ and assume that $\delta_1(\v{x}) = \text{true}$; that is, the regularization parameter for the first layer is always relevant. 
 
-In this setting, we want a kernel $k$ to be dependent only on, firstly, whether parameters are relevant, and, secondly, the values of parameters relevant for both points. If we elaborate on the second consideration, assuming some $x_1$ and $x_1'$:
+In this setting, we want a kernel $k$ to be dependent on whether parameters are relevant and the values of relevant parameters for both points. For example, suppose we have first-layer parameters $x_1$ and $x_1'$:
 
 \begin{itemize}
 \item If we are comparing two points for which the same parameters are relevant, the value of any unused parameters shouldn't matter,  
@@ -222,6 +222,7 @@ We can build a kernel with these properties by embedding our points into a Eucli
 [0,0]^\transpose & \textrm{ if } \delta_i(\v{x}) = \textrm{ false }\\
 \omega_i [\sin{\pi\rho_i\frac{x_i}{u_i-l_i}}, \cos{\pi\rho_i\frac{x_i}{u_i-l_i}}]^\transpose & \textrm{ otherwise.}\end{array}\right.
 \end{equation}
+Where $\omega_i \in \mathbb{R}^+$ and $\rho_i \in [0,1]$.
 %
 \begin{figure}
 \input{figures/semicylinder}
@@ -236,7 +237,7 @@ Figure \ref{fig:cylinder} shows a visualization of the embedding of points $(x_1
 In this space, we have the Euclidean distance,
 %
 \begin{equation}
-d\br_i(\v{x}, \v{x}') = \left\{\begin{array}{ll}
+d\br_i(\v{x}, \v{x}') = ||\embeddingletter_i\br(\v{x})-\embeddingletter_i\br(\v{x}')||_2 =\left\{\begin{array}{ll}
 0 & \textrm{ if } \delta_i(\v{x}) = \delta_i(\v{x}') = \textrm{false}\\
 \omega_i & \textrm{ if } \delta_i(\v{x}) \neq \delta_i(\v{x}')\\
 \omega_i \sqrt{2} \sqrt{1 - \cos(\pi\rho_i \frac{x_i-x_i'}{u_i-l_i})} & \textrm{ if } \delta_i(\v{x}) = \delta_i(\v{x}') = \textrm{true}. \end{array}\right.
@@ -245,48 +246,49 @@ d\br_i(\v{x}, \v{x}') = \left\{\begin{array}{ll}
 
 
 
-We can use this to define a covariance over our original space. In particular, we consider the class of covariances which are functions only of the Euclidean distance $\Delta$ between points. A popular example of such a covariance is the exponentiated quadratic, for which $\kappa(\Delta) = \sigma^2 \exp(-\frac{1}{2} \Delta^2)$; another popular choice is the rational quadratic, for which $\kappa(\Delta) = \sigma^2 (1+\frac{1}{2\alpha} \Delta^2)^{-\alpha}$. We can simply take \eqref{eq:distance} in the place of $\Delta$, returning a valid covariance that satisfies all desiderata above. 
+We can use this to define a covariance over our original space. In particular, we consider the class of covariances that are functions only of the Euclidean distance $\Delta$ between points. A popular example of such a covariance is the exponentiated quadratic, for which $\kappa(\Delta) = \sigma^2 \exp(-\frac{1}{2} \Delta^2)$; another popular choice is the rational quadratic, for which $\kappa(\Delta) = \sigma^2 (1+\frac{1}{2\alpha} \Delta^2)^{-\alpha}$. We can simply take \eqref{eq:distance} in the place of $\Delta$, returning a valid covariance that satisfies all desiderata above. 
 
-Explicitly, note that, as desired, if $i$ is irrelevant for both $\v{x}$ and $\v{x}'$, $d\br_i$ specifies that $g(\v{x})$ and $g(\v{x}')$ should not differ owing to differences between $x_i$ and $x_i'$. Secondly, if $i$ is relevant for both $\v{x}$ and $\v{x}'$, the difference between $f(\v{x})$ and $f(\v{x}')$ due to $x_i$ and $x_i'$ increases monotonically with increasing $\left|x_i-x_i'\right|$. Parameter $\rho_i$ controls whether differing in the activity of $i$ contributes more or less to the distance than differing in $x_i$ should $i$ be relevant. If $\rho = \nicefrac{1}{3}$, and if $i$ is irrelevant for exactly one of $\v{x}$ and $\v{x}'$, $f(\v{x})$ and $f(\v{x}')$ are as different as is possible due to dimension $i$; that is, $f(\v{x})$ and $f(\v{x}')$ are exactly as different in that case as if $x_i=l_i$ and $x_i'=u_i$. For $\rho>\nicefrac{1}{3}$, $i$ being relevant for both $\v{x}$ and $\v{x}'$ means that $f(\v{x})$ and $f(\v{x}')$ could potentially be more different than if
+Explicitly, note that, as desired, if $i$ is irrelevant for both $\v{x}$ and $\v{x}'$, $d\br_i$ specifies that $g(\v{x})$ and $g(\v{x}')$ should not differ owing to differences between $x_i$ and $x_i'$. Secondly, if $i$ is relevant for both $\v{x}$ and $\v{x}'$, the difference between $f(\v{x})$ and $f(\v{x}')$ due to $x_i$ and $x_i'$ increases monotonically with increasing $\left|x_i-x_i'\right|$. The parameter $\rho_i$ controls whether differing in the relevance of $i$ contributes more or less to the distance than differing in the value of $x_i$ should $i$ be relevant. If $\rho = \nicefrac{1}{3}$, and if $i$ is irrelevant for exactly one of $\v{x}$ and $\v{x}'$, $f(\v{x})$ and $f(\v{x}')$ are as different as is possible due to dimension $i$; that is, $f(\v{x})$ and $f(\v{x}')$ are exactly as different in that case as if $x_i=l_i$ and $x_i'=u_i$. For $\rho>\nicefrac{1}{3}$, $i$ being relevant for both $\v{x}$ and $\v{x}'$ means that $f(\v{x})$ and $f(\v{x}')$ could potentially be more different than if
 $i$ was relevant in only one of them. For $\rho<\nicefrac{1}{3}$, the converse is true. Hyperparameter $\omega_i$ defines a length scale for the $i$th feature. 
 
-
-
+We call the kernel defined above the arc kernel. The parameters of the kernel, $\omega$ and $\rho$, can be optimized using the GP marginal likelihood, or integrated out using Markov chain Monte Carlo.
 
 
 
 
 \section{Experiments}
 
-We now show that our new kernel yields better results than other alternatives. 
-Bayesian optimization requires building a model of the function being optimized, and better models can be expected to lead to better outcomes.  However, because of the many interacting components of BO, optimizer performance might not correspond directly to the quality of the model.  Thus, we perform two types of experiments: first, we study model quality in isolation in a regression task; second, we demonstrate that the improved model indeed yields improved Bayesian optimization performance.
+We now show that the arc kernel yields better results than other alternatives.  Bayesian optimization requires building a surrogate model of the function being optimized, and better models can be expected to lead to more efficient optimization.  However, because of the many interacting components of BO, optimizer performance might not correspond directly to the quality of the model.  Thus, we perform two types of experiments: first, we study model quality in isolation in a regression task; second, we demonstrate that the improved model indeed yields improved Bayesian optimization performance.
 
-\paragraph{Data.} Both types of experiments used similar data obtained from a blackbox function that models the performance of a deep neural networks with up to six layers. The function takes XXX inputs, out of which YYY are conditional: the parameters in layer $k$ are only relevant if the network depth is at least $k$.
-Function evaluations were performed on a \note{type of GPU} and required ZZZ seconds on average.
-\note{FH: please fill in XXX, YYY, and ZZZ.}
+\paragraph{Data.} We use two different datasets, both of which are common in deep learning literature. The first is the canonical MNIST digits dataset [] where the task is to classify handwritten digits. The second is the CIFAR-10 object recognition dataset. We pre-processed CIFAR-10 by extracting features according to the pipeline given in []. We allow the neural networks for these problems to use up to $5$ hidden layers. We optimize over learning rates, weight constraints, dropout rate [], and the number of hidden units per layer leading to a total of up to $23$ hyperparameters and $6$ architectures. On MNIST, most effort is spent improving the error by a fraction of a percent, therefore we optimize this dataset using the log-classification error. For CIFAR-10, we just use the regular classification error as the objective. We use the Deepnet\footnote{https://github.com/nitishsrivastava/deepnet} package, and each function evaluation took approximately $1000$ to $2000$ seconds to run on NVIDIA GTX Titan GPUs.
 
 \subsection{Model Quality Experiments}   
 
 \paragraph{Models.}
-Separate Linear and Seperate {\sc gp} build a separate model for each neural net architecture, as in \cite{bergstra2011algorithms}.  The hierarchical {\sc gp} model combines all data together using the conditional kernel.
+Our first experiments concern the quality of the regression models used to form the response surface for Bayesian optimization. We generated data by performing 10 independent runs of Bayesian optimization on MNIST and then treat this as a regression problem. We compare the GP with arc kernel (AGP) to several baselines: the first baseline is a simple linear regression model, the second is a GP using a Mat\'{e}rn $\nicefrac{5}{2}$ kernel. Irrelevant dimensions are simply filled in randomly for each input. We also compare to the case where each architecture gets it's own separate model, as in~\cite{bergstra2011algorithms}. The results are averaged over $10$-fold train/test splits. Kernel parameters were inferred using slice sampling [].
+%Separate Linear and Seperate {\sc gp} build a separate model for each neural net architecture, as in \cite{bergstra2011algorithms}.  The hierarchical {\sc gp} model combines all data together using the conditional kernel.
 %
-In the case where all data comes from the same architecture, the hierarchical {\sc gp} model makes slightly different assumptions than a standard {\sc gp}, because it places the data on a semi-circle.  To check whether this alternate assumption affects performance, we also include a Separate-Hierarchical {\sc gp} model.
+%In the case where all data comes from the same architecture, the hierarchical {\sc gp} model makes slightly different assumptions than a standard {\sc gp}, because it places the data on a semi-circle.  To check whether this alternate assumption affects performance, we also include a Separate-Hierarchical {\sc gp} model.
 %
-We also compare against a simpler embedding method, or ``Poor Man's Embedding''.  In this procedure, we combine data from all models into a single model, replacing any unused parameters with a heuristic constant, set to $-1$ in these experiments.
+%We also compare against a simpler embedding method, or ``Poor Man's Embedding''.  In this procedure, we combine data from all models into a single model, replacing any unused parameters with a heuristic constant, set to $-1$ in these experiments.
 
-\paragraph{Data.} 951 datapoints were generated by performing Bayesian optimization.  Results are averaged over 10-fold train/test splits.
-\note{FH: very briefly describe the number of data points, where they come from, and how they were split to obtain error bars (I assume cross-validation).}
+%\paragraph{Data.} 951 datapoints were generated by performing Bayesian optimization on MNIST.  Results are averaged over 10-fold train/test splits.
+%\note{FH: very briefly describe the number of data points, where they come from, and how they were split to obtain error bars (I assume cross-validation).}
 
 \begin{table}[h!]
-\caption{{\small Normalized Mean Squared Error on Neural Network data\label{tab:nn_error}}}
+\caption{{\small Normalized Mean Squared Error on MNIST Bayesian optimization data\label{tab:nn_error}}}
 \label{tbl:nn_nmse}
-\input{tables/gpml-table.tex}
+\input{tables/mcmc-table.tex}
+\caption{Regression errors for a GP with the arc kernel compared to baselines.}
 \end{table}
+Table \ref{tbl:nn_nmse} shows that a GP using the arc kernel performs favourably to a GP that ignores the relevance information of each point.
 
 \paragraph{Results.}
-\note{FH: Describe Table \ref{tab:nn_error}.}
+%\note{FH: Describe Table \ref{tab:nn_error}.}
 
-\subsection{Bayesian Optimization Experiments}   
+\subsection{Bayesian Optimization Experiments}  
+
+\note{KS: Will add plots in the morning and finish this section.} 
 
 \paragraph{Experimental Setup.}
 For Bayesian optimization, we used the same process as in~\cite{snoek-etal-2012b}, including slice sampling and \emph{expected} expected improvement, but not expected improvement per time spent.
