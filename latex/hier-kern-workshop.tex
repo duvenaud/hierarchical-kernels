@@ -11,7 +11,8 @@
 \usepackage{bm}
 \usepackage{graphicx}
 \usepackage{epsfig}
-\usepackage{subfigure}
+\usepackage{caption}
+\usepackage{subcaption}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{color}
@@ -245,10 +246,11 @@ We can build a kernel with these properties for each possibly irrelevant input d
 Where $\omega_i \in \mathbb{R}^+$ and $\rho_i \in [0,1]$.
 %
 \begin{figure}
-\input{figures/semicylinder}
-\caption{A demonstration of the embedding giving rise to the pseudo-metric in 2 dimensions.  All points for which $\delta_2(x) =$ false are mapped onto a line varying only along $x_1$.  Points for which $\delta_2(x) =$ true are mapped to the surface of a semicylinder, depending on both $x_1$ and $x_2$.  This embedding gives a constant distance between pairs of points which have differing values of $\delta$ but the same values of $x_1$.
+\begin{subfigure}[]{0.3\textwidth}
+	\input{figures/semicylinder}
+	\caption{A demonstration of the embedding giving rise to the pseudo-metric in 2 dimensions.  All points for which $\delta_2(x) =$ false are mapped onto a line varying only along $x_1$.  Points for which $\delta_2(x) =$ true are mapped to the surface of a semicylinder, depending on both $x_1$ and $x_2$.  This embedding gives a constant distance between pairs of points which have differing values of $\delta$ but the same values of $x_1$.}
+\end{subfigure}
 %  The parameter $\rho$ determines how much distance there is along the arc.
-}
 \label{fig:cylinder}
 \end{figure}
 
@@ -294,7 +296,7 @@ We now show that the arc kernel yields better results than other alternatives.  
 
 \paragraph{Models.}
 
-Our first experiments concern the quality of the regression models used to form the response surface for Bayesian optimization. We generated data by performing 10 independent runs of Bayesian optimization on MNIST and then treat this as a regression problem. We compare the \gp{} with arc kernel (\agp) to several baselines: the first baseline is a simple linear regression model, the second is a \gp{} using a Mat\'{e}rn $\nicefrac{5}{2}$ kernel. Irrelevant dimensions are simply filled in randomly for each input. We also compare to the case where each architecture gets its own separate model, as in~\cite{bergstra2011algorithms}. The results are averaged over $10$-fold train/test splits. Kernel parameters were inferred using slice sampling \cite{Murray-Adams-2010a}.
+Our first experiments concern the quality of the regression models used to form the response surface for Bayesian optimization. We generated data by performing 10 independent runs of Bayesian optimization on MNIST and then treat this as a regression problem. We compare the \gp{} with arc kernel (\agp) to several baselines: the first baseline is a simple linear regression model, the second is a \gp{} using a Mat\'{e}rn $\nicefrac{5}{2}$ kernel. Irrelevant dimensions are simply filled in randomly for each input. We also compare to the case where each architecture gets its own separate model, as in~\cite{bergstra2011algorithms}. The results are averaged over $10$-fold train/test splits. Kernel parameters were inferred using slice sampling \cite{Murray-Adams-2010a}. As the errors lie between $0$ and $1$ with many distributed toward the lower end, it can be beneficial to take the log of the outputs before modelling them with a \gp{}. We experiment with both the original and transformed outputs.
 
 %Separate Linear and Seperate {\sc gp} build a separate model for each neural net architecture, as in \cite{bergstra2011algorithms}.  The hierarchical {\sc gp} model combines all data together using the conditional kernel.
 %
@@ -311,19 +313,15 @@ Our first experiments concern the quality of the regression models used to form 
 \input{tables/mcmc-table.tex}
 %\caption{Regression errors for a GP with the arc kernel compared to baselines.}
 \end{table}
-Table \ref{tbl:nn_nmse} shows that a \gp{} using the arc kernel performs favourably to a \gp{} that ignores the relevance information of each point.
 
 \paragraph{Results.}
-%\note{FH: Describe Table \ref{tab:nn_error}.}
+Table \ref{tbl:nn_nmse} shows that a \gp{} using the arc kernel performs favourably to a \gp{} that ignores the relevance information of each point. The ``separate'' categories apply a different model to each layer and therefore does not take advantage of dependencies between layers. Interestingly, the separate Arc \gp{}, which is effectively just a standard \gp{}, performs comparably to a standard \gp{}, suggesting that the embedding doesn't limit the expressiveness of the model.
 
 \subsection{Bayesian Optimization Experiments}  
 \vspace{-0.05in} 
 
-\note{KS: Will add plots in the morning and finish this section.} 
-
 \paragraph{Experimental Setup.}
-For Bayesian optimization, we used the same process as in~\cite{snoek-etal-2012b}, including slice sampling and \emph{expected} expected improvement, but not expected improvement per time spent.
-\note{FH: mention anything that differed in the setup.}
+For Bayesian optimization, we used the same process as in~\cite{snoek-etal-2012b}, including slice sampling and \emph{expected} expected improvement. 
 
 \paragraph{Results.}
 \note{FH: Discuss results including the nice figure of error over time. Also briefly mention experiments on datasets that did \emph{not} look awesome (we can't pick and choose!)}
