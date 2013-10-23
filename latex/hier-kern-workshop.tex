@@ -344,20 +344,20 @@ For Bayesian optimization, we used the same process as in~\cite{snoek-etal-2012b
 		\includegraphics[width=\textwidth]{figures/mnist.eps}
 		\caption{MNIST}
 		\label{fig:mnist}
-	\end{subfigure}
+	\end{subfigure}\quad
 	\begin{subfigure}[]{0.3\textwidth}
 		\includegraphics[width=\textwidth]{figures/cifar10.eps}
 		\caption{CIFAR-10}
 		\label{fig:cifar10}
-	\end{subfigure}
+	\end{subfigure}\quad
 	\begin{subfigure}[]{0.3\textwidth}
 		\includegraphics[width=\textwidth]{figures/fevals_per_layer.eps}
-		\caption{Proportion of architectures searched.}
+		\caption{Architectures searched}
 		\label{fig:proparchs}
 	\end{subfigure}
 	\caption{Bayesian optimization results using the arc kernel.}
 	\label{fig:arcbo}
-\vspace{-0.5cm}
+\vspace{-0.3cm}
 \end{figure}
 
 Figure~\ref{fig:arcbo} shows that on these datasets, using the arc kernel consistently reaches good solutions faster than the naive baseline, or it finds a better solution. In the case of MNIST, the best discovered model achieved $1.19\%$ test error using $50000$ training examples. By comparison,~\cite{wan2013regularization} achieved $1.28\%$ test error using a similar model and $60000$ training examples. Similarly, our best model for CIFAR-10 achieved $21.1\%$ test error using $45000$ training examples and $400$ features. For comparison, a support vector machine using $1600$ features with the same pipeline and $50000$ training examples achieves $22.1\%$ error. Figure \ref{fig:proparchs} shows the proportion of function evaluations spent on each architecture size for the CIFAR-10 experiments. Interestingly, the baseline tends to favour smaller models while a \gp{} using the arc kernel distributes it's efforts amongst deeper architectures that tend to yield better results.
