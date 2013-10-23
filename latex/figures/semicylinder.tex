@@ -11,14 +11,14 @@
 \newcommand{\bigradius}{3}
 \newcommand{\biggerradius}{3.3}
 \newcommand{\smallradius}{0.5}
-\newcommand{\xtwolabelangle}{80}
+\newcommand{\xtwolabelangle}{90}
 \newcommand{\belowamount}{0.2cm}
 \newcommand{\belowamounttwo}{0.11cm}
+\newcommand{\myell}{l}
 
 \newcommand{\embedding}{g}
 
 \tikzset{state/.style={circle,draw=black, very thick,minimum size=4em}}
-%\tikzstyle{cylfill} = 
 
 \def\centerarc[#1] (#2) (#3:#4:#5)% [draw options] (center) (initial angle:final angle:radius)
 { \draw[#1] (#2) ++(#3:#5) arc (#3:#4:#5);
@@ -27,7 +27,7 @@
 	\coordinate (right) at ({\bigradius*cos(\anglemin)}, {\bigradius*sin(\anglemin)});
 
 	\coordinate (O1) at (-2, 0);
-	\coordinate (O2) at (3, 1.5);
+	\coordinate (O2) at (3, 1);
 	
 	\coordinate (left1) at ($ (left) + (O1) $);
 	\coordinate (right1) at ($ (right) + (O1) $);
@@ -42,37 +42,35 @@
 	\centerarc[thick] (O1) (\anglemin:\anglemax:\smallradius)
 
 	\draw[fill] (left1) circle (1.5pt);
-	%\draw (left1) node[below, left] {$f(x_1 = u, \delta = \textnormal{true}, x_2 = 0$)};
-	\draw (left1) node[below = \belowamount, left] {$\embedding(u, \textnormal{true}, 0$)};
+	\draw (left1) node[below = \belowamount, left] {$\embedding(0, \textnormal{true}, u$)};
 	
 	\draw[fill] (right1) circle (1.5pt);
-	\draw (right1) node[below = \belowamount] (r1below) {};
-	\draw (right1) node[left] {$\embedding(\ell, \textnormal{true}, 0)$};
+	\draw (right1) node[below = \belowamount] (r1below) {}
+	               node[left] {$\embedding(0, \textnormal{true}, \myell)$};
 
 	\draw[fill] (O1) circle (1.5pt);
-	\draw (O1) node[below = \belowamount] (o1below) {};
-	\draw (O1) node[below] {$\embedding(\cdot, \textnormal{false}, 0)$};
+	\draw (O1) node[below = \belowamount] (o1below) {}
+	           node[left = 0.3cm] {$\embedding(0, \textnormal{false}, \cdot)$};
 
-	\draw (left1) -- (O1) node[above] {$\rho \pi$};
+	\draw (left1) -- (O1) node[above] {$\rho \pi$} 
+			      node[midway, above] {$\omega$};
 	\draw (right1) -- (O1);
 	
 	
 	% Second arc
 	% ================================
-	% Draw arcs
 	\centerarc[thick] (O2) (\anglemin:\anglemax:\bigradius)
 	\centerarc[thick] (O2) (\anglemin:\anglemax:\smallradius)
 
 	\draw[fill] (left2) circle (1.5pt);
-%	\draw (left2) node[below, left] {$f(u, \textnormal{true})$};
 	
 	\draw[fill] (right2) circle (1.5pt);
 	\draw (right2) node[below = \belowamount] (r2below) {};
-	\draw (right2) node[right] {$\embedding(\ell, \textnormal{true}, 1)$};
+	\draw (right2) node[right] {$\embedding(1, \textnormal{true}, \myell)$};
 
 	\draw[fill] (O2) circle (1.5pt);
-	\draw (O2) node[below = \belowamount] (o2below) {};
-%	\draw (O2) node[below] {$f(\cdot, \textnormal{false})$};
+	\draw (O2) node[below = \belowamount] (o2below) {}
+                   node[right] {$\embedding(1, \textnormal{false}, \cdot)$};
 
 	\draw[dashed] (left2) -- (O2);
 	\draw[dashed] (right2) -- (O2);
@@ -102,16 +100,16 @@
 	\draw[trans] ($ (r1below)!0.45!(r2below) $) -- ($ (r1below)!0.3!(r2below) $);
 	\draw[trans] ($ (r1below)!0.55!(r2below) $) -- ($ (r1below)!0.7!(r2below) $);
 
-	\coordinate(x2half) at ($ (O1)!0.5!(O2) $);
+	\coordinate(x2half) at ($ (O1)!0.6!(O2) $);
 	\draw (x2half) node[below = \belowamounttwo] (x2halfbelow) {$x_1$};
-	\draw[trans] ($ (o1below)!0.45!(o2below) $) -- ($ (o1below)!0.3!(o2below) $);
-	\draw[trans] ($ (o1below)!0.55!(o2below) $) -- ($ (o1below)!0.7!(o2below) $);
+	\draw[trans] ($ (o1below)!0.55!(o2below) $) -- ($ (o1below)!0.4!(o2below) $);
+	\draw[trans] ($ (o1below)!0.65!(o2below) $) -- ($ (o1below)!0.8!(o2below) $);
 
 	% Draw arrows showing in which direction x2 varies.
-	\coordinate (arclabel) at ($ (O2) + ({\biggerradius*cos(\xtwolabelangle)}, {\biggerradius*sin(\xtwolabelangle)}) $);
+	\coordinate (arclabel) at ($ (O1) + ({\biggerradius*cos(\xtwolabelangle)}, {\biggerradius*sin(\xtwolabelangle)}) $);
 	\draw (arclabel) node {$x_2$};
-	\centerarc[trans] (O2) ( \xtwolabelangle + 5  :  \xtwolabelangle + 30  :\biggerradius)
-	\centerarc[trans] (O2) ( \xtwolabelangle - 5  :  \xtwolabelangle - 30  :\biggerradius)
+	\centerarc[trans] (O1) ( \xtwolabelangle + 5  :  \xtwolabelangle + 30  :\biggerradius)
+	\centerarc[trans] (O1) ( \xtwolabelangle - 5  :  \xtwolabelangle - 30  :\biggerradius)
 
 %	\coordinate (x1) at ({\bigradius*cos(\angletwo)}, {\bigradius*sin(\angletwo)});
 %	\coordinate (x2) at ({\bigradius*cos(\angleone)}, {\bigradius*sin(\angleone)});
