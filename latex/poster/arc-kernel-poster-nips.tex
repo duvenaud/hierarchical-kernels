@@ -127,7 +127,7 @@
 %    \includegraphics[width=6cm,angle=0]{badges/cambridgecrest}
 %    \vspace{.1in}
 %    \includegraphics[width=6cm,angle=0]{unicamtext.pdf}
-    \includegraphics[width=8cm,trim=0em 0em 0em 0em, clip]{badges/freiburg}
+    \includegraphics[width=8cm,trim=0em 0em 0em 0em, clip]{badges/uni-freiburg}
 \end{minipage}
 %
 \hspace{1cm}
@@ -193,19 +193,22 @@
 
 \vspace{0.5in}
 
-\mysection{Bayesian Optimization with Guassian Processes}
+\mysection{Bayesian Optimization with Gaussian Processes}
 Formally, we aim to do inference about some function $f$ with domain 
 %(input space)
- $\sX$. $\sX = \prod_{i=1}^D \sX_i$ is a $D$-dimensional input space, where each individual dimension is bounded real, that is, $\sX_i = [l_i, u_i] \subset \reals$ (with lower and upper bounds $l_i$ and $u_i$, respectively). We define functions $\delta_i\colon \sX\to \{\text{true}, \text{false}\}$, for $i \in \{1,\,\ldots,\,D\}$. $\delta_i(\v{x})$ stipulates the relevance of the $i$th feature $x_i$ to 
+ $\sX$. $\sX = \prod_{i=1}^D \sX_i$ is a $D$-dimensional input space, where each individual dimension is bounded real, that is, $\sX_i = [l_i, u_i] \subset \reals$ (with lower and upper bounds $l_i$ and $u_i$, respectively).\\
+We define functions $\textcolor{red}{\delta_i\colon \sX\to \{\text{true}, \text{false}\}}$, for $i \in \{1,\,\ldots,\,D\}$. $\delta_i(\v{x})$ stipulates the relevance of the $i$th feature $x_i$ to 
  %inference about
   $f(\v{x})$.
 
 
 
-\subsection{The problem}
+\subsection*{The problem}
 \vspace{-0.05in}
 
-As an example, imagine trying to model the performance of a neural network having either one or two hidden layers, with respect to the regularization parameters for each layer, $x_1$ and $x_2$.  If $y$ represents the performance of a one layer-net with regularization parameters $x_1$ and $x_2$, then the value $x_2$ doesn't matter, since there is no second layer to the network. Below, we'll write an input triple as $(x_1, \delta_2(\v{x}), x_2)$ and assume that $\delta_1(\v{x}) = \text{true}$; that is, the regularization parameter for the first layer is always relevant. 
+Example: imagine trying to model the performance of a neural network having either one or two hidden layers, with respect to the regularization parameters for each layer, $x_1$ and $x_2$.\\ 
+If $y$ represents the performance of a one layer-net with regularization parameters $x_1$ and $x_2$, then the value $x_2$ doesn't matter, since there is no second layer to the network.\\
+Below, we'll write an input triple as $(x_1, \delta_2(\v{x}), x_2)$ and assume that $\delta_1(\v{x}) = \text{true}$; that is, the regularization parameter for the first layer is always relevant. 
 
 In this setting, we want a kernel $k$ to be dependent on which parameters are relevant, and the values of relevant parameters for both points. For example, consider first-layer parameters $x_1$ and $x_1'$:
 %
@@ -230,7 +233,7 @@ In this setting, we want a kernel $k$ to be dependent on which parameters are re
 \newpage 
 \mysection{The Arc Kernel}
 
-We can build a kernel with these properties for each possibly irrelevant input dimension $i$ by embedding our points into a Euclidean space.  Specifically, we use the embedding
+We can build a kernel with these properties for each possibly irrelevant input dimension $i$ by {\textcolor{red}{embedding our points into a Euclidean space}}.  Specifically, we use the embedding
 %
 %To emphasize that we're in the real case, we explicitly denote the pseudometric as $d\br_i$ and the (pseudo-)isometry from $(\sX, d_i)$ to $\reals^2,d_\text{E}$ 
 %as $f\br_i$. For the definitions, recall that $\delta_i(\v{x})$ is true iff dimension $i$ is relevant given the instantiation of $i$'s ancestors in $\v{x}$.
@@ -262,7 +265,9 @@ A demonstration of the embedding giving rise to the pseudo-metric.  All points f
 %\end{table}
 
 
-Figure \ref{fig:cylinder} shows a visualization of the embedding of points $(x_1, \delta_2(\v{x}), x_2)$ into $\reals^3$. 
+The figure above
+%\ref{fig:cylinder} 
+shows a visualization of the embedding of points $(x_1, \delta_2(\v{x}), x_2)$ into $\reals^3$. 
 %
 In this space, we have the Euclidean distance,
 %
