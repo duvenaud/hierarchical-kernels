@@ -182,6 +182,7 @@
 	\item Also includes architecture-\textbf{dependent} hyperparameters: learning rates, weight decays, dropout probabilities, etc.
 	\item The number of architecture-dependent hyperparameters changes with different architectures.
 	\item \textcolor{red} {Need to optimize over a varying number of hyperparameters!}
+	\item This is difficult for Bayesian optimization with Gaussian processes because we need to define a kernel over vectors of different sizes.
 \end{itemize}
 \end{minipage}
 \begin{minipage}[c]{0.35\columnwidth}
@@ -195,7 +196,7 @@
 
 \vspace{0.5in}
 
-\mysection{Bayesian Optimization with Gaussian Processes}
+\mysection{Comparing Architectures in Conditional Spaces}
 Formally, we aim to do inference about some function $f$ with domain 
 %(input space)
  $\sX$. $\sX = \prod_{i=1}^D \sX_i$ is a $D$-dimensional input space, where each individual dimension is bounded real, that is, $\sX_i = [l_i, u_i] \subset \reals$ (with lower and upper bounds $l_i$ and $u_i$, respectively).\\
@@ -205,10 +206,10 @@ We define functions $\textcolor{red}{\delta_i\colon \sX\to \{\text{true}, \text{
 
 
 
-\subsection*{The problem}
+\subsection*{Example}
 \vspace{-0.05in}
 
-Example: imagine trying to model the performance of a neural network having either one or two hidden layers, with respect to the regularization parameters for each layer, $x_1$ and $x_2$.\\ 
+Imagine trying to model the performance of a neural network having either one or two hidden layers, with respect to the regularization parameters for each layer, $x_1$ and $x_2$.\\ 
 If $y$ represents the performance of a one layer-net with regularization parameters $x_1$ and $x_2$, then the value $x_2$ doesn't matter, since there is no second layer to the network.\\
 Below, we'll write an input triple as $(x_1, \delta_2(\v{x}), x_2)$ and assume that $\delta_1(\v{x}) = \text{true}$; that is, the regularization parameter for the first layer is always relevant. 
 
@@ -216,17 +217,17 @@ In this setting, we want a kernel $k$ to be dependent on which parameters are re
 %
 \begin{itemize}
 \item If we are comparing two points for which the same parameters are relevant, the value of any unused parameters shouldn't matter,  
-\begin{equation}
+\begin{equation*}
  k\bigl((x_1, \textnormal{false}, x_2), (x_1', \textnormal{false}, x_2') \bigr)
 = k\bigl((x_1, \textnormal{false}, x_2''), (x_1', \textnormal{false}, x_2''')\bigr),\ 
 \forall x_2, x_2', x_2'', x_2''';
-\end{equation}
+\end{equation*}
 \item The covariance between a point using both parameters and a point using only one should again only depend on their shared parameters,
-\begin{equation}
+\begin{equation*}
  k\bigl((x_1, \textnormal{false}, x_2), (x_1', \textnormal{true}, x_2') \bigr)
 = k\bigl((x_1, \textnormal{false}, x_2''), (x_1', \textnormal{true}, x_2''')\bigr),\ 
 \forall x_2, x_2', x_2'', x_2'''.
-\end{equation}
+\end{equation*}
 \end{itemize}
 
 
@@ -242,13 +243,13 @@ We can build a kernel with these properties for each possibly irrelevant input d
 %
 %
 
-\begin{equation}
+\begin{equation*}
 \embeddingletter_i\br(\v{x}) = \left\{\begin{array}{ll}
 [0,0]^\transpose & \textrm{ if } \delta_i(\v{x}) = \textrm{ false }\\
 \omega_i [\sin{\pi\rho_i\frac{x_i}{u_i-l_i}}, \cos{\pi\rho_i\frac{x_i}{u_i-l_i}}]^\transpose & \textrm{ otherwise.}\end{array}\right.
-\label{eq:embedding}
-\end{equation}
-Where $\omega_i \in \mathbb{R}^+$ and $\rho_i \in [0,1]$.
+\end{equation*}
+Where $\omega_i \in \mathbb{R}^+$ and $\rho_i \in [0,1]$.\hfill{}
+\linebreak
 %
 %\begin{figure}
 %	\floatbox[{\capbeside\thisfloatsetup{capbesideposition={right,top}}}]{figure}[\FBwidth]
@@ -256,16 +257,17 @@ Where $\omega_i \in \mathbb{R}^+$ and $\rho_i \in [0,1]$.
 %\begin{table}
 %\begin{tabular}{c}
 
-\centering
+\begin{center}
 \input{figures/semicylinder}\label{fig:cylinder}
+\end{center}
 	%\caption{}
 %  The parameter $\rho$ determines how much distance there is along the arc.
 %\end{figure}
 %\end{tabular}
 
-A demonstration of the embedding giving rise to the pseudo-metric.  All points for which $\delta_2(x) =$ false are mapped onto a line varying only along $x_1$.  Points for which $\delta_2(x) =$ true are mapped to the surface of a semicylinder, depending on both $x_1$ and $x_2$.  This embedding gives a constant distance between pairs of points which have differing values of $\delta$ but the same values of $x_1$.
+A demonstration of the embedding giving rise to the pseudo-metric.  All points for which $\delta_2(x) =$ false are mapped onto a line varying only along $x_1$.  Points for which $\delta_2(x) =$ true are mapped to the surface of a semicylinder, depending on both $x_1$ and $x_2$.  This embedding gives a constant distance between pairs of points which have differing values of $\delta$ but the same values of $x_1$.\hfill{}
 %\end{table}
-
+\linebreak
 
 The figure above
 %\ref{fig:cylinder} 
@@ -273,13 +275,12 @@ shows a visualization of the embedding of points $(x_1, \delta_2(\v{x}), x_2)$ i
 %
 In this space, we have the Euclidean distance,
 %
-\begin{equation}
+\begin{equation*}
 d\br_i(\v{x}, \v{x}') = ||\embeddingletter_i\br(\v{x})-\embeddingletter_i\br(\v{x}')||_2 =\left\{\begin{array}{ll}
 0 & \textrm{ if } \delta_i(\v{x}) = \delta_i(\v{x}') = \textrm{false}\\
 \omega_i & \textrm{ if } \delta_i(\v{x}) \neq \delta_i(\v{x}')\\
 \omega_i \sqrt{2} \sqrt{1 - \cos(\pi\rho_i \frac{x_i-x_i'}{u_i-l_i})} & \textrm{ if } \delta_i(\v{x}) = \delta_i(\v{x}') = \textrm{true}. \end{array}\right.
-\label{eq:distance}
-\end{equation}
+\end{equation*}
 
 \mysection{Experimental Setup}
 	\begin{itemize}
@@ -293,7 +294,7 @@ d\br_i(\v{x}, \v{x}') = ||\embeddingletter_i\br(\v{x})-\embeddingletter_i\br(\v{
 			\item Dropout rates.
 			\item Number of hidden units in each layer.
 		\end{itemize}
-		\item Baseline embeds irrelevant dimensions randomly, roughly corresponds to a uniform prior over unused dimensions.
+		\item Baseline embeds irrelevant dimensions randomly, roughly corresponds to a uniform prior over irrelevant dimensions.
 	\end{itemize}
 
 
