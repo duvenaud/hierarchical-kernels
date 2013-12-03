@@ -178,8 +178,8 @@
 \begin{minipage}[c]{0.64\columnwidth}
 \begin{itemize}
 	\item Example: optimizing hyperparameters of a neural net.
-	\item Includes architecture-\textbf{independent} hyperparameters: epochs, batch-size, number of layers, etc.
-	\item Also includes architecture-\textbf{dependent} hyperparameters: learning rates, weight decays, dropout probabilities, etc.
+	\item Can include architecture-\textbf{independent} hyperparameters: epochs, batch-size, number of layers, etc.
+	\item Can also include architecture-\textbf{dependent} hyperparameters: learning rates, weight decays, dropout probabilities, etc.
 	\item The number of architecture-dependent hyperparameters changes with different architectures.
 	\item \textcolor{red} {Need to optimize over a varying number of hyperparameters!}
 	\item This is difficult for Bayesian optimization with Gaussian processes because we need to define a kernel over vectors of different sizes.
