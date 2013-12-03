@@ -1,13 +1,13 @@
-\def\layersep{1.33cm}
-\def\nodesep{.75cm}
-\def\nodesize{.35cm}
+\def\layersep{2.6cm}
+\def\nodesep{1.75cm}
+\def\nodesize{.85cm}
 
 \newcommand{\numdims}[0]{3}
 \newcommand{\numhidden}[0]{4}
 \newcommand{\upnodedist}[0]{0.6cm}
 \newcommand{\bardist}[0]{\hspace{-0.2cm}}
 
-\begin{tabular}{c|c}
+\begin{tabular}{c}
 \hspace{-0.5cm}
 \begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=\layersep]
     \tikzstyle{every pin edge}=[<-,shorten <=1pt]
@@ -51,8 +51,9 @@
 %    \node[annot,above of=H-1, node distance=\upnodedist] {Hidden};
 %    \node[annot,above of=O-1, node distance=\upnodedist] {Outputs};
 \end{tikzpicture}
-&
-\bardist
+\\
+One-layer MLP \\
+\vspace{0.25cm} \\
 \begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=\layersep]
     \tikzstyle{every pin edge}=[<-,shorten <=1pt]
     \tikzstyle{neuron}=[circle,fill=black!25,minimum size=17pt,inner sep=0pt]
@@ -106,8 +107,6 @@
 %    \node[annot,above of=H2-1, node distance=\upnodedist] {Hidden};
 %    \node[annot,above of=O-1, node distance=\upnodedist] {Outputs};
 \end{tikzpicture}
-\bardist
  \\
-\hspace{-0.5cm} One-layer MLP & 
 Two-layer MLP 
 \end{tabular}
