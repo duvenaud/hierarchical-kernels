@@ -78,20 +78,22 @@
 
 \pbox{0.99\textwidth}{}{linewidth=2mm,framearc=0.3,linecolor=camdarkblue,fillstyle=gradient,gradangle=0,gradbegin=white,gradend=white,gradmidpoint=1.0,framesep=1em}{
 %%% U Toronto Logo
-\begin{minipage}[c]{\logowidth}
+\begin{minipage}[c][][b]{\logowidth}
 %  \begin{center}
-    \includegraphics[width=6.5cm,trim=9em 0em 9em 0em, clip]{badges/toronto}
+    \vspace{-.9in}
+    \includegraphics[width=8cm,trim=9em 0em 9em 0em, clip]{badges/toronto}
  %       \vspace{.1in}
 %    \includegraphics[width=6cm]{uot_text.gif}
 %University of Cambridge 
 %  \end{center}
 \end{minipage}
+\hspace{0.3cm}
 %
 %
 %%% Cambridge Logo
-\begin{minipage}[c]{\logowidth}
+\begin{minipage}[c][][b]{\logowidth}
 %  \begin{center}
-    \vspace{.1in}
+    \vspace{.978in}
     \includegraphics[width=6cm]{badges/cambridgecrest}
     \includegraphics[width=6cm]{badges/unicamtext.pdf}
 %University of Cambridge 
@@ -111,19 +113,19 @@
 %
 %
 % Harvard
-\begin{minipage}[c]{\logowidth}
+\begin{minipage}[c][][b]{\logowidth}
   \begin{flushright}
 %    \includegraphics[width=6cm,angle=0]{badges/cambridgecrest}
 %    \vspace{.1in}
 %    \includegraphics[width=6cm,angle=0]{unicamtext.pdf}
-    \includegraphics[width=8cm,trim=3.2em 0em 3.2em 2em, clip]{badges/harvard}
+    \includegraphics[width=8cm,trim=3.2em 0em 3.2em 3em, clip]{badges/harvard}
 %University of Cambridge 
   \end{flushright}
 \end{minipage}
 %
 \hspace{1cm}
 % 
-\begin{minipage}[c]{\logowidth}
+\begin{minipage}[c][][b]{\logowidth}
 %    \includegraphics[width=6cm,angle=0]{badges/cambridgecrest}
 %    \vspace{.1in}
 %    \includegraphics[width=6cm,angle=0]{unicamtext.pdf}
@@ -132,7 +134,7 @@
 %
 \hspace{1cm}
 % 
-\begin{minipage}[c]{\logowidth}
+\begin{minipage}[c][][b]{\logowidth}
 %    \includegraphics[width=6cm,angle=0]{badges/cambridgecrest}
 %    \vspace{.1in}
 %    \includegraphics[width=6cm,angle=0]{unicamtext.pdf}
