@@ -225,6 +225,7 @@ In this setting, we want a kernel $k$ to be dependent on which parameters are re
 \end{equation}
 \end{itemize}
 
+Put another way, in the absence of any other information, this specification encodes our prior ignorance about the irrelevant (missing) parameters while still allowing us to model correlations between relevant parameters.
 %Elaborating on the first consideration:
 %
 %\begin{itemize}[leftmargin=0.8cm]
@@ -300,7 +301,7 @@ We dub this new kernel the \emph{arc kernel}. Its parameters, $\omega_i$ and $\r
 
 We now show that the arc kernel yields better results than other alternatives. 
 % Bayesian optimization requires building a surrogate model of the function being optimized, and better models can be expected to lead to more efficient optimization.  However, because of the many interacting components of BO, optimizer performance might not correspond directly to the quality of the model.  Thus, w
-We perform two types of experiments: first, we study model quality in isolation in a regression task; second, we demonstrate that the improved model indeed yields improved \bo{} performance.
+We perform two types of experiments: first, we study model quality in isolation in a regression task; second, we study the effect of the arc kernel on \bo{} performance. All \gp{} models use a Mat\'{e}rn $\nicefrac{5}{2}$ kernel.
 
 \paragraph{Data.} We use two different datasets, both of which are common in the deep learning literature. The first is the canonical MNIST digits dataset~\cite{lecun-1998a} where the task is to classify handwritten digits. The second is the CIFAR-10 object recognition dataset~\cite{Krizhevsky-2009a}. We pre-processed CIFAR-10 by extracting features according to the pipeline given in~\cite{coates2010analysis}.
 
@@ -308,7 +309,7 @@ We perform two types of experiments: first, we study model quality in isolation 
 
 \paragraph{Models.}
 
-Our first experiments concern the quality of the regression models used to form the response surface for Bayesian optimization. We generated data by performing 10 independent runs of Bayesian optimization on MNIST and then treat this as a regression problem. We compare the \gp{} with arc kernel (\agp) to several baselines: the first baseline is a simple linear regression model, the second is a \gp{} using a Mat\'{e}rn $\nicefrac{5}{2}$ kernel. Irrelevant dimensions are simply filled in randomly for each input. We also compare to the case where each architecture gets its own separate model, as in~\cite{bergstra2011algorithms}. The results are averaged over $10$-fold train/test splits. Kernel parameters were inferred using slice sampling \cite{Murray-Adams-2010a}. As the errors lie between $0$ and $1$ with many distributed toward the lower end, it can be beneficial to take the log of the outputs before modelling them with a \gp{}. We experiment with both the original and transformed outputs.
+Our first experiments concern the quality of the regression models used to form the response surface for Bayesian optimization. We generated data by performing 10 independent runs of Bayesian optimization on MNIST and then treat this as a regression problem. We compare the \gp{} with arc kernel (\agp) to several baselines: the first baseline is a simple linear regression model, the second is a \gp{}  where irrelevant dimensions are simply filled in randomly for each input. We also compare to the case where each architecture uses its own separate \gp{}, as in~\cite{bergstra2011algorithms}. The results are averaged over $10$-fold train/test splits. Kernel parameters were inferred using slice sampling \cite{Murray-Adams-2010a}. As the errors lie between $0$ and $1$ with many distributed toward the lower end, it can be beneficial to take the log of the outputs before modelling them with a \gp{}. We experiment with both the original and transformed outputs.
 
 %Separate Linear and Seperate {\sc gp} build a separate model for each neural net architecture, as in \cite{bergstra2011algorithms}.  The hierarchical {\sc gp} model combines all data together using the conditional kernel.
 %
@@ -326,6 +327,7 @@ Our first experiments concern the quality of the regression models used to form 
 \input{tables/mcmc-table.tex}
 %\input{tables/mcmc-table-transposed.tex}
 %\caption{Regression errors for a GP with the arc kernel compared to baselines.}
+\vspace{-0.3cm}
 \end{table}
 
 \paragraph{Results.}
@@ -333,7 +335,7 @@ Table \ref{tbl:nn_nmse} shows that a \gp{} using the arc kernel performs favoura
 
 \subsection{Bayesian Optimization Experiments}  
 \vspace{-0.05in} 
-In this experiment, we test the ability of Bayesian optimization to tune the hyperparameters of each layer of a deep neural network. We allow the neural networks for these problems to use up to $5$ hidden layers (or no hidden layer). We optimize over learning rates, L2 weight constraints, dropout rates~\cite{hinton2012improving}, and the number of hidden units per layer leading to a total of up to $23$ hyperparameters and $6$ architectures. On MNIST, most effort is spent improving the error by a fraction of a percent, therefore we optimize this dataset using the log-classification error. For CIFAR-10, we use classification error as the objective. We use the Deepnet\footnote{https://github.com/nitishsrivastava/deepnet} package, and each function evaluation took approximately $1000$ to $2000$ seconds to run on NVIDIA GTX Titan GPUs.
+In this experiment, we test the ability of Bayesian optimization to tune the hyperparameters of each layer of a deep neural network. We allow the neural networks for these problems to use up to $5$ hidden layers (or no hidden layer). We optimize over learning rates, L2 weight constraints, dropout rates~\cite{hinton2012improving}, and the number of hidden units per layer leading to a total of up to $23$ hyperparameters and $6$ architectures. On MNIST, most effort is spent improving the error by a fraction of a percent, therefore we optimize this dataset using the log-classification error. For CIFAR-10, we use classification error as the objective. We use the Deepnet\footnote{https://github.com/nitishsrivastava/deepnet} package, and each function evaluation took approximately $1000$ to $2000$ seconds to run on NVIDIA GTX Titan GPUs. Note that in this setup, when a network of depth $n$ is tested, all hyperparameters from layers $n+1$ onward are deemed irrelevant.
 \paragraph{Experimental Setup.}
 For Bayesian optimization, we follow the methodology of~\cite{snoek-etal-2012b}, using slice sampling and the expected improvement heuristic. In this methodology, the acquisition function is optimized by first selecting from a pre-determined grid of points lying in $[0,1]^{23}$, distributed according to a Sobol sequence. Our baseline is a standard Gaussian process that is agnostic to whether particular dimensions are irrelevant for a given point.
 
