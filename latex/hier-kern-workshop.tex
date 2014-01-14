@@ -135,7 +135,7 @@
 \author{
 Kevin Swersky \\
 University of Toronto \\
-{\small \texttt{kswersky@cs.utoronto.edu}} \\
+{\small \texttt{kswersky@cs.toronto.edu}} \\
 \And
 David Duvenaud \\
 University of Cambridge \\
@@ -182,10 +182,10 @@ The most common choice of prior distribution are Gaussian processes (\gp s~\cite
 However, some problem domains remain challenging to model well with \gp s, and the efficiency and effectiveness of Bayesian optimization suffers as a result. In this paper, we tackle the common problem of input dimensions that are only relevant if other inputs take certain values~\cite{Hut09:phd,bergstra2011algorithms}. This is a general problem in algorithm configuration~\cite{Hut09:phd} that occurs in many machine learning contexts, such as, e.g., in deep neural networks~\cite{HinOsiTeh06}; flexible computer vision architectures~\cite{BerYamCox13}; and the combined selection and hyperparameter optimization of machine learning algorithms~\cite{ThoEtAl13}. We detail the case of deep neural networks below.
 
 Bayesian optimization has recently been applied successfully to deep neural networks~\cite{snoek-etal-2012b, bergstra2011algorithms} to optimize high level model parameters and optimization parameters, which we will refer to collectively as \emph{hyperparameters}.  Deep neural networks represent the state-of-the-art on multiple machine learning benchmarks such as object recognition~\cite{krizhevsky-2012}, speech recognition~\cite{deepSpeechReviewSPM2012}, natural language processing~\cite{mikolov2010recurrent} and more.
-They are multi-layered models by definition, and each layer is typically parameterized by a unique set of hyperparameters, such as regularization parameters and the layer capacity or number of hidden units.  Thus adding additional layers introduces additional hyperparameters to be optimized.  The result is a complex hierarchical conditional parameter space, which is difficult to search over.  Historically, practitioners have simply built a separate model for each type of architecture \cite{bergstra2011algorithms} or assumed a fixed architecture~\cite{snoek-etal-2012b}.  However, if there is any relation between networks with different architectures, separately modeling each is wasteful. 
+They are multi-layered models by definition, and each layer is typically parameterized by a unique set of hyperparameters, such as regularization parameters and the layer capacity or number of hidden units.  Thus adding additional layers introduces additional hyperparameters to be optimized.  The result is a complex hierarchical conditional parameter space, which is difficult to search over.  Historically, practitioners have simply built a separate model for each type of architecture or used non-\gp~models~\cite{bergstra2011algorithms}, or assumed a fixed architecture~\cite{snoek-etal-2012b}.  If there is any relation between networks with different architectures, separately modelling each is wasteful. 
 
 \gp s with standard kernels fail to model the performance of architectures with such conditional hyperparameters. To remedy this, 
-the contribution of this paper is the introduction of a kernel that allows observed information to be shared across architectures when this is appropriate. We demonstrate empirically on a \gp{} regression task and a Bayesian optimization task that this kernel models the conditional parameter space of a typical deep learning problem better than previous \emph{ad-hoc} methods. 
+the contribution of this paper is the introduction of a kernel that allows observed information to be shared across architectures when this is appropriate. We demonstrate the effectiveness of this kernel on a \gp{} regression task and a Bayesian optimization task using a feed-forward classification neural network. 
 
 
 \section{A Kernel for Conditional Parameter Spaces}
@@ -263,7 +263,7 @@ Where $\omega_i \in \mathbb{R}^+$ and $\rho_i \in [0,1]$.
 	{\hspace{-1cm}\input{figures/semicylinder}\label{fig:cylinder}}
 	%\caption{}
 %  The parameter $\rho$ determines how much distance there is along the arc.
-
+\vspace{-0.3cm}
 \end{figure}
 
 Figure \ref{fig:cylinder} shows a visualization of the embedding of points $(x_1, \delta_2(\v{x}), x_2)$ into $\reals^3$. 
@@ -335,9 +335,9 @@ Table \ref{tbl:nn_nmse} shows that a \gp{} using the arc kernel performs favoura
 
 \subsection{Bayesian Optimization Experiments}  
 \vspace{-0.05in} 
-In this experiment, we test the ability of Bayesian optimization to tune the hyperparameters of each layer of a deep neural network. We allow the neural networks for these problems to use up to $5$ hidden layers (or no hidden layer). We optimize over learning rates, L2 weight constraints, dropout rates~\cite{hinton2012improving}, and the number of hidden units per layer leading to a total of up to $23$ hyperparameters and $6$ architectures. On MNIST, most effort is spent improving the error by a fraction of a percent, therefore we optimize this dataset using the log-classification error. For CIFAR-10, we use classification error as the objective. We use the Deepnet\footnote{https://github.com/nitishsrivastava/deepnet} package, and each function evaluation took approximately $1000$ to $2000$ seconds to run on NVIDIA GTX Titan GPUs. Note that in this setup, when a network of depth $n$ is tested, all hyperparameters from layers $n+1$ onward are deemed irrelevant.
+In this experiment, we test the ability of Bayesian optimization to tune the hyperparameters of each layer of a deep neural network. We allow the neural networks for these problems to use up to $5$ hidden layers (or no hidden layer). We optimize over learning rates, L2 weight constraints, dropout rates~\cite{hinton2012improving}, and the number of hidden units per layer leading to a total of up to $23$ hyperparameters and $6$ architectures. On MNIST, most effort is spent improving the error by a fraction of a percent, therefore we optimize this dataset using the log-classification error. For CIFAR-10, we use classification error as the objective. We use the Deepnet\footnote{https://github.com/nitishsrivastava/deepnet} package, and each function evaluation took approximately $1000$ to $2000$ seconds to run on NVIDIA GTX Titan GPUs. Note that when a network of depth $n$ is tested, all hyperparameters from layers $n+1$ onward are deemed irrelevant.
 \paragraph{Experimental Setup.}
-For Bayesian optimization, we follow the methodology of~\cite{snoek-etal-2012b}, using slice sampling and the expected improvement heuristic. In this methodology, the acquisition function is optimized by first selecting from a pre-determined grid of points lying in $[0,1]^{23}$, distributed according to a Sobol sequence. Our baseline is a standard Gaussian process that is agnostic to whether particular dimensions are irrelevant for a given point.
+For Bayesian optimization, we follow the methodology of~\cite{snoek-etal-2012b}, using slice sampling and the expected improvement heuristic. In this methodology, the acquisition function is optimized by first selecting from a pre-determined grid of points lying in $[0,1]^{23}$, distributed according to a Sobol sequence. Our baseline is a standard Gaussian process over this space that is agnostic to whether particular dimensions are irrelevant for a given point.
 
 \paragraph{Results.}
 \begin{figure}[t!]
