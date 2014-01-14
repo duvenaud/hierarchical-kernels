@@ -39,6 +39,9 @@ if xeqz
     z = x;
 end
 
+x = x(:);
+z = z(:);
+
 % Use projection into 2D to compute kernel.
 xproj = [x, zeros(size(x,1), 1)];
 zproj = [z, zeros(size(z,1), 1)];

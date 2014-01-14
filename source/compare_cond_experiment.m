@@ -16,13 +16,13 @@ addpath(genpath('methods'))
 
 
 outdir = '/scratch/results/18-oct-overnight-fear-backup/';
-outdir = '/home/dkd23/results/oct-22-fear/';
+outdir = '/home/dkd23/results/jan-14-fear/';
 mkdir(outdir);
 
 
 [datafiles, methods] = define_datasets_and_methods();
 
-methods{1} = @separate_linear;
+methods{1} = @sep_box;
 methods(2:end) = [];
 
 K = 10;
