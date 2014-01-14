@@ -5,7 +5,7 @@ function test_cov_derivs()
 % Feb 2013
 
 
-covfunc = @covCond;
+covfunc = @covBox;
 
 n = 5;
 D = 1;
@@ -27,8 +27,7 @@ exp(hypers)
 for i = 1:num_hypers
     ng = numerical_grad( covwrap, hypers, i, delta );
     tg = covfunc(hypers, x, z, i);
-    ng
-    tg
+    tg./ng
 end
 
 end

@@ -8,8 +8,8 @@ datafiles{end+1} = '../data/matlab/concatenated_nan.mat';
 datafiles{end+1} = '../data/matlab/concatenated_nan_log.mat';
 datafiles{end+1} = '../data/matlab/concatenated_nan_half.mat';
 datafiles{end+1} = '../data/matlab/concatenated_nan_log_half.mat';
-%datafiles{end+1} = '../data/matlab/concrete_500';
-%datafiles{end+1} = '../data/matlab/housing.mat';
+datafiles{end+1} = '../data/matlab/concrete_500';
+datafiles{end+1} = '../data/matlab/housing.mat';
 
 
 
@@ -21,3 +21,5 @@ methods{end+1} = @linear_nonan;
 methods{end+1} = @gp_ard_nonan;
 methods{end+1} = @sep_hierarchical;
 methods{end+1} = @gp_hierarchical;
+methods{end+1} = @sep_box;
+methods{end+1} = @gp_box;
