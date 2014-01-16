@@ -20,7 +20,8 @@ addpath(genpath('methods'))
 %outdir = '/scratch/results/18-oct-overnight-fear-backup/';
 
 %outdir = '/home/dkd23/results/oct-18-fear/';
-outdir = '/home/dkd23/results/oct-22-fear/';
+%outdir = '/home/dkd23/results/oct-22-fear/';
+outdir = '/home/dkd23/results/jan-14-fear/';
 
 
 

@@ -9,7 +9,7 @@ covfunc = @covBox;
 
 n = 5;
 D = 1;
-x = randn(n,D);
+x = randn(n-1,D);
 z = randn(n,D);
 x(1) = NaN;
 x(3) = NaN;
@@ -27,7 +27,7 @@ exp(hypers)
 for i = 1:num_hypers
     ng = numerical_grad( covwrap, hypers, i, delta );
     tg = covfunc(hypers, x, z, i);
-    tg./ng
+    tg./    ng
 end
 
 end
