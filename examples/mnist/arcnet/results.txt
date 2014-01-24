@@ -1,0 +1,1 @@
+/ais/gobi3/u/nitish/svhn/models/3layer_conv_run5_BEST 2.61

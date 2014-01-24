@@ -1,0 +1,37 @@
+Best result: nan
+Job-id: -1
+Parameters: 
+name: "depth"
+int_val: 0
+
+name: "num_units"
+int_val: 13
+int_val: 18
+int_val: 4
+int_val: 4
+int_val: 5
+
+name: "log_base_epsilon"
+dbl_val: -11.1984702559
+dbl_val: -4.36126537465
+dbl_val: -0.0769449059091
+dbl_val: -9.98772986428
+dbl_val: -2.34102241129
+dbl_val: -6.76025997533
+
+name: "weight_norm"
+dbl_val: 7.4822769165
+dbl_val: 0.88077545166
+dbl_val: 3.73546600342
+dbl_val: 7.12419891357
+dbl_val: 7.78453826904
+dbl_val: 2.8589553833
+
+name: "dropout"
+dbl_val: 0.444702148438
+dbl_val: 0.723901367188
+dbl_val: 0.160815429688
+dbl_val: 0.0878662109375
+dbl_val: 0.172143554688
+dbl_val: 0.347827148438
+

@@ -1,0 +1,231 @@
+name: "3layer_conv_run4"
+model_type: FEED_FORWARD_NET
+seed: 42
+hyperparams {
+  base_epsilon: 0.01
+  adapt: NO_ADAPT
+  epsilon_decay : INVERSE_T
+  epsilon_decay_half_life : 10000
+  initial_momentum : 0.5
+  final_momentum : 0.9
+  momentum_change_steps : 10000
+  apply_weight_norm : false
+  weight_norm : 4
+  apply_l2_decay: true
+  l2_decay: 0.004
+  dropout: true
+  dropout_prob: 0.5
+  activation: RECTIFIED_LINEAR
+  stop_dropout_for_last: 10000
+}
+
+layer {
+  name: "input_layer"
+  dimensions: 3072
+  is_input: true
+  shape: 784
+  hyperparams{
+    droput: true
+    dropout_prob: 0
+    activation: LINEAR
+    normalize: false
+    add_noise: false
+    shift: false
+  }
+  data_field {
+    train: "train_data"
+    validation: "valid_data"
+    test: "test_data"
+  }
+}
+
+layer {
+  name: "output_layer"
+  dimensions: 1
+  numlabels: 10
+  param {
+    name: "bias"
+    initialization: CONSTANT
+  }
+  hyperparams{
+    dropout: false
+    activation: SOFTMAX
+    apply_l2_decay: false
+  }
+  is_output: true
+  loss_function: CROSS_ENTROPY
+  data_field {
+    train: "train_labels"
+    validation: "valid_labels"
+    test: "test_labels"
+  }
+  performance_stats {
+    compute_cross_entropy: true
+    compute_correct_preds: true
+  }
+}
+
+layer {
+  name: "hidden1"
+  dimensions: 100
+  param {
+    name: "bias"
+    initialization: CONSTANT
+  }
+  hyperparams {
+    dropout: true
+    dropout_prob: 0
+    apply_l2_decay: false
+  }
+}
+
+edge {
+  node1: "input_layer"
+  node2: "hidden1"
+  param {
+    name: "weight"
+    conv: true
+    conv_params {
+      size: 5
+      stride: 1
+      padding: 2
+      num_filters: 64
+      num_colors: 3
+      max_pool: true
+      pool_size: 3
+      pool_stride: 2
+    }
+    initialization: DENSE_GAUSSIAN
+    sigma: 0.01
+  }
+  hyperparams {
+    base_epsilon: 0.001
+    epsilon_decay : NONE  #EXPONENTIAL
+    initial_momentum : 0.9
+    final_momentum : 0.9
+    momentum_change_steps : 20000
+    sparsity : false
+    apply_weight_norm : false
+    apply_l2_decay: false
+    l2_decay: 0.0001
+  }
+  receptive_field_width : 8
+  display_rows: 8
+  display_cols: 8
+}
+edge {
+  node1: "hidden1"
+  node2: "hidden2"
+  param {
+    name: "weight"
+    conv: true
+    conv_params {
+      size: 5
+      stride: 1
+      padding: 2
+      num_filters: 64
+      num_colors: 64
+      max_pool: true
+      pool_size: 3
+      pool_stride: 2
+    }
+    initialization: DENSE_GAUSSIAN
+    sigma: 0.01
+  }
+  hyperparams {
+    base_epsilon: 0.001
+    epsilon_decay : NONE  #EXPONENTIAL
+    initial_momentum : 0.9
+    final_momentum : 0.9
+    momentum_change_steps : 20000
+    sparsity : false
+    apply_weight_norm : false
+    apply_l2_decay: false
+    l2_decay: 0.001
+  }
+  receptive_field_width : 8
+  display_rows: 8
+  display_cols: 8
+}
+edge {
+  node1: "hidden2"
+  node2: "hidden3"
+  param {
+    name: "weight"
+    conv: true
+    conv_params {
+      size: 5
+      stride: 1
+      padding: 2
+      num_filters: 128
+      num_colors: 64
+      max_pool: true
+      pool_size: 3
+      pool_stride: 2
+    }
+    initialization: DENSE_GAUSSIAN
+    sigma: 0.01
+  }
+  hyperparams {
+    base_epsilon: 0.001
+    epsilon_decay : NONE  #EXPONENTIAL
+    initial_momentum : 0.9
+    final_momentum : 0.9
+    momentum_change_steps : 20000
+    sparsity : false
+    apply_weight_norm : false
+    apply_l2_decay: false
+    l2_decay: 0.001
+  }
+  receptive_field_width : 8
+  display_rows: 8
+  display_cols: 8
+}
+
+edge {
+  node1: "hidden3"
+  node2: "hidden4"
+  param {
+    name: "weight"
+    initialization: DENSE_GAUSSIAN_SQRT_FAN_IN
+    sigma: 1.0
+  }
+  hyperparams {
+    base_epsilon: 1.0
+    apply_weight_norm : true
+    weight_norm : 4
+    apply_l2_decay: false
+  }
+}
+
+edge {
+  node1: "hidden4"
+  node2: "hidden5"
+  param {
+    name: "weight"
+    initialization: DENSE_GAUSSIAN_SQRT_FAN_IN
+    sigma: 1.0
+  }
+  hyperparams {
+    base_epsilon: 1.0
+    apply_weight_norm : true
+    weight_norm : 4
+    apply_l2_decay: false
+  }
+}
+
+edge {
+  node1: "hidden5"
+  node2: "output_layer"
+  param {
+    name: "weight"
+    initialization: DENSE_GAUSSIAN_SQRT_FAN_IN
+    sigma: 1.0
+  }
+  hyperparams {
+    base_epsilon: 1.0
+    apply_weight_norm : true
+    weight_norm : 4
+    apply_l2_decay: false
+  }
+}
