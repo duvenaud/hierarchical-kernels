@@ -19,7 +19,7 @@ hyp.cov = [ log_lengthscales, log_variance ];
 max_iters = hhp.max_iterations
 
 % Save intialize hyperparameters.
-model.init_hypers = hyp;        
+model.init_hypers = hyp;
 
 % Fit the model.
 [cur_hyp, nlZ] = minimize(hyp, @gp, -max_iters, ...

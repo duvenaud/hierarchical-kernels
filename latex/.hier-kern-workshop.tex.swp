@@ -135,7 +135,7 @@
 \author{
 Kevin Swersky \\
 University of Toronto \\
-{\small \texttt{kswersky@cs.utoronto.edu}} \\
+{\small \texttt{kswersky@cs.toronto.edu}} \\
 \And
 David Duvenaud \\
 University of Cambridge \\
@@ -159,7 +159,7 @@ University of Oxford \\
 
 \maketitle
 \begin{abstract}
-In practical Bayesian optimization, we must often search over structures with differing numbers of parameters.  For instance, we may wish to search over neural network architectures with an unkown number of layers.  To relate performance data gathered for different architectures, we define a new kernel for conditional parameter spaces that explicitly includes information about which parameters are relevant in a given structure. We show that this kernel improves model quality and Bayesian optimization results over several simpler baseline kernels.
+In practical Bayesian optimization, we must often search over structures with differing numbers of parameters.  For instance, we may wish to search over neural network architectures with an unknown number of layers.  To relate performance data gathered for different architectures, we define a new kernel for conditional parameter spaces that explicitly includes information about which parameters are relevant in a given structure. We show that this kernel improves model quality and Bayesian optimization results over several simpler baseline kernels.
 \end{abstract}
 
 %\note{FH: I left notes throughout using this mechanism. These notes stand out ugly on purpose -- so that they can't be overlooked easily. Once a note is dealt with, please remove it or comment it out in the source. For checking e.g. length, all notes can also be disabled at once by commenting out a single line towards the top of the source.}
@@ -177,15 +177,15 @@ In practical Bayesian optimization, we must often search over structures with di
 Bayesian optimization (\bo) is an efficient approach for solving blackbox optimization problems of the form $\arg\min_{x \in X} f(x)$ (see~\cite{Brochu2010} for a detailed overview), where $f$ is expensive to evaluate. 
 It employs a prior distribution $p(f)$ over functions that is updated as new information on $f$ becomes available.
 %
-The most common choice of prior distribution are Gaussian processes (\gp s~\cite{rasmussen38gaussian}), as they are powerful and flexible models for which the marginal and conditional distributions can be computed efficiently.\footnote{There are prominent exceptions to this rule, though. In particular, tree-based models, such as random forests, can be a better choice if there are many data points (and \gp s thus become computationally inefficient), if the input dimensionality is high, if the noise is not normally distributed, or if there are non-stationarities~\cite{TadGraPol11,HutHooLey11,BerEtAl11}.}
+The most common choice of prior distribution are Gaussian processes (\gp s~\cite{rasmussen38gaussian}), as they are powerful and flexible models for which the marginal and conditional distributions can be computed efficiently.\footnote{There are prominent exceptions to this rule, though. In particular, tree-based models, such as random forests, can be a better choice if there are many data points (and \gp s thus become computationally inefficient), if the input dimensionality is high, if the noise is not normally distributed, or if there are non-stationarities~\cite{TadGraPol11,HutHooLey11,bergstra2011algorithms}.}
 %
-However, some problem domains remain challenging to model well with \gp s, and the efficiency and effectiveness of Bayesian optimization suffers as a result. In this paper, we tackle the common problem of input dimensions that are only relevant if other inputs take certain values~\cite{Hut09:phd,BergstraJ2011}. This is a general problem in algorithm configuration~\cite{Hut09:phd} that occurs in many machine learning contexts, such as, for example, in deep neural networks~\cite{HinOsiTeh06}; flexible computer vision architectures~\cite{BerYamCox13}; and the combined selection and hyperparameter optimization of machine learning algorithms~\cite{ThoEtAl13}. We detail the case of deep neural networks below.
+However, some problem domains remain challenging to model well with \gp s, and the efficiency and effectiveness of Bayesian optimization suffers as a result. In this paper, we tackle the common problem of input dimensions that are only relevant if other inputs take certain values~\cite{Hut09:phd,bergstra2011algorithms}. This is a general problem in algorithm configuration~\cite{Hut09:phd} that occurs in many machine learning contexts, such as, e.g., in deep neural networks~\cite{HinOsiTeh06}; flexible computer vision architectures~\cite{BerYamCox13}; and the combined selection and hyperparameter optimization of machine learning algorithms~\cite{ThoEtAl13}. We detail the case of deep neural networks below.
 
-Bayesian optimization has recently been applied successfully to deep neural networks~\cite{snoek-etal-2012b, BergstraJ2011} to optimize high level model parameters and optimization parameters, which we will refer to collectively as \emph{hyperparameters}.  Deep neural networks represent the state-of-the-art on multiple machine learning benchmarks such as object recognition~\cite{krizhevsky-2012}, speech recognition~\cite{deepSpeechReviewSPM2012}, natural language processing~\cite{mikolov2010recurrent} and more.
-They are multi-layered models by definition, and each layer is typically parameterized by a unique set of hyperparameters, such as regularization parameters and the layer capacity or number of hidden units.  Thus adding additional layers introduces additional hyperparameters to be optimized.  The result is a complex hierarchical conditional parameter space, which is difficult to search over.  Historically, practitioners have simply built a separate model for each type of architecture \cite{bergstra2011algorithms} or assumed a fixed architecture~\cite{snoek-etal-2012b}.  However, if there is any relation between networks with different architectures, separately modeling each is wasteful. 
+Bayesian optimization has recently been applied successfully to deep neural networks~\cite{snoek-etal-2012b, bergstra2011algorithms} to optimize high level model parameters and optimization parameters, which we will refer to collectively as \emph{hyperparameters}.  Deep neural networks represent the state-of-the-art on multiple machine learning benchmarks such as object recognition~\cite{krizhevsky-2012}, speech recognition~\cite{deepSpeechReviewSPM2012}, natural language processing~\cite{mikolov2010recurrent} and more.
+They are multi-layered models by definition, and each layer is typically parameterized by a unique set of hyperparameters, such as regularization parameters and the layer capacity or number of hidden units.  Thus adding additional layers introduces additional hyperparameters to be optimized.  The result is a complex hierarchical conditional parameter space, which is difficult to search over.  Historically, practitioners have simply built a separate model for each type of architecture or used non-\gp~models~\cite{bergstra2011algorithms}, or assumed a fixed architecture~\cite{snoek-etal-2012b}.  If there is any relation between networks with different architectures, separately modelling each is wasteful. 
 
-While \gp s with standard kernels fail to model the performance of architectures with such conditional %parameters, 
-The contribution of this paper is the introduction of a kernel that allows observed information to be shared across architectures when this is appropriate. We demonstrate empirically on a \gp{} regression task and a Bayesian optimization task that this kernel models the conditional parameter space of a typical deep learning problem better than previous \emph{ad-hoc} methods. 
+\gp s with standard kernels fail to model the performance of architectures with such conditional hyperparameters. To remedy this, 
+the contribution of this paper is the introduction of a kernel that allows observed information to be shared across architectures when this is appropriate. We demonstrate the effectiveness of this kernel on a \gp{} regression task and a Bayesian optimization task using a feed-forward classification neural network. 
 
 
 \section{A Kernel for Conditional Parameter Spaces}
@@ -225,6 +225,7 @@ In this setting, we want a kernel $k$ to be dependent on which parameters are re
 \end{equation}
 \end{itemize}
 
+Put another way, in the absence of any other information, this specification encodes our prior ignorance about the irrelevant (missing) parameters while still allowing us to model correlations between relevant parameters.
 %Elaborating on the first consideration:
 %
 %\begin{itemize}[leftmargin=0.8cm]
@@ -262,7 +263,7 @@ Where $\omega_i \in \mathbb{R}^+$ and $\rho_i \in [0,1]$.
 	{\hspace{-1cm}\input{figures/semicylinder}\label{fig:cylinder}}
 	%\caption{}
 %  The parameter $\rho$ determines how much distance there is along the arc.
-
+\vspace{-0.3cm}
 \end{figure}
 
 Figure \ref{fig:cylinder} shows a visualization of the embedding of points $(x_1, \delta_2(\v{x}), x_2)$ into $\reals^3$. 
@@ -282,7 +283,7 @@ d\br_i(\v{x}, \v{x}') = ||\embeddingletter_i\br(\v{x})-\embeddingletter_i\br(\v{
 We can use this to define a covariance over our original space. In particular, we consider the class of covariances that are functions only of the Euclidean distance $\Delta$ between points. There are many examples of such covariances. Popular examples are the exponentiated quadratic, for which $\kappa(\Delta) = \sigma^2 \exp(-\frac{1}{2} \Delta^2)$, or the rational quadratic, for which $\kappa(\Delta) = \sigma^2 (1+\frac{1}{2\alpha} \Delta^2)^{-\alpha}$. We can simply take \eqref{eq:distance} in the place of $\Delta$, returning a valid covariance that satisfies all desiderata above. 
 
 
-Explicitly, note that, as desired, if $i$ is irrelevant for both $\v{x}$ and $\v{x}'$, $d\br_i$ specifies that $g(\v{x})$ and $g(\v{x}')$ should not differ owing to differences between $x_i$ and $x_i'$. Secondly, if $i$ is relevant for both $\v{x}$ and $\v{x}'$, the difference between $f(\v{x})$ and $f(\v{x}')$ due to $x_i$ and $x_i'$ increases monotonically with increasing $\left|x_i-x_i'\right|$. The parameter $\rho_i$ controls whether differing in the relevance of $i$ contributes more or less to the distance than differing in the value of $x_i$, should $i$ be relevant. 
+Explicitly, note that as desired, if $i$ is irrelevant for both $\v{x}$ and $\v{x}'$, $d\br_i$ specifies that $g(\v{x})$ and $g(\v{x}')$ should not differ owing to differences between $x_i$ and $x_i'$. Secondly, if $i$ is relevant for both $\v{x}$ and $\v{x}'$, the difference between $f(\v{x})$ and $f(\v{x}')$ due to $x_i$ and $x_i'$ increases monotonically with increasing $\left|x_i-x_i'\right|$. The parameter $\rho_i$ controls whether differing in the relevance of $i$ contributes more or less to the distance than differing in the value of $x_i$, should $i$ be relevant. 
 %
 %
 %\note{FH: the following 3 sentences are details that could be dropped if we're in need of space.}
@@ -300,15 +301,15 @@ We dub this new kernel the \emph{arc kernel}. Its parameters, $\omega_i$ and $\r
 
 We now show that the arc kernel yields better results than other alternatives. 
 % Bayesian optimization requires building a surrogate model of the function being optimized, and better models can be expected to lead to more efficient optimization.  However, because of the many interacting components of BO, optimizer performance might not correspond directly to the quality of the model.  Thus, w
-We perform two types of experiments: first, we study model quality in isolation in a regression task; second, we demonstrate that the improved model indeed yields improved \bo{} performance.
+We perform two types of experiments: first, we study model quality in isolation in a regression task; second, we study the effect of the arc kernel on \bo{} performance. All \gp{} models use a Mat\'{e}rn $\nicefrac{5}{2}$ kernel.
 
-\paragraph{Data.} We use two different datasets, both of which are common in the deep learning literature. The first is the canonical MNIST digits dataset~\cite{lecun-1998a} where the task is to classify handwritten digits. The second is the CIFAR-10 object recognition dataset. We pre-processed CIFAR-10 by extracting features according to the pipeline given in~\cite{coates2010analysis}. We allow the neural networks for these problems to use up to $5$ hidden layers. We optimize over learning rates, weight constraints, dropout rate~\cite{hinton2012improving}, and the number of hidden units per layer leading to a total of up to $23$ hyperparameters and $6$ architectures. On MNIST, most effort is spent improving the error by a fraction of a percent, therefore we optimize this dataset using the log-classification error. For CIFAR-10, we just use the regular classification error as the objective. We use the Deepnet\footnote{https://github.com/nitishsrivastava/deepnet} package, and each function evaluation took approximately $1000$ to $2000$ seconds to run on NVIDIA GTX Titan GPUs.
+\paragraph{Data.} We use two different datasets, both of which are common in the deep learning literature. The first is the canonical MNIST digits dataset~\cite{lecun-1998a} where the task is to classify handwritten digits. The second is the CIFAR-10 object recognition dataset~\cite{Krizhevsky-2009a}. We pre-processed CIFAR-10 by extracting features according to the pipeline given in~\cite{coates2010analysis}.
 
 \subsection{Model Quality Experiments}   
 
 \paragraph{Models.}
 
-Our first experiments concern the quality of the regression models used to form the response surface for Bayesian optimization. We generated data by performing 10 independent runs of Bayesian optimization on MNIST and then treat this as a regression problem. We compare the \gp{} with arc kernel (\agp) to several baselines: the first baseline is a simple linear regression model, the second is a \gp{} using a Mat\'{e}rn $\nicefrac{5}{2}$ kernel. Irrelevant dimensions are simply filled in randomly for each input. We also compare to the case where each architecture gets its own separate model, as in~\cite{bergstra2011algorithms}. The results are averaged over $10$-fold train/test splits. Kernel parameters were inferred using slice sampling \cite{Murray-Adams-2010a}. As the errors lie between $0$ and $1$ with many distributed toward the lower end, it can be beneficial to take the log of the outputs before modelling them with a \gp{}. We experiment with both the original and transformed outputs.
+Our first experiments concern the quality of the regression models used to form the response surface for Bayesian optimization. We generated data by performing 10 independent runs of Bayesian optimization on MNIST and then treat this as a regression problem. We compare the \gp{} with arc kernel (\agp) to several baselines: the first baseline is a simple linear regression model, the second is a \gp{}  where irrelevant dimensions are simply filled in randomly for each input. We also compare to the case where each architecture uses its own separate \gp{}, as in~\cite{bergstra2011algorithms}. The results are averaged over $10$-fold train/test splits. Kernel parameters were inferred using slice sampling \cite{Murray-Adams-2010a}. As the errors lie between $0$ and $1$ with many distributed toward the lower end, it can be beneficial to take the log of the outputs before modelling them with a \gp{}. We experiment with both the original and transformed outputs.
 
 %Separate Linear and Seperate {\sc gp} build a separate model for each neural net architecture, as in \cite{bergstra2011algorithms}.  The hierarchical {\sc gp} model combines all data together using the conditional kernel.
 %
@@ -326,28 +327,51 @@ Our first experiments concern the quality of the regression models used to form 
 \input{tables/mcmc-table.tex}
 %\input{tables/mcmc-table-transposed.tex}
 %\caption{Regression errors for a GP with the arc kernel compared to baselines.}
+\vspace{-0.3cm}
 \end{table}
 
 \paragraph{Results.}
-Table \ref{tbl:nn_nmse} shows that a \gp{} using the arc kernel performs favourably to a \gp{} that ignores the relevance information of each point. The ``separate'' categories apply a different model to each layer and therefore does not take advantage of dependencies between layers. Interestingly, the separate Arc \gp{}, which is effectively just a standard \gp{}, performs comparably to a standard \gp{}, suggesting that the embedding doesn't limit the expressiveness of the model.
+Table \ref{tbl:nn_nmse} shows that a \gp{} using the arc kernel performs favourably to a \gp{} that ignores the relevance information of each point. The ``separate'' categories apply a different model to each layer and therefore do not take advantage of dependencies between layers. Interestingly, the separate Arc \gp{}, which is effectively just a standard \gp{} with additional embedding, performs comparably to a standard \gp{}, suggesting that the embedding doesn't limit the expressiveness of the model.
 
 \subsection{Bayesian Optimization Experiments}  
 \vspace{-0.05in} 
-
+In this experiment, we test the ability of Bayesian optimization to tune the hyperparameters of each layer of a deep neural network. We allow the neural networks for these problems to use up to $5$ hidden layers (or no hidden layer). We optimize over learning rates, L2 weight constraints, dropout rates~\cite{hinton2012improving}, and the number of hidden units per layer leading to a total of up to $23$ hyperparameters and $6$ architectures. On MNIST, most effort is spent improving the error by a fraction of a percent, therefore we optimize this dataset using the log-classification error. For CIFAR-10, we use classification error as the objective. We use the Deepnet\footnote{https://github.com/nitishsrivastava/deepnet} package, and each function evaluation took approximately $1000$ to $2000$ seconds to run on NVIDIA GTX Titan GPUs. Note that when a network of depth $n$ is tested, all hyperparameters from layers $n+1$ onward are deemed irrelevant.
 \paragraph{Experimental Setup.}
-For Bayesian optimization, we used the same process as in~\cite{snoek-etal-2012b}, including slice sampling and \emph{expected} expected improvement. 
+For Bayesian optimization, we follow the methodology of~\cite{snoek-etal-2012b}, using slice sampling and the expected improvement heuristic. In this methodology, the acquisition function is optimized by first selecting from a pre-determined grid of points lying in $[0,1]^{23}$, distributed according to a Sobol sequence. Our baseline is a standard Gaussian process over this space that is agnostic to whether particular dimensions are irrelevant for a given point.
 
 \paragraph{Results.}
-\note{FH: Discuss results including the nice figure of error over time. Also briefly mention experiments on datasets that did \emph{not} look awesome (we can't pick and choose!)}
+\begin{figure}[t!]
+	\centering
+	\begin{subfigure}[]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{figures/mnist.eps}
+		\caption{MNIST}
+		\label{fig:mnist}
+	\end{subfigure}\quad
+	\begin{subfigure}[]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{figures/cifar10.eps}
+		\caption{CIFAR-10}
+		\label{fig:cifar10}
+	\end{subfigure}\quad
+	\begin{subfigure}[]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{figures/fevals_per_layer.eps}
+		\caption{Architectures searched}
+		\label{fig:proparchs}
+	\end{subfigure}
+	\caption{Bayesian optimization results using the arc kernel.}
+	\label{fig:arcbo}
+\vspace{-0.3cm}
+\end{figure}
 
+Figure~\ref{fig:arcbo} shows that on these datasets, using the arc kernel consistently reaches good solutions faster than the naive baseline, or it finds a better solution. In the case of MNIST, the best discovered model achieved $1.19\%$ test error using $50000$ training examples. By comparison,~\cite{wan2013regularization} achieved $1.28\%$ test error using a similar model and $60000$ training examples. Similarly, our best model for CIFAR-10 achieved $21.1\%$ test error using $45000$ training examples and $400$ features. For comparison, a support vector machine using $1600$ features with the same feature pipeline and $50000$ training examples achieves $22.1\%$ error. Figure \ref{fig:proparchs} shows the proportion of function evaluations spent on each architecture size for the CIFAR-10 experiments. Interestingly, the baseline tends to favour smaller models while a \gp{} using the arc kernel distributes it's efforts amongst deeper architectures that tend to yield better results.
 
 \section{Conclusion}
 \vspace{-0.05in} 
 
-We introduced a kernel for conditional parameter spaces that facilitates modelling the performance of deep neural network architectures by enabling the sharing of information across architectures where useful.
-Empirical results show that this kernel improves \gp{} model quality and \gp{}-based Bayesian optimization results over several simpler baseline kernels.
-\note{FH: fleshed out very briefly - please feel free to expand, e.g., to add a highlight from the experiments.}
+We introduced the arc kernel for conditional parameter spaces that facilitates modelling the performance of deep neural network architectures by enabling the sharing of information across architectures where useful.
+Empirical results show that this kernel improves \gp{} model quality and \gp{}-based Bayesian optimization results over several simpler baseline kernels. Allowing information to be shared across architectures improves the efficiency of Bayesian optimization and removes the need to manually search for good architectures. The resulting models perform favourably compared to established benchmarks by domain experts.
 
+\section{Acknowledgements}
+The authors would like to thank Ryan P. Adams for helpful discussions.
 
 \bibliography{hierarchicalkernel}
 \bibliographystyle{unsrt}
