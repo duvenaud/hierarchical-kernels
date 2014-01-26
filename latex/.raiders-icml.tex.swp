@@ -1,7 +1,7 @@
 \documentclass{article}
 \renewcommand{\subparagraph}{\paragraph}
-\usepackage{include/nips13submit_e}
-%\usepackage{theapa}
+\usepackage{include/icml2014}
+\usepackage{natbib}
 \usepackage{times}
 \usepackage{amsmath, amsthm, amssymb}
 \usepackage{pstricks}
@@ -13,7 +13,7 @@
 \usepackage{epsfig}
 \usepackage{caption}
 \usepackage{subcaption}
-\usepackage{floatrow}
+%\usepackage{floatrow}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{color}
@@ -46,17 +46,19 @@
 % ===========================================
 
 % ==============Kevin's commands ===============
-\newfloatcommand{capbtabbox}{table}[][\FBwidth]
+%\newfloatcommand{capbtabbox}{table}[][\FBwidth]
 
 % ============== Mike's commands ==============
 \usepackage{nicefrac}
-\newcommand{\vect}[1]{\underline{\smash{#1}}}
-\renewcommand{\v}[1]{\vect{#1}}
+%\newcommand{\vect}[1]{\underline{\smash{#1}}}
+\newcommand{\vect}[1]{{#1}}
+%\renewcommand{\v}[1]{adsf}
+\newcommand{\vectorize}[1]{\vect{#1}}
 \newcommand{\reals}{\mathds{R}}
 \newcommand{\sX}{\mathcal{X}}
 \newcommand{\sD}{\mathcal{D}}
 \newcommand{\br}{}%{^{\text{\textnormal{ r}}}}
-\newcommand{\cat}{^{\text{\textnormal{c}}}}
+\newcommand{\cat}{^\textnormal{c}}
 % ============== ==============
 
 \newcommand{\cut}[1]{}
@@ -69,7 +71,7 @@
 \DeclareFontShape{OT1}{pzc}{m}{it}{<-> s * [1.200] pzcmi7t}{}
 \DeclareMathAlphabet{\mathscr}{OT1}{pzc}{m}{it}
 
-\newcommand\transpose{{\textrm{\tiny{\sf{T}}}}}
+\newcommand\transpose{{\textnormal{\tiny{\sf{T}}}}}
 \newcommand{\note}[1]{}
 \newcommand{\hlinespace}{~\vspace*{-0.15cm}~\\\hline\\\vspace*{0.15cm}}
 %\newcommand{\hlinespace}{~\vspace*{0.45cm}\\\hline\\~\vspace*{-0.9cm}}
@@ -80,7 +82,7 @@
 
 \newcommand{\lnote}[1]{\note{#1}}
 \newcommand{\emcite}[1]{\citet{#1}}
-\newcommand{\yrcite}[1]{\citeyear{#1}}
+%\newcommand{\yrcite}[1]{\citeyear{#1}}
 \newcommand{\aunpcite}[1]{\citeR{#1}}
 
 \newcommand{\heavyrule}{\specialrule{\heavyrulewidth}{.4em}{.4em}}
@@ -97,7 +99,6 @@
 
 
 
-\usepackage{amsmath, amsthm, amssymb}
 \newtheorem{thm}{Theorem}%[section]
 \newtheorem{lem}[thm]{Lemma}
 \newtheorem{prop}[thm]{Proposition}
@@ -108,7 +109,7 @@
 \newtheorem{define}[thm]{Definition}
 \hyphenation{ge-ne-ral-ize}
 
-\newcommand{\Var}{\ensuremath\text{Var}}
+\newcommand{\Var}{\ensuremath\textnormal{Var}}
 \newcommand{\indicator}{\ensuremath\mathds{I}}
 
 \newcommand{\fhspace}{\vspace*{0.2cm}}
@@ -124,40 +125,59 @@
 \newcommand{\gp}{{\sc gp}}
 \newcommand{\agp}{Arc \gp}
 
-\nipsfinalcopy
+\DeclareCaptionType{copyrightbox}
+\usepackage{float}
+
+\let\ifpdf\relax
+\definecolor{mydarkblue}{rgb}{0,0.08,0.45}
+\usepackage{hyperref}
+\hypersetup{ %
+    pdftitle={},
+    pdfauthor={},
+    pdfsubject={},
+    pdfkeywords={},
+    pdfborder=0 0 0,
+    pdfpagemode=UseNone,
+    colorlinks=true,
+    linkcolor=mydarkblue,
+    citecolor=mydarkblue,
+    filecolor=mydarkblue,
+    urlcolor=mydarkblue,
+    pdfview=FitH}
 
 
+
+
+\icmltitlerunning{Raiders of the Lost Architecture}
 
 \begin{document}
 
-\title{Raiders of the Lost Architecture:\\Kernels for Bayesian Optimization in Conditional Parameter Spaces}
+\twocolumn[
+\icmltitle{Raiders of the Lost Architecture:\\Kernels for Bayesian Optimization in Conditional Parameter Spaces}
 
-\author{
-Kevin Swersky \\
-University of Toronto \\
-{\small \texttt{kswersky@cs.toronto.edu}} \\
-\And
-David Duvenaud \\
-University of Cambridge \\
-{\small \texttt{dkd23@cam.ac.uk}} \\
-\And
-Jasper Snoek\\
-Harvard University \\
-{\small \texttt{jsnoek@seas.harvard.edu}} \\
-\AND
-Frank Hutter  \\
-Freiburg University \\
-{\small {\tt fh@informatik.uni-freiburg.de}} \\
-\And
-Michael A. Osborne \\
-University of Oxford \\
-{\small{\tt mosb@robots.ox.ac.uk}} \\
-}
+\icmlauthor{Kevin Swersky}{kswersky@cs.toronto.edu}
+\icmladdress{University of Toronto}
+
+\icmlauthor{David Duvenaud}{dkd23@cam.ac.uk}
+\icmladdress{University of Cambridge}
+
+\icmlauthor{Jasper Snoek}{jsnoek@seas.harvard.edu}
+\icmladdress{Harvard University}
+
+\icmlauthor{Frank Hutter}{fh@informatik.uni-freiburg.de}
+\icmladdress{Freiburg University}
+
+\icmlauthor{Michael A. Osborne}{mosb@robots.ox.ac.uk}
+\icmladdress{ University of Oxford}
 
 
 
+\icmlkeywords{}
 
-\maketitle
+\vskip 0.3in
+]
+
+
 \begin{abstract}
 In practical Bayesian optimization, we must often search over structures with differing numbers of parameters.  For instance, we may wish to search over neural network architectures with an unknown number of layers.  To relate performance data gathered for different architectures, we define a new kernel for conditional parameter spaces that explicitly includes information about which parameters are relevant in a given structure. We show that this kernel improves model quality and Bayesian optimization results over several simpler baseline kernels.
 \end{abstract}
@@ -197,32 +217,36 @@ In this section, we construct a kernel between points in a space that may have d
 
 Formally, we aim to do inference about some function $f$ with domain 
 %(input space)
- $\sX$. $\sX = \prod_{i=1}^D \sX_i$ is a $D$-dimensional input space, where each individual dimension is bounded real, that is, $\sX_i = [l_i, u_i] \subset \reals$ (with lower and upper bounds $l_i$ and $u_i$, respectively). We define functions $\delta_i\colon \sX\to \{\text{true}, \text{false}\}$, for $i \in \{1,\,\ldots,\,D\}$. $\delta_i(\v{x})$ stipulates the relevance of the $i$th feature $x_i$ to 
- %inference about
-  $f(\v{x})$.
+ $\sX$. $\sX = \prod_{i=1}^D \sX_i$ is a $D$-dimensional input space, where each individual dimension is bounded real, that is, $\sX_i = [l_i, u_i] \subset \reals$ (with lower and upper bounds $l_i$ and $u_i$, respectively).
+We define functions 
+$\delta_i\colon \sX\to \{\textnormal{true}, \textnormal{false}\}$,
+ for $i \in \{1,\,\ldots,\,D\}$.
+  $\delta_i(\vectorize{x})$ stipulates the relevance of the $i$th feature $x_i$ to  
+%inference about 
+$f(\vectorize{x})$.
 
 
 
 \subsection{The problem}
 \vspace{-0.05in}
 
-As an example, imagine trying to model the performance of a neural network having either one or two hidden layers, with respect to the regularization parameters for each layer, $x_1$ and $x_2$.  If $y$ represents the performance of a one layer-net with regularization parameters $x_1$ and $x_2$, then the value $x_2$ doesn't matter, since there is no second layer to the network. Below, we'll write an input triple as $(x_1, \delta_2(\v{x}), x_2)$ and assume that $\delta_1(\v{x}) = \text{true}$; that is, the regularization parameter for the first layer is always relevant. 
+As an example, imagine trying to model the performance of a neural network having either one or two hidden layers, with respect to the regularization parameters for each layer, $x_1$ and $x_2$.  If $y$ represents the performance of a one layer-net with regularization parameters $x_1$ and $x_2$, then the value $x_2$ doesn't matter, since there is no second layer to the network. Below, we'll write an input triple as $(x_1, \delta_2(\vectorize{x}), x_2)$ and assume that $\delta_1(\vectorize{x}) = \text{true}$; that is, the regularization parameter for the first layer is always relevant. 
 
 In this setting, we want a kernel $k$ to be dependent on which parameters are relevant, and the values of relevant parameters for both points. For example, consider first-layer parameters $x_1$ and $x_1'$:
 %
 \begin{itemize}[leftmargin=0.8cm]
 \item If we are comparing two points for which the same parameters are relevant, the value of any unused parameters shouldn't matter,  
-\begin{equation}
- k\bigl((x_1, \textnormal{false}, x_2), (x_1', \textnormal{false}, x_2') \bigr)
-= k\bigl((x_1, \textnormal{false}, x_2''), (x_1', \textnormal{false}, x_2''')\bigr),\ 
+\begin{align}
+ & k\bigl((x_1, \textnormal{false}, x_2), (x_1', \textnormal{false}, x_2') \bigr) \nonumber\\
+= & k\bigl((x_1, \textnormal{false}, x_2''), (x_1', \textnormal{false}, x_2''')\bigr),\ 
 \forall x_2, x_2', x_2'', x_2''';
-\end{equation}
+\end{align}
 \item The covariance between a point using both parameters and a point using only one should again only depend on their shared parameters,
-\begin{equation}
- k\bigl((x_1, \textnormal{false}, x_2), (x_1', \textnormal{true}, x_2') \bigr)
-= k\bigl((x_1, \textnormal{false}, x_2''), (x_1', \textnormal{true}, x_2''')\bigr),\ 
+\begin{align}
+ & k\bigl((x_1, \textnormal{false}, x_2), (x_1', \textnormal{true}, x_2') \bigr) \nonumber\\
+= & k\bigl((x_1, \textnormal{false}, x_2''), (x_1', \textnormal{true}, x_2''')\bigr),\ 
 \forall x_2, x_2', x_2'', x_2'''.
-\end{equation}
+\end{align}
 \end{itemize}
 
 Put another way, in the absence of any other information, this specification encodes our prior ignorance about the irrelevant (missing) parameters while still allowing us to model correlations between relevant parameters.
@@ -237,7 +261,7 @@ Put another way, in the absence of any other information, this specification enc
 %& = k_{\text{FT}},\ \forall x_2, x_2'.
 %\end{align}
 %\end{itemize}
-%We usually additionally want $k_{\text{FF}}>k_{\text{FT}}$, expressing the fact that points that have identical relevance $\delta_2({\v{x}})$ are more similar than points that differ in relevance $\delta_2({\v{x}})$.
+%We usually additionally want $k_{\text{FF}}>k_{\text{FT}}$, expressing the fact that points that have identical relevance $\delta_2({\vectorize{x}})$ are more similar than points that differ in relevance $\delta_2({\vectorize{x}})$.
 
 
 \subsection{Cylindrical Embedding}
@@ -246,19 +270,19 @@ Put another way, in the absence of any other information, this specification enc
 We can build a kernel with these properties for each possibly irrelevant input dimension $i$ by embedding our points into a Euclidean space.  Specifically, the embedding we use is
 %
 %To emphasize that we're in the real case, we explicitly denote the pseudometric as $d\br_i$ and the (pseudo-)isometry from $(\sX, d_i)$ to $\reals^2,d_\text{E}$ 
-%as $f\br_i$. For the definitions, recall that $\delta_i(\v{x})$ is true iff dimension $i$ is relevant given the instantiation of $i$'s ancestors in $\v{x}$.
+%as $f\br_i$. For the definitions, recall that $\delta_i(\vectorize{x})$ is true iff dimension $i$ is relevant given the instantiation of $i$'s ancestors in $\vectorize{x}$.
 %
 %
-\begin{equation}
-\embeddingletter_i\br(\v{x}) = \left\{\begin{array}{ll}
-[0,0]^\transpose & \textrm{ if } \delta_i(\v{x}) = \textrm{ false }\\
+\begin{align}
+\embeddingletter_i\br(\vectorize{x}) = \left\{\begin{array}{ll}
+[0,0]^\transpose & \textrm{ if } \delta_i(\vectorize{x}) = \textrm{ false }\\
 \omega_i [\sin{\pi\rho_i\frac{x_i}{u_i-l_i}}, \cos{\pi\rho_i\frac{x_i}{u_i-l_i}}]^\transpose & \textrm{ otherwise.}\end{array}\right.
 \label{eq:embedding}
-\end{equation}
+\end{align}
 Where $\omega_i \in \mathbb{R}^+$ and $\rho_i \in [0,1]$.
 %
 \begin{figure}
-	\floatbox[{\capbeside\thisfloatsetup{capbesideposition={right,top}}}]{figure}[\FBwidth]
+	%\floatbox[{\capbeside\thisfloatsetup{capbesideposition={right,top}}}]{figure}[\FBwidth]
 	{\caption{A demonstration of the embedding giving rise to the pseudo-metric.  All points for which $\delta_2(x) =$ false are mapped onto a line varying only along $x_1$.  Points for which $\delta_2(x) =$ true are mapped to the surface of a semicylinder, depending on both $x_1$ and $x_2$.  This embedding gives a constant distance between pairs of points which have differing values of $\delta$ but the same values of $x_1$.}}
 	{\hspace{-1cm}\input{figures/semicylinder}\label{fig:cylinder}}
 	%\caption{}
@@ -266,28 +290,30 @@ Where $\omega_i \in \mathbb{R}^+$ and $\rho_i \in [0,1]$.
 \vspace{-0.3cm}
 \end{figure}
 
-Figure \ref{fig:cylinder} shows a visualization of the embedding of points $(x_1, \delta_2(\v{x}), x_2)$ into $\reals^3$. 
+Figure \ref{fig:cylinder} shows a visualization of the embedding of points $(x_1, \delta_2(\vectorize{x}), x_2)$ into $\reals^3$. 
 %
 In this space, we have the Euclidean distance,
 %
-\begin{equation}
-d\br_i(\v{x}, \v{x}') = ||\embeddingletter_i\br(\v{x})-\embeddingletter_i\br(\v{x}')||_2 =\left\{\begin{array}{ll}
-0 & \textrm{ if } \delta_i(\v{x}) = \delta_i(\v{x}') = \textrm{false}\\
-\omega_i & \textrm{ if } \delta_i(\v{x}) \neq \delta_i(\v{x}')\\
-\omega_i \sqrt{2} \sqrt{1 - \cos(\pi\rho_i \frac{x_i-x_i'}{u_i-l_i})} & \textrm{ if } \delta_i(\v{x}) = \delta_i(\v{x}') = \textrm{true}. \end{array}\right.
+\begin{align}
+& d\br_i(\vectorize{x}, \vectorize{x}') = 
+||\embeddingletter_i\br(\vectorize{x})-\embeddingletter_i\br(\vectorize{x}')||_2 \nonumber\\
+= & \left\{\begin{array}{ll}
+0 & \textrm{ if } \delta_i(\vectorize{x}) = \delta_i(\vectorize{x}') = \textrm{false}\\
+\omega_i & \textrm{ if } \delta_i(\vectorize{x}) \neq \delta_i(\vectorize{x}')\\
+\omega_i \sqrt{2} \sqrt{1 - \cos(\pi\rho_i \frac{x_i-x_i'}{u_i-l_i})} & \textrm{ if } \delta_i(\vectorize{x}) = \delta_i(\vectorize{x}') = \textrm{true}. \end{array}\right.
 \label{eq:distance}
-\end{equation}
+\end{align}
 
 
 
 We can use this to define a covariance over our original space. In particular, we consider the class of covariances that are functions only of the Euclidean distance $\Delta$ between points. There are many examples of such covariances. Popular examples are the exponentiated quadratic, for which $\kappa(\Delta) = \sigma^2 \exp(-\frac{1}{2} \Delta^2)$, or the rational quadratic, for which $\kappa(\Delta) = \sigma^2 (1+\frac{1}{2\alpha} \Delta^2)^{-\alpha}$. We can simply take \eqref{eq:distance} in the place of $\Delta$, returning a valid covariance that satisfies all desiderata above. 
 
 
-Explicitly, note that as desired, if $i$ is irrelevant for both $\v{x}$ and $\v{x}'$, $d\br_i$ specifies that $g(\v{x})$ and $g(\v{x}')$ should not differ owing to differences between $x_i$ and $x_i'$. Secondly, if $i$ is relevant for both $\v{x}$ and $\v{x}'$, the difference between $f(\v{x})$ and $f(\v{x}')$ due to $x_i$ and $x_i'$ increases monotonically with increasing $\left|x_i-x_i'\right|$. The parameter $\rho_i$ controls whether differing in the relevance of $i$ contributes more or less to the distance than differing in the value of $x_i$, should $i$ be relevant. 
+Explicitly, note that as desired, if $i$ is irrelevant for both $\vectorize{x}$ and $\vectorize{x}'$, $d\br_i$ specifies that $g(\vectorize{x})$ and $g(\vectorize{x}')$ should not differ owing to differences between $x_i$ and $x_i'$. Secondly, if $i$ is relevant for both $\vectorize{x}$ and $\vectorize{x}'$, the difference between $f(\vectorize{x})$ and $f(\vectorize{x}')$ due to $x_i$ and $x_i'$ increases monotonically with increasing $\left|x_i-x_i'\right|$. The parameter $\rho_i$ controls whether differing in the relevance of $i$ contributes more or less to the distance than differing in the value of $x_i$, should $i$ be relevant. 
 %
 %
 %\note{FH: the following 3 sentences are details that could be dropped if we're in need of space.}
-%If $\rho = \nicefrac{1}{3}$, and if $i$ is irrelevant for exactly one of $\v{x}$ and $\v{x}'$, $f(\v{x})$ and $f(\v{x}')$ are as different as is possible due to dimension $i$; that is, $f(\v{x})$ and $f(\v{x}')$ are exactly as different in that case as if $x_i=l_i$ and $x_i'=u_i$. For $\rho>\nicefrac{1}{3}$, $i$ being relevant for both $\v{x}$ and $\v{x}'$ means that $f(\v{x})$ and $f(\v{x}')$ could potentially be more different than if %$i$ was relevant in only one of them. For $\rho<\nicefrac{1}{3}$, the converse is true. 
+%If $\rho = \nicefrac{1}{3}$, and if $i$ is irrelevant for exactly one of $\vectorize{x}$ and $\vectorize{x}'$, $f(\vectorize{x})$ and $f(\vectorize{x}')$ are as different as is possible due to dimension $i$; that is, $f(\vectorize{x})$ and $f(\vectorize{x}')$ are exactly as different in that case as if $x_i=l_i$ and $x_i'=u_i$. For $\rho>\nicefrac{1}{3}$, $i$ being relevant for both $\vectorize{x}$ and $\vectorize{x}'$ means that $f(\vectorize{x})$ and $f(\vectorize{x}')$ could potentially be more different than if %$i$ was relevant in only one of them. For $\rho<\nicefrac{1}{3}$, the converse is true. 
 %
 %
 Hyperparameter $\omega_i$ defines a length scale for the $i$th feature. 
@@ -371,10 +397,10 @@ We introduced the arc kernel for conditional parameter spaces that facilitates m
 Empirical results show that this kernel improves \gp{} model quality and \gp{}-based Bayesian optimization results over several simpler baseline kernels. Allowing information to be shared across architectures improves the efficiency of Bayesian optimization and removes the need to manually search for good architectures. The resulting models perform favourably compared to established benchmarks by domain experts.
 
 \section{Acknowledgements}
-The authors would like to thank Ryan P. Adams for helpful discussions.
+%The authors would like to thank Ryan P. Adams for helpful discussions.
 
 \bibliography{hierarchicalkernel}
-\bibliographystyle{unsrt}
+\bibliographystyle{include/icml2014}
 
 
 \end{document}
