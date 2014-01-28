@@ -47,7 +47,7 @@
 %	\centerarc[thick] (O1) (\anglemin:\anglemax:\smallradius)
 
 	\draw[fill] (left1) circle (1.5pt);
-	\draw (left1) node[below = \belowamount, right] {$\embedding(0, \textnormal{true}, u$)};
+	\draw (left1) node[below = \belowamount, right] (l1below) {$\embedding(0, \textnormal{true}, u$)};
 	
 	\draw[fill] (right1) circle (1.5pt);
 	\draw (right1) node[below = \belowamount] (r1below) {}
@@ -57,7 +57,7 @@
 	\draw (O1) node[below = \belowamount] (o1below) {}
 	           node[left = 0.3cm] {$\embedding(0, \textnormal{false}, \cdot)$};
 
-	\draw (left1) -- (O1) node[above] {$\rho \pi$};
+	%\draw (left1) -- (O1) node[above] {$\rho \pi$};
 	\draw (right1) -- (O1) node[midway, below] {$\omega$};
 	
 	
@@ -112,17 +112,9 @@
 	\draw[trans] ($ (o1below)!0.65!(o2below) $) -- ($ (o1below)!0.8!(o2below) $);
 
 	% Draw arrows showing in which direction x2 varies.
-	\coordinate (arclabel) at ($ (O1) + ({\biggerradius*cos(\xtwolabelangle)}, {\biggerradius*sin(\xtwolabelangle)}) $);
-	\draw (arclabel) node {$x_2$};
-	\centerarc[trans] (O1) ( \xtwolabelangle + 5  :  \xtwolabelangle + 30  :\biggerradius)
-	\centerarc[trans] (O1) ( \xtwolabelangle - 5  :  \xtwolabelangle - 30  :\biggerradius)
-
-%	\coordinate (x1) at ({\bigradius*cos(\angletwo)}, {\bigradius*sin(\angletwo)});
-%	\coordinate (x2) at ({\bigradius*cos(\angleone)}, {\bigradius*sin(\angleone)});
-%	\draw[fill] (x1) circle (1.5pt);
-%	\draw (x1) node[above, left] {$f(x_1, \textnormal{true})$};
-%	\draw[fill] (x2) circle (1.5pt);
-%	\draw (x2) node[above, right] {$f(x_2, \textnormal{true})$};
+	\coordinate(x22half) at ($ (l1below)!0.5!(r1below) $);
+	\draw (x22half) node (x22halfbelow) {$x_2$};
+	\draw[trans] ($ (l1below)!0.45!(r1below) $) -- ($ (l1below)!0.3!(r1below) $);
+	\draw[trans] ($ (l1below)!0.55!(r1below) $) -- ($ (l1below)!0.7!(r1below) $);
 \end{tikzpicture}
-%}
-%\end{center}
+
