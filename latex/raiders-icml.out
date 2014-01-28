@@ -3,8 +3,9 @@
 \BOOKMARK [2][-]{subsection.2.1}{The problem}{section.2}
 \BOOKMARK [2][-]{subsection.2.2}{Cylindrical Embedding}{section.2}
 \BOOKMARK [2][-]{subsection.2.3}{Box Kernel}{section.2}
-\BOOKMARK [1][-]{section.3}{Experiments}{}
-\BOOKMARK [2][-]{subsection.3.1}{Model Quality Experiments}{section.3}
-\BOOKMARK [2][-]{subsection.3.2}{Bayesian Optimization Experiments}{section.3}
-\BOOKMARK [1][-]{section.4}{Conclusion}{}
-\BOOKMARK [1][-]{section.5}{Acknowledgements}{}
+\BOOKMARK [1][-]{section.3}{Missing Data}{}
+\BOOKMARK [1][-]{section.4}{Experiments}{}
+\BOOKMARK [2][-]{subsection.4.1}{Model Quality Experiments}{section.4}
+\BOOKMARK [2][-]{subsection.4.2}{Bayesian Optimization Experiments}{section.4}
+\BOOKMARK [1][-]{section.5}{Conclusion}{}
+\BOOKMARK [1][-]{section.6}{Acknowledgements}{}

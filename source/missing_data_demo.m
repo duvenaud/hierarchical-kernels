@@ -15,7 +15,7 @@ randn('state',seed);
 rand('state',seed);
 
 addpath(genpath('gpml'))
-
+addpath(genpath('utils'))
 
 % True function:
 truefunc = @(x) 1./(1+exp(-(x - 0.5).*20));
@@ -86,6 +86,6 @@ h_co = plot( orig_x(censored_ixs), y(censored_ixs), 'rx');
 legend([h_tf h_uo h_co h_pnc h_pc], {'True Function', 'Uncensored observations', 'Censored observations', 'Prediction if uncensored', 'Prediction if censored'}, ...
     'Location', 'Best');
 set(gcf, 'color', 'white');
-xlabel('True creditworthiness');
-ylabel('Credit score');
+xlabel('Credit score');
+ylabel('True creditworthiness');
 title('Handling missing data');

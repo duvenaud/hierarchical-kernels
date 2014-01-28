@@ -7,7 +7,7 @@
 \newcommand{\anglemax}{150}
 \newcommand{\angleone}{70}
 \newcommand{\angletwo}{120}
-\newcommand{\bigradius}{3}
+\newcommand{\bigradius}{3.75}
 \newcommand{\biggerradius}{3.3}
 \newcommand{\smallradius}{0.5}
 \newcommand{\xtwolabelangle}{90}
@@ -26,9 +26,11 @@
 \def\centerarc[#1] (#2) (#3:#4:#5)% [draw options] (center) (initial angle:final angle:radius)
 { \draw[#1] (#2) ++(#3:#5) arc (#3:#4:#5);
 }
+	\coordinate (x2span) at (6, 0);
 
 	\coordinate (left) at ({\bigradius*cos(\anglemax)}, {\bigradius*sin(\anglemax)});
-	\coordinate (right) at ({\bigradius*cos(\anglemin)}, {\bigradius*sin(\anglemin)});
+	\coordinate (right) at ($ (left) + (x2span) $);
+	%\coordinate (right) at ({\bigradius*cos(\anglemin)}, {\bigradius*sin(\anglemin)});
 
 	\coordinate (O1) at (-2, 0);
 	\coordinate (O2) at (3, 1.25);
@@ -47,18 +49,17 @@
 %	\centerarc[thick] (O1) (\anglemin:\anglemax:\smallradius)
 
 	\draw[fill] (left1) circle (1.5pt);
-	\draw (left1) node[below = \belowamount, right] (l1below) {$\embedding(0, \textnormal{true}, u$)};
+	\draw (left1) node[below = \belowamount] (l1below) {$\embedding(0, 1, \textnormal{true})$};
 	
 	\draw[fill] (right1) circle (1.5pt);
-	\draw (right1) node[below = \belowamount] (r1below) {}
-	               node[left] {$\embedding(0, \textnormal{true}, \myell)$};
+	\draw (right1) node[below = \belowamount] (r1below) {$\embedding(0, 0, \textnormal{true})$};
 
 	\draw[fill] (O1) circle (1.5pt);
 	\draw (O1) node[below = \belowamount] (o1below) {}
-	           node[left = 0.3cm] {$\embedding(0, \textnormal{false}, \cdot)$};
+	           node[left = 0.3cm] {$\embedding(0, \cdot, \textnormal{false})$};
 
 	%\draw (left1) -- (O1) node[above] {$\rho \pi$};
-	\draw (right1) -- (O1) node[midway, below] {$\omega$};
+	%\draw (right1) -- (O1) node[midway, below] {$\omega$};
 	
 	
 	% Second arc
@@ -75,10 +76,10 @@
 
 	\draw[fill] (O2) circle (1.5pt);
 	\draw (O2) node[below = \belowamount] (o2below) {}
-                   node[right] {$\embedding(1, \textnormal{false}, \cdot)$};
+                   node[right] {$\embedding(1, \cdot, \textnormal{false})$};
 
-	\draw[dashed] (left2) -- (O2);
-	\draw[dashed] (right2) -- (O2);
+	%\draw[dashed] (left2) -- (O2);
+	%\draw[dashed] (right2) -- (O2);
 
 
 	% Connect the arcs
@@ -98,7 +99,7 @@
 %		\fill[fill=blue!40,fill opacity=0.8](arca1)--(arca2)--(arcb2)--(arcb1)--cycle;
 	}
 
-	\draw (right2) node[left] {$\embedding(1, \textnormal{true}, \myell)$};
+	\draw (right2) node[above] {$\embedding(1, 1, \textnormal{true})$};
 
 	% Draw arrows showing in which direction x1 varies.
 	\coordinate(x1half) at ($ (right1)!0.5!(right2) $);
@@ -117,4 +118,3 @@
 	\draw[trans] ($ (l1below)!0.45!(r1below) $) -- ($ (l1below)!0.3!(r1below) $);
 	\draw[trans] ($ (l1below)!0.55!(r1below) $) -- ($ (l1below)!0.7!(r1below) $);
 \end{tikzpicture}
-
