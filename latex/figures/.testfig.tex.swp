@@ -1,5 +1,64 @@
-% A simple figure to illustrate Mike and Frank's embedding
-% Sept 2013
+\documentclass{article}
+\renewcommand{\subparagraph}{\paragraph}
+
+\usepackage{times}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{pstricks}
+\usepackage{pst-tree}
+%\usepackage{color}
+%\usepackage{makeidx}  % allows for indexgeneration
+\usepackage{bm}
+%\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{caption}
+\usepackage{subcaption}
+%\usepackage{floatrow}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{color}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{framed}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{multirow}
+%\usepackage{sgame}
+\usepackage{dsfont}
+\def\sgtextcolor{black}
+\def\sglinecolor{black}
+%\renewcommand{\gamestretch}{2}
+\usepackage{multicol}
+\usepackage{lscape}
+\usepackage{relsize}
+\usepackage{rotating}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{titlesec}
+
+
+% ============== Mike's commands ==============
+\usepackage{nicefrac}
+%\newcommand{\vect}[1]{\underline{\smash{#1}}}
+%\newcommand{\vect}[1]{{#1}}
+%\renewcommand{\v}[1]{adsf}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\reals}{\mathds{R}}
+\newcommand{\sX}{\mathcal{X}}
+\newcommand{\sD}{\mathcal{D}}
+\newcommand{\br}{}%{^{\text{\textnormal{ r}}}}
+\newcommand{\cat}{^\textnormal{c}}
+% ============== ==============
+
+
+\begin{document}
+
+
+\subsection{Box Kernel}
+\begin{figure}
+	\caption{The box embedding}
+	{
+% A simple figure to illustrate box embedding
+% Jan 2014
 
 \newcommand{\scaleamount}{0.8}
 \newcommand{\anglemin}{40}
@@ -26,8 +85,11 @@
 \def\centerarc[#1] (#2) (#3:#4:#5)% [draw options] (center) (initial angle:final angle:radius)
 { \draw[#1] (#2) ++(#3:#5) arc (#3:#4:#5);
 }
+	\coordinate (x2span) at (6, 0);
+
 	\coordinate (left) at ({\bigradius*cos(\anglemax)}, {\bigradius*sin(\anglemax)});
-	\coordinate (right) at ({\bigradius*cos(\anglemin)}, {\bigradius*sin(\anglemin)});
+	\coordinate (right) at ($ (left) + (x2span) $);
+	%\coordinate (right) at ({\bigradius*cos(\anglemin)}, {\bigradius*sin(\anglemin)});
 
 	\coordinate (O1) at (-2, 0);
 	\coordinate (O2) at (3, 1.25);
@@ -41,11 +103,12 @@
 	% ==================
 	
 	% Draw arcs
-	\centerarc[thick] (O1) (\anglemin:\anglemax:\bigradius)
-	\centerarc[thick] (O1) (\anglemin:\anglemax:\smallradius)
+%	\centerarc[thick] (O1) (\anglemin:\anglemax:\bigradius)
+	\draw[thick] (left1) -- (right1);
+%	\centerarc[thick] (O1) (\anglemin:\anglemax:\smallradius)
 
 	\draw[fill] (left1) circle (1.5pt);
-	\draw (left1) node[below = \belowamount, right] {$\embedding(0, \textnormal{true}, u$)};
+	\draw (left1) node[below = \belowamount, right] (l1below) {$\embedding(0, \textnormal{true}, u$)};
 	
 	\draw[fill] (right1) circle (1.5pt);
 	\draw (right1) node[below = \belowamount] (r1below) {}
@@ -55,14 +118,15 @@
 	\draw (O1) node[below = \belowamount] (o1below) {}
 	           node[left = 0.3cm] {$\embedding(0, \textnormal{false}, \cdot)$};
 
-	\draw (left1) -- (O1) node[above] {$\rho \pi$};
-	\draw (right1) -- (O1) node[midway, below] {$\omega$};
+	%\draw (left1) -- (O1) node[above] {$\rho \pi$};
+	%\draw (right1) -- (O1) node[midway, below] {$\omega$};
 	
 	
 	% Second arc
 	% ================================
-	\centerarc[thick] (O2) (\anglemin:\anglemax:\bigradius)
-	\centerarc[thick] (O2) (\anglemin:\anglemax:\smallradius)
+	%\centerarc[thick] (O2) (\anglemin:\anglemax:\bigradius)
+	%\centerarc[thick] (O2) (\anglemin:\anglemax:\smallradius)
+	\draw[thick] (left2) -- (right2);
 
 	\draw[fill] (left2) circle (1.5pt);
 	
@@ -74,8 +138,8 @@
 	\draw (O2) node[below = \belowamount] (o2below) {}
                    node[right] {$\embedding(1, \textnormal{false}, \cdot)$};
 
-	\draw[dashed] (left2) -- (O2);
-	\draw[dashed] (right2) -- (O2);
+	%\draw[dashed] (left2) -- (O2);
+	%\draw[dashed] (right2) -- (O2);
 
 
 	% Connect the arcs
@@ -86,14 +150,13 @@
 	% Draw surface
 	\foreach \i in {\angleminplusone, ..., \anglemax}
 	{
-		\coordinate (arca) at ({\bigradius*cos(\i)}, {\bigradius*sin(\i)});
-		\coordinate (arcb) at ({\bigradius*cos(\i - 1)}, {\bigradius*sin(\i - 1)});
-		\coordinate (arca1) at ($ (arca) + (O1) $);
-		\coordinate (arca2) at ($ (arca) + (O2) $);
-		\coordinate (arcb1) at ($ (arcb) + (O1) $);
-		\coordinate (arcb2) at ($ (arcb) + (O2) $);
+%		\coordinate (arca) at (\i, \i);
+%		\coordinate (arca1) at ($ (arca) / 100 + (O1) $);
+%		\coordinate (arca2) at ($ (arca) / 100 + (O2) $);
+%		\coordinate (arcb1) at ($ (arcb) + (O1) $);
+%		\coordinate (arcb2) at ($ (arcb) + (O2) $);
 %		\draw[green] (arca1) -- (arca2);
-		\fill[fill=blue!40,fill opacity=0.8](arca1)--(arca2)--(arcb2)--(arcb1)--cycle;
+%		\fill[fill=blue!40,fill opacity=0.8](arca1)--(arca2)--(arcb2)--(arcb1)--cycle;
 	}
 
 	\draw (right2) node[left] {$\embedding(1, \textnormal{true}, \myell)$};
@@ -110,17 +173,19 @@
 	\draw[trans] ($ (o1below)!0.65!(o2below) $) -- ($ (o1below)!0.8!(o2below) $);
 
 	% Draw arrows showing in which direction x2 varies.
-	\coordinate (arclabel) at ($ (O1) + ({\biggerradius*cos(\xtwolabelangle)}, {\biggerradius*sin(\xtwolabelangle)}) $);
-	\draw (arclabel) node {$x_2$};
-	\centerarc[trans] (O1) ( \xtwolabelangle + 5  :  \xtwolabelangle + 30  :\biggerradius)
-	\centerarc[trans] (O1) ( \xtwolabelangle - 5  :  \xtwolabelangle - 30  :\biggerradius)
+	\coordinate(x22half) at ($ (l1below)!0.5!(r1below) $);
+	\draw (x22half) node (x22halfbelow) {$x_2$};
+	\draw[trans] ($ (l1below)!0.45!(r1below) $) -- ($ (l1below)!0.3!(r1below) $);
+	\draw[trans] ($ (l1below)!0.55!(r1below) $) -- ($ (l1below)!0.7!(r1below) $);
+\end{tikzpicture}	
+	
+	
+	}
+\vspace{-0.3cm}
+\end{figure}
+\label{fig:boxkernel}
 
-%	\coordinate (x1) at ({\bigradius*cos(\angletwo)}, {\bigradius*sin(\angletwo)});
-%	\coordinate (x2) at ({\bigradius*cos(\angleone)}, {\bigradius*sin(\angleone)});
-%	\draw[fill] (x1) circle (1.5pt);
-%	\draw (x1) node[above, left] {$f(x_1, \textnormal{true})$};
-%	\draw[fill] (x2) circle (1.5pt);
-%	\draw (x2) node[above, right] {$f(x_2, \textnormal{true})$};
-\end{tikzpicture}
-%}
-%\end{center}
+
+
+\end{document}
+

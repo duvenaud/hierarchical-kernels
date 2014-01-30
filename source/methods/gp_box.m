@@ -6,17 +6,8 @@ function [predictions, log_prob_y, model] = gp_box(  Xtrain, ytrain, Xtest, ytes
 % David Duvenaud, Jasoer Snoek, Frank Hutter, Mike Osborne, Kevin Swersky
 % Oct 2013
 
-% A mask to indicate which variables cannot be missing.
-%dims_always_there = logical([ 1 1 1 1 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 ]);
-%num_dims_always_there = sum(dims_always_there);
-%num_dims_sometimes_there = sum(dims_always_there == 0);
-
-%assert( all(all(~isnan(Xtrain(:, dims_always_there)))));
-
 hhp = common_gp_parameters();     % Use a common set of hyper-hyper-priors.
 [N,D] = size(Xtrain);
-
-%assert(length(dims_always_there) == D)
 
 % Easy part of model set up:
 meanfunc = {'meanConst'};
@@ -25,30 +16,23 @@ likfunc = @likGauss;
 hyp.mean = 0;
 hyp.lik = ones(1,eval(likfunc())).*log(hhp.noise_scale);    
 
+% Set up hypers.
+default_x = 0;  default_dist = 0;
 
-% Randomly draw hyperparameters for se_ard part of kernel..
-%log_lengthscales = log(hhp.length_scale.*gamrnd(hhp.gamma_a, hhp.gamma_b,1,num_dims_always_there));
-%log_variance = log(hhp.sd_scale);
-%iso_cov_hypers = [ log_lengthscales, log_variance ]';
+% These should be initialized identically gp_ard.
+log_lengthscales = log(hhp.length_scale.*gamrnd(hhp.gamma_a, hhp.gamma_b,1,D));
+log_variance = log(hhp.sd_scale);
 
-% Set up hypers for the rest of the dimensions.
-omega = 1;  rho = 0;  sf2 = 1;
-covcond_hypers = repmat( [omega; rho;log(sf2)], D, 1);
+covcond_hypers = [repmat( [default_x; default_dist], 1, D); ...
+                  log_lengthscales; ...
+                  repmat( log_variance, 1, D)];
 
-% Now construct the kernel.  It will be a product of a se_ard for the
-% dimensions that are always there, and a product of covCond for the
-% dimensions that could be missing.
-%cov_iso = { 'covMask', {dims_always_there, 'covSEard' }};
+% Now construct the kernel.  It will be a product covBox.
 list_of_covconds = cell(1, D);
-%ixs_not_always_there = find(~dims_always_there);
 for i = 1:D
     list_of_covconds{i} = { 'covMask', { i, 'covBox'}};
 end
 covfunc = { 'covProd', list_of_covconds };
-%covcond_mask = { 'covMask', {~dims_always_there, covcond_nomask }};
-%covfunc = { 'covProd', {cov_iso, cov_cond }};
-
-%hyp.cov = [iso_cov_hypers; covcond_hypers];
 hyp.cov = covcond_hypers;
 
 max_iters = hhp.max_iterations;

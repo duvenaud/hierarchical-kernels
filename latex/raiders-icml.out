@@ -1,0 +1,11 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}
+\BOOKMARK [1][-]{section.2}{A Kernel for Conditional Parameter Spaces}{}
+\BOOKMARK [2][-]{subsection.2.1}{The problem}{section.2}
+\BOOKMARK [2][-]{subsection.2.2}{Cylindrical Embedding}{section.2}
+\BOOKMARK [2][-]{subsection.2.3}{Box Kernel}{section.2}
+\BOOKMARK [1][-]{section.3}{Missing Data}{}
+\BOOKMARK [1][-]{section.4}{Experiments}{}
+\BOOKMARK [2][-]{subsection.4.1}{Model Quality Experiments}{section.4}
+\BOOKMARK [2][-]{subsection.4.2}{Bayesian Optimization Experiments}{section.4}
+\BOOKMARK [1][-]{section.5}{Conclusion}{}
+\BOOKMARK [1][-]{section.6}{Acknowledgements}{}

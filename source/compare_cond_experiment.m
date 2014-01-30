@@ -15,21 +15,25 @@ addpath(genpath('utils'))
 addpath(genpath('methods'))
 
 
-outdir = '/scratch/results/18-oct-overnight-fear-backup/';
-outdir = '/home/dkd23/results/jan-14-fear/';
+
+%outdir = '/scratch/results/18-oct-overnight-fear-backup/';
+outdir = '/home/dkd23/results/jan-16-fear/';
 mkdir(outdir);
 
 
 [datafiles, methods] = define_datasets_and_methods();
 
-methods{1} = @sep_box;
-methods(2:end) = [];
+methods{2} = @sep_box;
+methods{1} = @separate_gp_ard;
+methods(3:end) = [];
+
+datafiles([ 1:2, 4:end]) = [];
 
 K = 10;
 
 for dataset_ix = 1:length(datafiles)
-    for fold = 1:K;
-        for method_ix = 1%1:numel(methods)
+    for fold = 1;%:K;
+        for method_ix = 1:numel(methods)
             run_one_fold( datafiles{dataset_ix}, methods{method_ix}, K, ...
                           fold, seed, outdir, false )
         end

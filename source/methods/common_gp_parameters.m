@@ -4,9 +4,9 @@ function hhp = common_gp_parameters()
 %
 % Called hhp for 'hyper-hyper-parameters'.
 
-hhp.max_iterations = 200;
+hhp.max_iterations = 10;
 hhp.length_scale = 1;
-hhp.sd_scale = 0.1;
+hhp.sd_scale = 1;
 hhp.add_sd_scale = 0.1;
 hhp.noise_scale = 0.1;
 hhp.max_order = 10;

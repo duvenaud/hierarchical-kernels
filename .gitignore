@@ -33,3 +33,12 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# Latex temp files
+latex/*.bbl
+latex/*.blg
+latex/*.dvi
+latex/*.log
+latex/*.aux
+latex/*.tex.backup
+
