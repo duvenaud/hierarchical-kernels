@@ -1,0 +1,126 @@
+\renewcommand{\subparagraph}{\paragraph}
+% \usepackage{include/icml2014}
+\usepackage{natbib}
+\usepackage{times}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{pstricks}
+\usepackage{pst-tree}
+%\usepackage{color}
+%\usepackage{makeidx}  % allows for indexgeneration
+\usepackage{bm}
+%\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{caption}
+\usepackage{subcaption}
+%\usepackage{floatrow}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{color}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{framed}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{multirow}
+%\usepackage{sgame}
+\usepackage{dsfont}
+\def\sgtextcolor{black}
+\def\sglinecolor{black}
+%\renewcommand{\gamestretch}{2}
+\usepackage{multicol}
+\usepackage{lscape}
+\usepackage{relsize}
+\usepackage{rotating}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{titlesec}
+
+
+% ============== Jasper Spacing Hackery =========
+%\titlespacing{\section}{0pt}{0pt}{0pt}
+%\titlespacing{\subsection}{0pt}{0pt}{0pt}
+%\titlespacing{\subsubsection}{0pt}{0pt}{0pt}
+%\titlespacing{\paragraph}{0pt}{0pt}{10pt}
+\usepackage{enumitem}
+\setlist[itemize]{noitemsep, topsep=0pt} % Makes els 1 and 2 fit more nicely
+% ===========================================
+
+% ==============Kevin's commands ===============
+%\newfloatcommand{capbtabbox}{table}[][\FBwidth]
+
+% ============== Mike's commands ==============
+\usepackage{nicefrac}
+%\newcommand{\vect}[1]{\underline{\smash{#1}}}
+%\newcommand{\vect}[1]{{#1}}
+%\renewcommand{\v}[1]{adsf}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\reals}{\mathds{R}}
+\newcommand{\sX}{\mathcal{X}}
+\newcommand{\sD}{\mathcal{D}}
+\newcommand{\br}{}%{^{\text{\textnormal{ r}}}}
+\newcommand{\cat}{^\textnormal{c}}
+% ============== ==============
+
+\newcommand{\cut}[1]{}
+\newcommand{\hide}[1]{}
+\renewcommand{\blue}[1]{{\textcolor{blue}{#1}}}
+%\renewcommand{\blue}[1]{#1}
+
+%% Zapf Chancery font: has lowercase script letters
+\DeclareFontFamily{OT1}{pzc}{}
+\DeclareFontShape{OT1}{pzc}{m}{it}{<-> s * [1.200] pzcmi7t}{}
+\DeclareMathAlphabet{\mathscr}{OT1}{pzc}{m}{it}
+
+\newcommand\transpose{{\textnormal{\tiny{\sf{T}}}}}
+\newcommand{\note}[1]{}
+\newcommand{\hlinespace}{~\vspace*{-0.15cm}~\\\hline\\\vspace*{0.15cm}}
+%\newcommand{\hlinespace}{~\vspace*{0.45cm}\\\hline\\~\vspace*{-0.9cm}}
+%\newcommand{\hlinespace}{~\vspace*{0.05cm}\\\hline~\vspace*{0.5cm}}
+
+% comment the next line to turn off notes
+%\renewcommand{\note}[1]{~\\\frame{\begin{minipage}[c]{\textwidth}\vspace{2pt}\center{#1}\vspace{2pt}\end{minipage}}\vspace{3pt}\\}
+
+\newcommand{\lnote}[1]{\note{#1}}
+\newcommand{\emcite}[1]{\citet{#1}}
+%\newcommand{\yrcite}[1]{\citeyear{#1}}
+\newcommand{\aunpcite}[1]{\citeR{#1}}
+
+\newcommand{\heavyrule}{\specialrule{\heavyrulewidth}{.4em}{.4em}}
+\newcommand{\lightrule}{\specialrule{.03em}{.4em}{.4em}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% keep figures from going onto a page by themselves
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.9}
+\renewcommand{\dbltopfraction}{0.9}      % for double-column styles
+\renewcommand{\dblfloatpagefraction}{0.7}   % for double-column styles
+
+\newtheorem{thm}{Theorem}%[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{obs}[thm]{Observation}
+
+%\theoremstyle{definition}
+\newtheorem{define}[thm]{Definition}
+\hyphenation{ge-ne-ral-ize}
+
+\newcommand{\Var}{\ensuremath\textnormal{Var}}
+\newcommand{\indicator}{\ensuremath\mathds{I}}
+
+%\newcommand{\fhspace}{\vspace*{0.2cm}}
+%\newcommand{\newsec}{\hspace{0cm}}
+
+% replaces tabular; takes same arguments. use \midrule for a rule, no vertical rules, and eg \cmidrule(l){2-3} as needed with \multicolumn
+\newenvironment{ktabular}[1]{\sffamily\small\begin{center}\begin{tabular}[c]{#1}\toprule}{\bottomrule \end{tabular}\end{center}\normalsize\rmfamily\vspace{-5pt}}
+\newcommand{\tbold}[1]{\textbf{#1}}
+\newcommand{\interrowspace}{.6em}
+
+\newcommand{\embeddingletter}{g}
+\newcommand{\bo}{{\sc bo}}
+\newcommand{\gp}{{\sc gp}}
+\newcommand{\agp}{Arc \gp}
+
+\usepackage{float}
