@@ -1,5 +1,4 @@
-Raiders of the Lost Architecture:
-Kernels for Bayesian Optimization in Conditional Parameter Spaces
+Raiders of the Lost Architecture: Kernels for Bayesian Optimization in Conditional Parameter Spaces
 ====================
 
 In practical Bayesian optimization, we must often search over structures with differing numbers of parameters.
