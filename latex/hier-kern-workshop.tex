@@ -37,16 +37,16 @@
 \usepackage{titlesec}
 
 % ============== Jasper Spacing Hackery =========
-\titlespacing{\section}{0pt}{0pt}{0pt}
-\titlespacing{\subsection}{0pt}{0pt}{0pt}
-\titlespacing{\subsubsection}{0pt}{0pt}{0pt}
-\titlespacing{\paragraph}{0pt}{0pt}{10pt}
+%\titlespacing{\section}{0pt}{0pt}{0pt}
+%\titlespacing{\subsection}{0pt}{0pt}{0pt}
+%\titlespacing{\subsubsection}{0pt}{0pt}{0pt}
+%\titlespacing{\paragraph}{0pt}{0pt}{10pt}
 \usepackage{enumitem}
 \setlist[itemize]{noitemsep, topsep=0pt} % Makes els 1 and 2 fit more nicely
 % ===========================================
 
 % ==============Kevin's commands ===============
-\newfloatcommand{capbtabbox}{table}[][\FBwidth]
+%\newfloatcommand{capbtabbox}{table}[][\FBwidth]
 
 % ============== Mike's commands ==============
 \usepackage{nicefrac}
@@ -71,7 +71,7 @@
 
 \newcommand\transpose{{\textrm{\tiny{\sf{T}}}}}
 \newcommand{\note}[1]{}
-\newcommand{\hlinespace}{~\vspace*{-0.15cm}~\\\hline\\\vspace*{0.15cm}}
+\newcommand{\hlinespace}{~\vspace*{0cm}~\\\hline\\\vspace*{0cm}}
 %\newcommand{\hlinespace}{~\vspace*{0.45cm}\\\hline\\~\vspace*{-0.9cm}}
 %\newcommand{\hlinespace}{~\vspace*{0.05cm}\\\hline~\vspace*{0.5cm}}
 
@@ -115,9 +115,9 @@
 \newcommand{\newsec}{\hspace{0cm}}
 
 % replaces tabular; takes same arguments. use \midrule for a rule, no vertical rules, and eg \cmidrule(l){2-3} as needed with \multicolumn
-\newenvironment{ktabular}[1]{\sffamily\small\begin{center}\begin{tabular}[c]{#1}\toprule}{\bottomrule \end{tabular}\end{center}\normalsize\rmfamily\vspace{-5pt}}
+\newenvironment{ktabular}[1]{\sffamily\small\begin{center}\begin{tabular}[c]{#1}\toprule}{\bottomrule \end{tabular}\end{center}\normalsize\rmfamily\vspace{-0pt}}
 \newcommand{\tbold}[1]{\textbf{#1}}
-\newcommand{\interrowspace}{.6em}
+%\newcommand{\interrowspace}{.6em}
 
 \newcommand{\embeddingletter}{g}
 \newcommand{\bo}{{\sc bo}}
@@ -170,7 +170,7 @@ In practical Bayesian optimization, we must often search over structures with di
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\vspace{-0.05in} 
+%\vspace{-0.05in} 
 
 %FH: substituted this nice description with a more concise version - we don't need to tell people at BayesOpt in detail what Bayesian optimization is.
 
@@ -189,7 +189,7 @@ the contribution of this paper is the introduction of a kernel that allows obser
 
 
 \section{A Kernel for Conditional Parameter Spaces}
-\vspace{-0.05in} 
+%\vspace{-0.05in} 
 
 \gp{}s employ a positive-definite kernel function $k: \sX \times \sX \rightarrow \mathbb{R}$ to model the covariance between function values. Typical \gp{} models cannot, however, model the covariance between function values whose inputs have different (possibly overlapping) sets of relevant variables.
 
@@ -204,7 +204,7 @@ Formally, we aim to do inference about some function $f$ with domain
 
 
 \subsection{The problem}
-\vspace{-0.05in}
+%\vspace{-0.05in}
 
 As an example, imagine trying to model the performance of a neural network having either one or two hidden layers, with respect to the regularization parameters for each layer, $x_1$ and $x_2$.  If $y$ represents the performance of a one layer-net with regularization parameters $x_1$ and $x_2$, then the value $x_2$ doesn't matter, since there is no second layer to the network. Below, we'll write an input triple as $(x_1, \delta_2(\v{x}), x_2)$ and assume that $\delta_1(\v{x}) = \text{true}$; that is, the regularization parameter for the first layer is always relevant. 
 
@@ -241,7 +241,7 @@ Put another way, in the absence of any other information, this specification enc
 
 
 \subsection{Cylindrical Embedding}
-\vspace{-0.05in} 
+%\vspace{-0.05in} 
 
 We can build a kernel with these properties for each possibly irrelevant input dimension $i$ by embedding our points into a Euclidean space.  Specifically, the embedding we use is
 %
@@ -258,12 +258,13 @@ We can build a kernel with these properties for each possibly irrelevant input d
 Where $\omega_i \in \mathbb{R}^+$ and $\rho_i \in [0,1]$.
 %
 \begin{figure}
-	\floatbox[{\capbeside\thisfloatsetup{capbesideposition={right,top}}}]{figure}[\FBwidth]
-	{\caption{A demonstration of the embedding giving rise to the pseudo-metric.  All points for which $\delta_2(x) =$ false are mapped onto a line varying only along $x_1$.  Points for which $\delta_2(x) =$ true are mapped to the surface of a semicylinder, depending on both $x_1$ and $x_2$.  This embedding gives a constant distance between pairs of points which have differing values of $\delta$ but the same values of $x_1$.}}
-	{\hspace{-1cm}\input{figures/semicylinder}\label{fig:cylinder}}
+\input{figures/semicylinder}
+%	\floatbox[{\capbeside\thisfloatsetup{capbesideposition={right,top}}}]{figure}[\FBwidth]
+\caption{A demonstration of the embedding giving rise to the pseudo-metric.  All points for which $\delta_2(x) =$ false are mapped onto a line varying only along $x_1$.  Points for which $\delta_2(x) =$ true are mapped to the surface of a semicylinder, depending on both $x_1$ and $x_2$.  This embedding gives a constant distance between pairs of points which have differing values of $\delta$ but the same values of $x_1$.}
+	{\hspace{-1cm}\label{fig:cylinder}}
 	%\caption{}
 %  The parameter $\rho$ determines how much distance there is along the arc.
-\vspace{-0.3cm}
+%\vspace{-0.3cm}
 \end{figure}
 
 Figure \ref{fig:cylinder} shows a visualization of the embedding of points $(x_1, \delta_2(\v{x}), x_2)$ into $\reals^3$. 
@@ -297,7 +298,7 @@ We dub this new kernel the \emph{arc kernel}. Its parameters, $\omega_i$ and $\r
 
 
 \section{Experiments}
-\vspace{-0.05in} 
+%\vspace{-0.05in} 
 
 We now show that the arc kernel yields better results than other alternatives. 
 % Bayesian optimization requires building a surrogate model of the function being optimized, and better models can be expected to lead to more efficient optimization.  However, because of the many interacting components of BO, optimizer performance might not correspond directly to the quality of the model.  Thus, w
@@ -327,14 +328,14 @@ Our first experiments concern the quality of the regression models used to form 
 \input{tables/mcmc-table.tex}
 %\input{tables/mcmc-table-transposed.tex}
 %\caption{Regression errors for a GP with the arc kernel compared to baselines.}
-\vspace{-0.3cm}
+%\vspace{-0.3cm}
 \end{table}
 
 \paragraph{Results.}
 Table \ref{tbl:nn_nmse} shows that a \gp{} using the arc kernel performs favourably to a \gp{} that ignores the relevance information of each point. The ``separate'' categories apply a different model to each layer and therefore do not take advantage of dependencies between layers. Interestingly, the separate Arc \gp{}, which is effectively just a standard \gp{} with additional embedding, performs comparably to a standard \gp{}, suggesting that the embedding doesn't limit the expressiveness of the model.
 
 \subsection{Bayesian Optimization Experiments}  
-\vspace{-0.05in} 
+%\vspace{-0.05in} 
 In this experiment, we test the ability of Bayesian optimization to tune the hyperparameters of each layer of a deep neural network. We allow the neural networks for these problems to use up to $5$ hidden layers (or no hidden layer). We optimize over learning rates, L2 weight constraints, dropout rates~\cite{hinton2012improving}, and the number of hidden units per layer leading to a total of up to $23$ hyperparameters and $6$ architectures. On MNIST, most effort is spent improving the error by a fraction of a percent, therefore we optimize this dataset using the log-classification error. For CIFAR-10, we use classification error as the objective. We use the Deepnet\footnote{https://github.com/nitishsrivastava/deepnet} package, and each function evaluation took approximately $1000$ to $2000$ seconds to run on NVIDIA GTX Titan GPUs. Note that when a network of depth $n$ is tested, all hyperparameters from layers $n+1$ onward are deemed irrelevant.
 \paragraph{Experimental Setup.}
 For Bayesian optimization, we follow the methodology of~\cite{snoek-etal-2012b}, using slice sampling and the expected improvement heuristic. In this methodology, the acquisition function is optimized by first selecting from a pre-determined grid of points lying in $[0,1]^{23}$, distributed according to a Sobol sequence. Our baseline is a standard Gaussian process over this space that is agnostic to whether particular dimensions are irrelevant for a given point.
@@ -342,30 +343,34 @@ For Bayesian optimization, we follow the methodology of~\cite{snoek-etal-2012b},
 \paragraph{Results.}
 \begin{figure}[t!]
 	\centering
-	\begin{subfigure}[]{0.3\textwidth}
+	\begin{subfigure}[]{0.45\textwidth}
 		\includegraphics[width=\textwidth]{figures/mnist.eps}
 		\caption{MNIST}
 		\label{fig:mnist}
 	\end{subfigure}\quad
-	\begin{subfigure}[]{0.3\textwidth}
+	\begin{subfigure}[]{0.45\textwidth}
 		\includegraphics[width=\textwidth]{figures/cifar10.eps}
 		\caption{CIFAR-10}
 		\label{fig:cifar10}
-	\end{subfigure}\quad
-	\begin{subfigure}[]{0.3\textwidth}
-		\includegraphics[width=\textwidth]{figures/fevals_per_layer.eps}
-		\caption{Architectures searched}
-		\label{fig:proparchs}
 	\end{subfigure}
 	\caption{Bayesian optimization results using the arc kernel.}
 	\label{fig:arcbo}
-\vspace{-0.3cm}
+%\vspace{-0.3cm}
 \end{figure}
 
-Figure~\ref{fig:arcbo} shows that on these datasets, using the arc kernel consistently reaches good solutions faster than the naive baseline, or it finds a better solution. In the case of MNIST, the best discovered model achieved $1.19\%$ test error using $50000$ training examples. By comparison,~\cite{wan2013regularization} achieved $1.28\%$ test error using a similar model and $60000$ training examples. Similarly, our best model for CIFAR-10 achieved $21.1\%$ test error using $45000$ training examples and $400$ features. For comparison, a support vector machine using $1600$ features with the same feature pipeline and $50000$ training examples achieves $22.1\%$ error. Figure \ref{fig:proparchs} shows the proportion of function evaluations spent on each architecture size for the CIFAR-10 experiments. Interestingly, the baseline tends to favour smaller models while a \gp{} using the arc kernel distributes it's efforts amongst deeper architectures that tend to yield better results.
+Figure~\ref{fig:arcbo} shows that on these datasets, using the arc kernel consistently reaches good solutions faster than the naive baseline, or it finds a better solution. In the case of MNIST, the best discovered model achieved $1.19\%$ test error using $50000$ training examples. By comparison,~\cite{wan2013regularization} achieved $1.28\%$ test error using a similar model and $60000$ training examples. Similarly, our best model for CIFAR-10 achieved $21.1\%$ test error using $45000$ training examples and $400$ features. For comparison, a support vector machine using $1600$ features with the same feature pipeline and $50000$ training examples achieves $22.1\%$ error. 
+
+
+\begin{figure}
+	\includegraphics[width=0.45\textwidth]{figures/fevals_per_layer.eps}
+	\caption{Relative fraction of neural net architectures searched on the CIFAR-10 dataset.}
+	\label{fig:proparchs}
+\end{figure}
+
+Figure \ref{fig:proparchs} shows the proportion of function evaluations spent on each architecture size for the CIFAR-10 experiments. Interestingly, the baseline tends to favour smaller models while a \gp{} using the arc kernel distributes its efforts amongst deeper architectures that tend to yield better results.
 
 \section{Conclusion}
-\vspace{-0.05in} 
+%\vspace{-0.05in} 
 
 We introduced the arc kernel for conditional parameter spaces that facilitates modelling the performance of deep neural network architectures by enabling the sharing of information across architectures where useful.
 Empirical results show that this kernel improves \gp{} model quality and \gp{}-based Bayesian optimization results over several simpler baseline kernels. Allowing information to be shared across architectures improves the efficiency of Bayesian optimization and removes the need to manually search for good architectures. The resulting models perform favourably compared to established benchmarks by domain experts.
